@@ -83,7 +83,7 @@
 - Class: exact_question
   Output: To test your understanding of how R prints vectors, what is the value of the 46th element of Nile?
   CorrectAnswer: 1120
-  AnswerTests: omnitest(correctVal=1120)
+  AnswerTests: omnitest(correctVal='1120')
   Hint: Look at the output of Nile and use the indices in square brackets to find the 46th element.
   
 - Class: mult_question
@@ -130,7 +130,7 @@
 - Class: exact_question
   Output: Discuss with your team how to interpret the stem-plot, noting the message at the top \" The decimal point is 2 digit(s) to the right of the |\". What value approximates the minimum flow in the data-set shown in the stem-plot?
   CorrectAnswer: 460
-  AnswerTests: omnitest(correctExpr='stem(Nile)')
+  AnswerTests: omnitest(correctVal='460')
   Hint: Discuss with your team how to interpret values in the stem-plot.
 
 - Class: cmd_question
