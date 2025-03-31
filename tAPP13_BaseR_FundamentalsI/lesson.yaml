@@ -83,7 +83,7 @@
 - Class: exact_question
   Output: To test your understanding of how R prints vectors, what is the value of the 46th element of Nile?
   CorrectAnswer: 1120
-  AnswerTests: omnitest(correctExpr='EXPR', correctVal=VAL)
+  AnswerTests: omnitest(correctVal=1120)
   Hint: Look at the output of Nile and use the indices in square brackets to find the 46th element.
   
 - Class: mult_question
