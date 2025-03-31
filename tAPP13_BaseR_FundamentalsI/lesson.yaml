@@ -12,6 +12,9 @@
   and concepts in the base R language. Remember, when you see an elipsis (...) just
   press \"Return\" or \"Enter\" to continue."
 
+- Class: text
+  Output: "Please do not use Swirl's skip() function to complete this assignment. Skipped questions will not receive credit."
+
 - Class: cmd_question
   Output: Please run the R built-in command Sys.info() to document your system. 
   CorrectAnswer: Sys.info()
@@ -36,4 +39,197 @@
   AnswerTests: omnitest(correctVal='Annual flow of the river Nile over 100 years')
   Hint: Read the R documentation for the Nile object.
 
+- Class: text
+  Output: "In R, vectors are collections of data of the same \"type\" or \"mode\"."
 
+- Class: text
+  Output: "In R, vectors may be of type \"double\", \"integer\", \"character\", \"complex\", \"logical\" or others."
+  
+- Class: text
+  Output: "Vector types and modes enforce rules on what kinds of values vectors can contain. For example, logical vectors may contain only the values \"TRUE\" and \"FALSE\", in addition to certain values that any vector can contain like \"NULL\" and \"NA\"."
+
+- Class: cmd_question
+  Output: "Inspect the Nile object by evaluating it by name at the R prompt."
+  CorrectAnswer: Nile
+  AnswerTests: omnitest(correctExpr='Nile')
+  Hint: Enter Nile
+
+- Class: mult_question
+  Output: Aside from the metadata in the output at the top, which kind of statistical data does the Nile object contain?
+  AnswerChoices: Numerical;Categorical;Dates/Times 
+  CorrectAnswer: Numerical
+  AnswerTests: omnitest(correctVal='Numerical')
+  Hint: Discuss with your team. 
+  
+- Class: cmd_question
+  Output: "Inspect the type of the Nile object by calling the typeof() function on it."
+  CorrectAnswer: typeof(Nile)
+  AnswerTests: omnitest(correctExpr='typeof(Nile)')
+  Hint: Enter typeof(Nile)  
+  
+- Class: text
+  Output: "Perhaps surprisingly, the type of the Nile object vector is \"double\" which corresponds to floating-point numbers with values after a decimal point, although they all look like integers." 
+  
+- Class: cmd_question
+  Output: "In R, vector modes are similar to types, except the \"double\" and \"integer\" vector type are both of the \"numeric\" mode.
+  In R, the distinction between numeric and character modes is most important. Inspect the mode of the Nile object by calling the typeof() function on it."
+  CorrectAnswer: mode(Nile)
+  AnswerTests: omnitest(correctExpr='mode(Nile)')
+  Hint: Enter mode(Nile)  
+
+- Class: text
+  Output: "It is important to understand how R prints vectors. If you scroll up to where you inspected the value of Nile, you will notice a sequence of integers along the left side showing the corresponding indices of the values printed at the beginning of each row."
+
+- Class: exact_question
+  Output: To test your understanding of how R prints vectors, what is the value of the 46th element of Nile?
+  CorrectAnswer: 1120
+  AnswerTests: omnitest(correctExpr='EXPR', correctVal=VAL)
+  Hint: Look at the output of Nile and use the indices in square brackets to find the 46th element.
+  
+- Class: mult_question
+  Output: What is the explanatory variable of the Nile dataset?
+  AnswerChoices: time in years;flow in cubic meters
+  CorrectAnswer: time in years
+  AnswerTests: omnitest(correctVal='time in years')
+  Hint: The explanatory variable is typically plotted on the x-axis.
+
+- Class: mult_question
+  Output: What is the response variable of the Nile dataset?
+  AnswerChoices: time in years;flow in cubic meters
+  CorrectAnswer: flow in cubic meters
+  AnswerTests: omnitest(correctVal='flow in cubic meters')
+  Hint: The response variable is typically plotted on the y-axis.
+
+- Class: cmd_question
+  Output: A basic statistical summary for statistical data is to characterize its frequency distribution, and answer how often a statistical variable takes a certain value or range of values. Last time we examined the frequency distribution of flow on the river Nile by making a histogram with the built-in hist() function. Use this function to make a histogram of the Nile dataset now.
+  CorrectAnswer: hist(Nile)
+  AnswerTests: omnitest(correctExpr='hist(Nile)')
+  Hint: Enter hist(Nile).
+
+- Class: mult_question
+  Output: What is the explanatory variable of a histogram of the Nile dataset?
+  AnswerChoices: time in years;flow in cubic meters;frequency
+  CorrectAnswer: time in years
+  AnswerTests: omnitest(correctVal='flow in cubic meters')
+  Hint: The explanatory variable is typically plotted on the x-axis.
+
+- Class: mult_question
+  Output: What is the response variable of a histogram of the Nile dataset?
+  AnswerChoices: time in years;flow in cubic meters;frequency
+  CorrectAnswer: frequency
+  AnswerTests: omnitest(correctVal='frequency')
+  Hint: The response variable is typically plotted on the y-axis.
+
+
+- Class: cmd_question
+  Output: Another classical way to visualize a frequency distribution is with a stem-and-leaf plot AKA stem-plot. It is equivalent to a histogram and involves rounding numbers after the second most significant digit. Make a stem-plot of the Nile data using the R built-in stem() function.
+  CorrectAnswer: stem(Nile)
+  AnswerTests: omnitest(correctExpr='stem(Nile)')
+  Hint: Enter stem(Nile)
+
+- Class: exact_question
+  Output: Discuss with your team how to interpret the stem-plot, noting the message at the top \" The decimal point is 2 digit(s) to the right of the |\". What value approximates the minimum flow in the data-set shown in the stem-plot?
+  CorrectAnswer: 460
+  AnswerTests: omnitest(correctExpr='stem(Nile)')
+  Hint: Discuss with your team how to interpret values in the stem-plot.
+
+- Class: cmd_question
+  Output: Compare your answer of the sten-plot approximate minimum value to the actual minimum by using the min() function on the Nile vector.
+  CorrectAnswer: min(Nile)
+  AnswerTests: omnitest(correctExpr='min(Nile)')
+  Hint: Enter min(Nile).
+
+- Class: text
+  Output: Notice that when you called hist(Nile), a window popped up with a plot of the histogram of the Nile vector. This behavior is called a "side-effect" because the plot is not returned directly as the output of the hist() function. Because R is a functional programming language, such side effects are rare.
+
+- Class: text
+  Output: What if you wanted to get more information about the histogram that hist(Nile) created, such as what values are the cut-offs for each histogram bin?
+
+- Class: cmd_question
+  Output: "It turns out that hist(Nile) returns more information about the histogram in an object, and we can capture that information by using R's assignment operator (<-) to 
+create a new R object to hold the return value of hist(Nile). Although we lost this return value by not using assignment the first time, we can just re-run the code using the assignment another time.
+Write an R expression that saves the return value of hist(Nile) in a new R object called \"hist_Nile\""
+  CorrectAnswer: hist_Nile <- hist(Nile)
+  AnswerTests: omnitest(correctExpr='hist_Nile <- hist(Nile)')
+  Hint: Check with your team how to use assignment to save a return value in R.
+
+- Class: cmd_question
+  Output: Examine the mode of the hist_Nile object to see what kind of R data type it is.
+  CorrectAnswer: mode(hist_Nile)
+  AnswerTests: omnitest(correctExpr='mode(hist_Nile)')
+  Hint: Enter mode(hist_Nile).
+
+- Class: text
+  Output: R functions frequently use lists as objects to hold return values.
+
+- Class: text
+  Output: Lists are a much more general and generalized data structure in R than vectors. Unlike with vectors, list elements may be heterogeneous, of different types, and list elements may even be other lists. 
+
+- Class: cmd_question
+  Output: To examine more information about the Nile histogram, evaluate the hist_Nile return object.
+  CorrectAnswer: hist_Nile
+  AnswerTests: omnitest(correctExpr='hist_Nile')
+  Hint: Evaluate hist_Nile
+
+- Class: cmd_question
+  Output: The elements of the hist_Nile return object have names. To see them, call the names() function on the return object.
+  CorrectAnswer: names(hist_Nile)
+  AnswerTests: omnitest(correctExpr='names(hist_Nile)')
+  Hint: Evaluate names(hist_Nile)
+
+- Class: cmd_question
+  Output: To understand more about the structure of a list and the types of its elements, use the str() function on the hist return value object.
+  CorrectAnswer: str(Nile)
+  AnswerTests: omnitest(correctExpr='str(Nile)')
+  Hint: Enter str(Nile).
+
+- Class: cmd_question
+  Output: To select a list element by its name, use the $ selection operator. Test it out by selecting the density element of the return value object.
+  CorrectAnswer: hist_Nile$density
+  AnswerTests: omnitest(correctExpr='hist_Nile$density')
+  Hint: Ask your team for help using the $ operator on the hist_Nile list.
+
+- Class: mult_question
+  Output: To understand the return value of a function, use the documentation for that function. Check the documentation for the hist() function down in the \"Value:\" section. What information does the \"density\" element hold?
+  AnswerChoices: relative frequencies;midpoints;bin breaks
+  CorrectAnswer: relative frequencies
+  AnswerTests: omnitest(correctVal='relative frequencies')
+  Hint: Please check with your team if you are having trouble.
+
+
+- Class: cmd_question
+  Output: Write an R expression to examine the R data mode of the density element of the hist return value object.
+  CorrectAnswer: mode(hist_Nile$density)
+  AnswerTests: omnitest(correctExpr='mode(hist_Nile$density)')
+  Hint: Please check with your team if you are having trouble.
+
+- Class: mult_question
+  Output: Is the density element of the return value a vector, a list, or something else?
+  AnswerChoices: vector;list;something else
+  CorrectAnswer: vector
+  AnswerTests: omnitest(correctVal='vector')
+  Hint: Please check with your team if you are having trouble.
+
+
+- Class: text
+  Output: In R, many functions are vectorized, meaning they automatically compute meaningful answers for vectors of any size.
+
+- Class: text
+  Output: In R, it is almost always usually faster to rely on vectorization rather than using a for loop to iterate over a vector.
+
+- Class: cmd_question
+  Output: Use the mean() function to compute the mean annual flow of the Nile river from the Nile dataset.
+  CorrectAnswer: mean(Nile)
+  AnswerTests: omnitest(correctExpr='mean(Nile)')
+  Hint: Enter mean(Nile).
+
+- Class: cmd_question
+  Output: The arithmetic mean of a sample of values is the sum of values divided by the number of values. Use the sum() and length() functions and the R division operator (/) to write a valid expression for the mean of the Nile data.
+  CorrectAnswer: sum(Nile)/length(Nile)
+  AnswerTests: omnitest(correctExpr='sum(Nile)/length(Nile)')
+  Hint: Please check with your team for help.
+  
+
+
+- Class: text
+  Output: Congratulations on completing tAPP13! Please quit R with q() and upload your R output file tAPP13.txt to CatCourses. You do not need to save the workspace image.
