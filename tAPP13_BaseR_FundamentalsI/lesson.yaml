@@ -7,11 +7,33 @@
   Version: 2.4.5
 
 - Class: text
-  Output: This short lesson is an example of how students can submit their
-    swirl lesson progress using Google Forms.
+  Output: "Welcome back to DSC 011 after Spring Break! For the next week or so, 
+  we'll use Swirl to learn and practice fundamental data science programming skills 
+  and concepts in the base R language. Remember, when you see an elipsis (...) just
+  press \"Return\" or \"Enter\" to continue."
 
 - Class: cmd_question
-  Output: Enter 2 + 2.
-  CorrectAnswer: 2 + 2
-  AnswerTests: omnitest(correctExpr='2 + 2')
-  Hint: Just enter 2 + 2.
+  Output: Please run the R built-in command Sys.info() to document your system. 
+  CorrectAnswer: Sys.info()
+  AnswerTests: omnitest(correctExpr='Sys.info()')
+  Hint: Enter Sys.info() at the R prompt (>)
+
+- Class: cmd_question
+  Output: "Because R is a statistical programming language, 
+  it comes with built-in datasets. Like everything else in R, 
+  these datasets are associated to R objects with unique names. 
+  Before Spring Break, we met the Nile dataset associated Nile R 
+  object.  Use the built-in help() function or ? operator of R 
+  to get documentation on the Nile dataset."
+  CorrectAnswer: help(Nile)
+  AnswerTests: any_of_exprs('?Nile', '?"Nile"', 'help(Nile)', 'help("Nile")')
+  Hint: "Try entering ?Nile or help(Nile)"
+
+- Class: mult_question
+  Output: What data are sampled in R's built-in Nile dataset?
+  AnswerChoices: Annual flow of the river Nile over 100 years;Commercial traffic on the river Nile;Mentions of the river Nile in literature from the 20th Century.
+  CorrectAnswer: Annual flow of the river Nile over 100 years
+  AnswerTests: omnitest(correctVal='Annual flow of the river Nile over 100 years')
+  Hint: Read the R documentation for the Nile object.
+
+
