@@ -1,0 +1,17 @@
+- Class: meta
+  Course: DSC_011_Sp25
+  Lesson: tAPP13_BaseR_FundamentalsI
+  Author: David H. Ardell
+  Type: Standard
+  Organization: UC Merced
+  Version: 2.4.5
+
+- Class: text
+  Output: This short lesson is an example of how students can submit their
+    swirl lesson progress using Google Forms.
+
+- Class: cmd_question
+  Output: Enter 2 + 2.
+  CorrectAnswer: 2 + 2
+  AnswerTests: omnitest(correctExpr='2 + 2')
+  Hint: Just enter 2 + 2.

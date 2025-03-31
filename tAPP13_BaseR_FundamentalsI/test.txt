@@ -1,0 +1,231 @@
+
+R version 4.4.3 (2025-02-28) -- "Trophy Case"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[?1034h> swirl()
+[1mError in swirl() : could not find function "swirl"
+[0m> install.packages()s)w)[1P)[1P)")s)w)i)r)l)")
+[1mInstalling package into ‘/Users/dave/Library/R/arm64/4.4/library’
+(as ‘lib’ is unspecified)
+[0m[1mtrying URL 'https://cloud.r-project.org/bin/macosx/big-sur-arm64/contrib/4.4/swirl_2.4.5.tgz'
+[0m[1mContent type 'application/x-gzip'[0m[1m length 352577 bytes (344 KB)
+[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m=[0m[1m
+[0m[1mdownloaded 344 KB
+
+[0m
+The downloaded binary packages are in
+	/var/folders/52/53mkkdz08xj5l90059bj78lh0000gn/T//RtmpMQL71Q/downloaded_packages
+> library(swirl)
+[1m
+| Hi! Type swirl() when you are ready to begin.
+
+[0m> swirl()
+[1m
+| Welcome to swirl! Please sign in. If you've been here before, use the same
+| name as you did then. If you are new, call yourself something unique.
+
+[0mWhat shall I call you? dave
+[1m
+| Thanks, dave. Let's cover a couple of quick housekeeping items before we
+| begin our first lesson. First of all, you should know that when you see
+| '...', that means you should press Enter when you are done reading and ready
+| to continue.
+[0m
+...  <-- That's your cue to press Enter to continue
+[1m
+| Also, when you see 'ANSWER:', the R prompt (>), or when you are asked to
+| select from a list, that means it's your turn to enter a response, then press
+| Enter to continue.
+[0m
+Select 1, 2, or 3 and press Enter 
+
+1: Continue.
+2: Proceed.
+3: Let's get going!
+
+Selection: 3
+[1m
+| You can exit swirl and return to the R prompt (>) at any time by pressing the
+| Esc key. If you are already at the prompt, type bye() to exit and save your
+| progress. When you exit properly, you'll see a short message letting you know
+| you've done so.
+[0m[1m
+| When you are at the R prompt (>):
+[0m[1m| -- Typing skip() allows you to skip the current question.
+[0m[1m| -- Typing play() lets you experiment with R on your own; swirl will ignore
+| what you do...
+[0m[1m| -- UNTIL you type nxt() which will regain swirl's attention.
+[0m[1m| -- Typing bye() causes swirl to exit. Your progress will be saved.
+[0m[1m| -- Typing main() returns you to swirl's main menu.
+[0m[1m| -- Typing info() displays these options again.
+
+[0m[1m| Let's get started!
+[0m
+...
+[1m
+| To begin, you must install a course. I can install a course for you from the
+| internet, or I can send you to a web page
+| (https://github.com/swirldev/swirl_courses) which will provide course options
+| and directions for installing courses yourself. (If you are not connected to
+| the internet, type 0 to exit.)
+[0m
+1: R Programming: The basics of programming in R
+2: Regression Models: The basics of regression modeling in R
+3: Statistical Inference: The basics of statistical inference in R
+4: Exploratory Data Analysis: The basics of exploring data in R
+5: Don't install anything for me. I'll do it myself.
+
+Selection: 
+Enter an item from the menu, or 0 to exit
+Selection: 
+Enter an item from the menu, or 0 to exit
+Selection: 3
+  |                                                                              |                                                                      |   0%  |                                                                              |==                                                                    |   3%  |                                                                              |===                                                                   |   4%  |                                                                              |===                                                                   |   5%  |                                                                              |====                                                                  |   5%  |                                                                              |=====                                                                 |   7%  |                                                                              |======                                                                |   8%  |                                                                              |=======                                                               |   9%  |                                                                              |=======                                                               |  11%  |                                                                              |==========                                                            |  15%  |                                                                              |============                                                          |  17%  |                                                                              |==============                                                        |  20%  |                                                                              |================                                                      |  23%  |                                                                              |=================                                                     |  24%  |                                                                              |=====================                                                 |  30%  |                                                                              |========================                                              |  34%  |                                                                              |===========================                                           |  39%  |                                                                              |============================                                          |  41%  |                                                                              |==============================                                        |  43%  |                                                                              |==============================                                        |  44%  |                                                                              |===============================                                       |  45%  |                                                                              |===================================                                   |  50%  |                                                                              |==========================================                            |  61%  |                                                                              |===========================================                           |  61%  |                                                                              |============================================                          |  63%  |                                                                              |===============================================                       |  68%  |                                                                              |==================================================                    |  71%  |                                                                              |====================================================                  |  74%  |                                                                              |======================================================                |  77%  |                                                                              |=============================================================         |  87%  |                                                                              |======================================================================| 100%
+[1m
+| Course installed successfully!
+
+[0m[1m
+| Please choose a course, or type 0 to exit swirl.
+[0m
+1: Statistical Inference
+2: Take me to the swirl course repository!
+
+Selection: 1
+[1m
+| Please choose a lesson, or type 0 to return to course menu.
+[0m
+ 1: Introduction             2: Probability1          
+ 3: Probability2             4: ConditionalProbability
+ 5: Expectations             6: Variance              
+ 7: CommonDistros            8: Asymptotics           
+ 9: T Confidence Intervals  10: Hypothesis Testing    
+11: P Values                12: Power                 
+13: Multiple Testing        14: Resampling            
+
+
+Selection: 1
+
+  |                                                                              |                                                                      |   0%
+[1m
+| Introduction to Statistical_Inference. (Slides for this and other Data
+| Science courses may be found at github
+| https://github.com/DataScienceSpecialization/courses. If you care to use
+| them, they must be downloaded as a zip file and viewed locally. This lesson
+| corresponds to Statistical_Inference/Introduction.)
+
+[0m...
+
+  |                                                                              |=======                                                               |  10%[1m
+| In this lesson, we'll briefly introduce basics of statistical inference, the
+| process of drawing conclusions "about a population using noisy statistical
+| data where uncertainty must be accounted for". In other words, statistical
+| inference lets scientists formulate conclusions from data and quantify the
+| uncertainty arising from using incomplete data.
+
+[0m...
+
+  |                                                                              |==============                                                        |  20%[1m
+| Which of the following is NOT an example of statistical inference?
+[0m
+1: Testing the efficacy of a new drug
+2: Recording the results of a statistics exam
+3: Constructing a medical image from fMRI data
+4: Polling before an election to predict its outcome
+
+Selection: 3
+[1m
+| Nice try, but that's not exactly what I was hoping for. Try again.
+[0m[1m
+| Which of the choices involves concrete data that doesn't require any
+| inference or generalization?
+[0m
+1: Recording the results of a statistics exam
+2: Polling before an election to predict its outcome
+3: Testing the efficacy of a new drug
+4: Constructing a medical image from fMRI data
+
+Selection: 1
+[1m
+| All that hard work is paying off!
+[0m
+  |                                                                              |=====================                                                 |  30%[1m
+| So statistical inference involves formulating conclusions using data AND
+| quantifying the uncertainty associated with those conclusions. The
+| uncertainty could arise from incomplete or bad data.
+
+[0m...
+
+  |                                                                              |============================                                          |  40%[1m
+| Which of the following would NOT be a source of bad data?
+[0m
+1: A poorly designed study
+2: Small sample size
+3: A randomly selected sample of population
+4: Selection bias
+
+Selection: 
+Enter an item from the menu, or 0 to exit
+Selection: 0
+[1m
+| Give it another try.
+[0m[1m
+| Which of the choices would allow one to draw reasonable inferences?
+[0m
+1: Selection bias
+2: A poorly designed study
+3: A randomly selected sample of population
+4: Small sample size
+
+Selection: 
+Enter an item from the menu, or 0 to exit
+Selection: 0
+[1m
+| Try again. Getting it right on the first try is boring anyway!
+[0m[1m
+| Which of the choices would allow one to draw reasonable inferences?
+[0m
+1: Selection bias
+2: Small sample size
+3: A randomly selected sample of population
+4: A poorly designed study
+
+Selection: 0
+[1m
+| Not exactly. Give it another go.
+[0m[1m
+| Which of the choices would allow one to draw reasonable inferences?
+[0m
+1: A randomly selected sample of population
+2: A poorly designed study
+3: Selection bias
+4: Small sample size
+
+Selection: 0
+[1m
+| Not quite! Try again.
+[0m[1m
+| Which of the choices would allow one to draw reasonable inferences?
+[0m
+1: Selection bias
+2: A randomly selected sample of population
+3: A poorly designed study
+4: Small sample size
+
+Selection: 
+Enter an item from the menu, or 0 to exit
+Selection: 
