@@ -72,7 +72,7 @@
   
 - Class: cmd_question
   Output: "In R, vector modes are similar to types, except the \"double\" and \"integer\" vector type are both of the \"numeric\" mode.
-  In R, the distinction between numeric and character modes is most important. Inspect the mode of the Nile object by calling the typeof() function on it."
+  In R, the distinction between numeric and character modes is most important. Inspect the mode of the Nile object by calling the mode() function on it."
   CorrectAnswer: mode(Nile)
   AnswerTests: omnitest(correctExpr='mode(Nile)')
   Hint: Enter mode(Nile)  
@@ -179,9 +179,9 @@ Write an R expression that saves the return value of hist(Nile) in a new R objec
 
 - Class: cmd_question
   Output: To understand more about the structure of a list and the types of its elements, use the str() function on the hist return value object.
-  CorrectAnswer: str(Nile)
-  AnswerTests: omnitest(correctExpr='str(Nile)')
-  Hint: Enter str(Nile).
+  CorrectAnswer: str(hist_Nile)
+  AnswerTests: omnitest(correctExpr='str(hist_Nile)')
+  Hint: Enter str(hist_Nile).
 
 - Class: cmd_question
   Output: To select a list element by its name, use the $ selection operator. Test it out by selecting the density element of the return value object.
