@@ -1,3 +1,4 @@
+letter boy.freq_pop boy.freq_obs girl.freq_pop girl.freq_obs both.freq_pop both.freq_obs  
 A 8901618 224 11547024 272 20448642 496
 B 6157982 146 6401778 136 12559760 282
 C 10212882 226 8364906 203 18577788 429
