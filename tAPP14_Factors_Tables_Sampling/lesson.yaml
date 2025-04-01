@@ -1,0 +1,10 @@
+- Class: meta
+  Course: DSC_011_Sp25
+  Lesson: Factors_Tables_Sampling_in_R
+  Author: David H. Ardell
+  Type: Standard
+  Organization: UC Merced
+  Version: 2.4.5
+
+- Class: text
+  Output: "Welcome to tAPP14 with more on other types of vectors in R, including factors, logical vectors and samples."
