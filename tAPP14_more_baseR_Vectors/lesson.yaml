@@ -318,8 +318,7 @@
 - Class: text
   Output: "In order to make results using random simulation reproducible, and evaluate the same way each time, 
   you always need to \"set the seed\" of the pseudorandom number generator (PRG) of R using the set.seed() function
-  at the beginning of an R script or session, before simulating.
-  That way, everyone will get the same sequence of (pseudo-)random results."
+  at the beginning of an R script or session, before simulating."
   
 - Class: cmd_question
   Output: "Try it! Set the PRG seed using the set.seed() function using as 
@@ -504,11 +503,11 @@
   it ignores NA values."
   
 - Class: cmd_question
-  Output: "Try it! Sort the airquality@Ozone vector elements by their values with
+  Output: "Try it! Sort the airquality$Ozone vector elements by their values with
   sort()"
-  CorrectAnswer: sort(airquality@Ozone)
-  AnswerTests: omnitest(correctExpr='sort(airquality@Ozone)')
-  Hint: "Evaluate sort(airquality@Ozone)"
+  CorrectAnswer: sort(airquality$Ozone)
+  AnswerTests: omnitest(correctExpr='sort(airquality$Ozone)')
+  Hint: "Evaluate sort(airquality$Ozone)"
 
 
 - Class: text
@@ -518,14 +517,14 @@
   but does not omit them."
   
 - Class: cmd_question
-  Output: "Try it! Inspect the return value of order(airquality@Ozone)"
-  CorrectAnswer: order(airquality@Ozone)
-  AnswerTests: omnitest(correctExpr='order(airquality@Ozone)')
-  Hint: "Evaluate order(airquality@Ozone)"
+  Output: "Try it! Inspect the return value of order(airquality$Ozone)"
+  CorrectAnswer: order(airquality$Ozone)
+  AnswerTests: omnitest(correctExpr='order(airquality$Ozone)')
+  Hint: "Evaluate order(airquality$Ozone)"
 
 - Class: cmd_question
   Output: "Write an R expression that uses the return value of 
-  order(airquality@Ozone) to sort the vector airquality@Ozone through the 
+  order(airquality$Ozone) to sort the vector airquality$Ozone through the 
   vector selection operator ([])"
   CorrectAnswer: airquality$Ozone[order(airquality$Ozone)]
   AnswerTests: omnitest(correctExpr='airquality$Ozone[order(airquality$Ozone)]')
