@@ -1,10 +1,471 @@
+# tAPP14
+
 - Class: meta
   Course: DSC_011_Sp25
-  Lesson: Factors_Tables_Sampling_in_R
+  Lesson: More_with_Vectors_in_R
   Author: David H. Ardell
   Type: Standard
   Organization: UC Merced
   Version: 2.4.5
 
 - Class: text
-  Output: "Welcome to tAPP14 with more on other types of vectors in R, including factors, logical vectors and samples."
+  Output: "Welcome to tAPP14 with more on vectors and numbers in R, 
+  logical vectors, missing data, random sampling and more."
+
+- Class: cmd_question
+  Output: Before we get started, please run the R built-in command Sys.info() to document your system. 
+  CorrectAnswer: Sys.info()
+  AnswerTests: omnitest(correctExpr='Sys.info()')
+  Hint: Enter Sys.info() at the R prompt (>)
+
+# Numbers and Generating Vectors from Fixed Data: c(), seq(), rep(), outer(), paste()
+  
+- Class: text
+  Output: "Let's look at some frequently used ways to make vectors in R."
+  
+- Class: text
+  Output: "The most basic function to initialize vectors from a set of known values in R is 
+  with the c() function."
+
+- Class: text
+  Output: "The c() function stands for \"concatenate\", analagous to the bash command 
+  \"cat\" which concatenates the lines of multiple files."
+  
+- Class: cmd_question
+  Output: "For example, the R expression \n\n nv <- c(10, -560, 3.2e4) \n\n creates 
+  a numeric vector from three numbers and binds it to the name \"nv\". Try it!"
+  CorrectAnswer: nv <- c(10, -560, 3e4)
+  AnswerTests: omnitest(correctExpr='nv <- c(10, -560, 3.2e4)')
+  Hint: "Copy and paste the R expression \n\n nv <- c(10, -560, 3.2e4) \n\n."
+
+- Class: cmd_question
+  Output: "Now evaluate the name \"nv\" to print the vector."
+  CorrectAnswer: nv
+  AnswerTests: omnitest(correctExpr='nv')
+  Hint: "Evaluate the R expression \"nv\" without the quotes."
+
+- Class: text
+  Output: "Look at the last value of the output. Did you notice how the value 3.2e4 expanded to the number 32000?" 
+
+- Class: text
+  Output: "This demonstrates a POSIX (Portable Operating System Interface) standard way to write numbers in scientific notation in R, Python, Perl and Bash." 
+
+- Class: text
+  Output: "The \"e\" stands for exponent, so \"3.2e4\" represents \"3.2 times 10 to the 4th power.\"."
+
+- Class: mult_question
+  Output: Test your understanding! What is the value of 4.9e-2?
+  AnswerChoices: 4.9;490;49;0.49;0.049
+  CorrectAnswer: 0.049
+  AnswerTests: omnitest(correctVal='0.049')
+  Hint: Negative exponents move the decimal point to the left.
+
+- Class: text
+  Output: "The c() function accepts vectors as arguments in addition to atomic values like numbers and
+  strings."
+  
+- Class: text
+  Output: "It concatenates all of them into a giant vector \"flattening\" the
+  vector arguments."
+
+- Class: cmd_question
+  Output: "Try it out! Evaluate the R expression \n\n c(111,nv,222,nv,333) \n\n to examine the result."
+  CorrectAnswer: c(111,nv,222,nv,333)
+  AnswerTests: omnitest(correctExpr='c(111,nv,222,nv,333)')
+  Hint: "Copy and paste the R expression \n\n c(111,nv,222,nv,333) \n\n without the quotes."
+
+- Class: text
+  Output: Notice how the elements of nv are repeated twice in the output.
+
+- Class: text
+  Output: To create a character vector, you can initialize c() with a list of double-quoted strings.
+  
+- Class: cmd_question
+  Output: "For example, the R expression \n\n ducks <- c(\"donald\", \"daffy\", \"huey\") \n\n creates 
+  a character vector. Try it!"
+  CorrectAnswer: ducks <- c("donald", "daffy", "huey")
+  AnswerTests: omnitest(correctExpr='ducks <- c("donald", "daffy", "huey")')
+  Hint: "Copy and paste the R expression ducks <- c(\"donald\", \"daffy\", \"huey\")"
+
+- Class: text
+  Output: Remember that in R, vectors cannot contain a mix of numbers and strings. All the elements of a vector must be the same type.
+
+- Class: cmd_question
+  Output: "See what happens if you use c() to concatenate the numeric vector nv and the character vector ducks now."
+  CorrectAnswer: c(nv,ducks)
+  AnswerTests: omnitest(correctExpr='c(nv,ducks)')
+  Hint: "Use c() with first argument nv and second argument ducks"
+
+- Class: text
+  Output: Did you notice how the numbers in nv got turned into strings? 
+
+- Class: cmd_question
+  Output: "Use the up-arrow to bring up your last command from history. Wrap the last expression 
+  with the mode() function to see what its data mode is."
+  CorrectAnswer: mode(c(nv,ducks))
+  AnswerTests: omnitest(correctExpr='mode(c(nv,ducks))')
+  Hint: "Compose the mode() function with the c() function using the arguments nv and ducks"
+
+- Class: text
+  Output: A simple way to generate a sequence of positive integers is with the range operator (:). 
+
+- Class: text
+  Output: "For example, the R expression \n\n 1:5 \n\n has the same value as the R expression \n\n c(1,2,3,4,5)."
+  
+- Class: cmd_question
+  Output: "Write an R expression using the range operator to generate a sequence from 50 to 550."
+  CorrectAnswer: 50:550
+  AnswerTests: omnitest(correctExpr='50:550')
+  Hint: "The range operator is the colon (:)."
+
+- Class: text
+  Output: "The seq() function in R is more flexible for creating sequences. For example, 
+  \n\n seq(-2,2,by=0.5) \n\n evaluates to \n\n [1] -2.0 -1.5 -1.0 -0.5  0.0  0.5  1.0  1.5  2.0 \n\n"
+  
+- Class: cmd_question
+  Output: "Write an R expression using the seq() function that descends from 4 to -4 by ones."
+  CorrectAnswer: seq(4,-4,by=-1)
+  AnswerTests: omnitest(correctExpr='seq(4,-4,by=-1)')
+  Hint: "The first argument should be the first element of the sequence. Use a negative argument to by."
+
+- Class: text
+  Output: "The rep() function is useful to make larger vectors from smaller vectors. For example, 
+  \n\n rep(c(1,2,3),3) \n\n evaluates to \n\n [1] 1, 2, 3, 1, 2, 3, 1, 2, 3\n\n"
+
+- Class: text
+  Output: "The \"each\" optional argument to rep() repeats each element in turn. For example, 
+  \n\n rep(c(1,2,3),each=3) \n\n evaluates to \n\n [1] 1, 1, 1, 2, 2, 2, 3, 3, 3\n\n"
+
+- Class: cmd_question
+  Output: "Use the rep function with the ducks chacter vector so that each name is  
+  immediately repeated 4 times in the output."
+  CorrectAnswer: rep(ducks,each=4)
+  AnswerTests: omnitest(correctExpr='rep(ducks,each=4)')
+  Hint: ""
+
+- Class: text
+  Output: "The function paste() creates character vectors from smaller vectors, pasting
+  the pieces together, and recycling the shorter vectors as needed by repeating from the
+  beginning." 
+  
+- Class: text
+  Output: "For example, \n\n paste(c(\"X\",\"Y\"), 1:5, sep=\"_\") \n\n 
+  evaluates to character vector \n\n \"X_1\", \"Y_2\", \"X_3\", \"Y_4\", \"X_5\" \n\n"
+
+- Class: text
+  Output: "Note how vectors are recycled in the output. The vector c(\"X\", \"Y\") is
+  recycled incompletely 3 times to match the sequence 1:5." 
+
+- Class: text
+  Output: "The paste() function uses a space character as the default separator when 
+  pasting, while the paste0() function uses an empty string as the default separator." 
+  
+- Class: cmd_question
+  Output: "Test your understanding! Compose the paste0() and rep() functions with the 
+  character vector ducks and the range 1:3 as arguments, 
+  to create the longer character vector 
+  \n\n \"donald1\", \"donald2\", \"donald3\", \"daffy1\", \"daffy2\", \"daffy3\", \"huey1\", \"huey2\", \"huey3\"" 
+  CorrectAnswer: paste0(rep(ducks,each=3),1:3)
+  AnswerTests: omnitest(correctExpr='paste0(rep(ducks,each=3),1:3)')
+  Hint: "Use rep() with the each optional argument on the ducks character vector in the first argument to paste0"
+
+- Class: text
+  Output: "We saw last time, that functions like mean(), sum(), and length() are 
+  vectorized, meaning they automatically compute the correct values without 
+  having to iterate over the vector with a for loop. These functions take many values and return one value. " 
+  
+- Class: text
+  Output: "Other functions and operators like \"+\", log() and factorial() 
+  are also vectorized, similar to paste(), in being able to map over one or more vectors and
+  operate over their elements automatically, again without a for loop. 
+  They take many values and return many values." 
+
+- Class: cmd_question
+  Output: "For example, demonstrate vectorized arithmetic by centering the Nile 
+  data vector -- subtract the mean of the Nile vector from each of its elements using 
+  the vectorized subtraction operator (-)"
+  CorrectAnswer: Nile-mean(Nile) 
+  AnswerTests: omnitest(correctExpr='Nile-mean(Nile)')
+  Hint: "Subtract from the vector Nile its mean, computed as mean(Nile)."
+
+- Class: text
+  Output: "In the next example we will use the factorial() function, 
+  defined on whole numbers. 
+  For example, for the whole number n, factorial(n), also written n!, 
+  is defined as the product
+  n * (n - 1) * (n - 2) * ... * 1. 
+  This has the same value as the R function prod(1:n), which 
+  is the product over the integers from 1 to n." 
+
+- Class: cmd_question
+  Output: "Generate a sequence of the first ten factorials using the factorial() 
+  function and the range operator."
+  CorrectAnswer: factorial(1:10) 
+  AnswerTests: omnitest(correctExpr='factorial(1:10)')
+  Hint: "Pass the range 1:10 as the argument to factorial()"
+
+- Class: text
+  Output: "Those factorials become large numbers! Let's use base-2 
+  logarithms to make the values more of
+  the same magnitude." 
+
+- Class: cmd_question
+  Output: "Use up-arrow to recall your last command and edit the
+  R command line by wrapping it in the log2() function. 
+  This shows that you can compose vectorized functions to 
+  rapidly create new vectors."
+  CorrectAnswer: log2(factorial(1:10)) 
+  AnswerTests: omnitest(correctExpr='log2(factorial(1:10))')
+  Hint: "Pass the range 1:10 as the argument to factorial() and 
+  wrap it in the log2() function."
+
+- Class: text
+  Output: "The logarithm functions are not defined for negative values. 
+  When vectorized R functions operate 
+  on vectors that contain values that are not defined for them, 
+  they will usually try to compute as much as they can." 
+
+- Class: cmd_question
+  Output: "For example, the nv vector contains a negative value. Apply the log2() function to the nv vector to see the result."
+  CorrectAnswer: log(nv) 
+  AnswerTests: omnitest(correctExpr='log(nv)')
+  Hint: "Enter log(nv)"
+
+- Class: text
+  Output: "The second element of the return vector is NaN, which stands for 
+  \"Not a Number\" and a warning is issued, but the function completes execution 
+  without an error."
+
+- Class: text
+  Output: "Comparison operators like less than (<) and equals to (==) are also vectorized. 
+  When applied to vectors, they test each element and return a logical vector of the same size
+  as the input vector, containing the values TRUE and FALSE according to the comparison." 
+
+- Class: cmd_question
+  Output: "Use the greater than operator (>) to compare each element of the nv vector to 0."
+  CorrectAnswer: nv > 0
+  AnswerTests: omnitest(correctExpr='nv > 0')
+  Hint: "Do not try to loop over the vector, just compare the vector directly to 0."
+
+
+# Generating Vectors by Sampling and Resampling: sample(), rnorm(), 
+
+
+- Class: text
+  Output: "Being a statistical programming language, R has many functions to 
+  simulate sampling from probability distributons and resampling from sample vectors."
+  
+- Class: text
+  Output: "The most widely used sampling function in R is the sample() function,
+  which randomly selects elements from a vector, either with or without replacement."
+
+- Class: cmd_question
+  Output: "To see how it works, examine the output of sample(1:10)"
+  CorrectAnswer: sample(1:10)
+  AnswerTests: omnitest(correctExpr='sample(1:10)')
+  Hint: "Copy and paste the R expression \n\n sample(1:10) \n\n."
+
+- Class: text
+  Output: "Notice that each number in the return value occurs only once, but in a random order. 
+  By default, sample() samples without replacement, which returns a random permutation of the input 
+  vector in the first argument."
+
+- Class: text
+  Output: "If you evaluate sample(1:10) again, you will get a different result each time."
+
+- Class: cmd_question
+  Output: "Try it! Examine the output of sample(1:10) again. 
+  Is the output the same or different from last time?"
+  CorrectAnswer: sample(1:10)
+  AnswerTests: omnitest(correctExpr='sample(1:10)')
+  Hint: "Copy and paste the R expression \n\n sample(1:10) \n\n."
+  
+- Class: text
+  Output: "If you compare your results across your team, you will find that each member is generating 
+  a different random resample of the input vector. In order to make your random simulations reproducible, 
+  you always need to \"set the seed\" of the pseudorandom number generator (PRG) of R using the set.seed() function.
+  That way, everyone will get the same sequence of (pseudo-)random results."
+  
+- Class: cmd_question
+  Output: "Try it! Set the PRG seed using the set.seed() function using as 
+  input value seed the number 42."
+  CorrectAnswer: set.seed(42)
+  AnswerTests: omnitest(correctExpr='set.seed(42)')
+  Hint: "Copy and paste the R expression \n\n set.seed(42) \n\n."  
+
+- Class: cmd_question
+  Output: "Now after setting the seed, execute sample(1:10) again. Everyone should get the same
+  (pseudo-)random output vector which looks like:  \n\n [1]  1  5 10  8  2  4  6  9  7  3"
+  CorrectAnswer: sample(1:10)
+  AnswerTests: omnitest(correctExpr='sample(1:10)')
+  Hint: "Copy and paste the R expression \n\n sample(1:10) \n\n."
+    
+- Class: text
+  Output: "If you sample with replacement by passing the \"replace=TRUE\" optional arguement to sample(),
+  each element in the input vector can be resampled multiple times. You can use the \"size\" argument to 
+  specify the size of the output vector (and the \"prob\" argument to set sampling probability weights to 
+  each element as well." 
+  
+- Class: cmd_question
+  Output: "Try it! Pass the ducks character vector to sample(), use \"size=50\" as the second argument 
+  and \"replace=TRUE\" as the third argument to resample the ducks vector 50 times."
+  CorrectAnswer: sample(ducks,size=50,replace=TRUE)
+  AnswerTests: omnitest(correctExpr='sample(ducks,size=50,replace=TRUE)')
+  Hint: "Use the template \n\n sample(ducks,size=,replace=) \n\n and fill in the specified values."
+    
+- Class: text
+  Output: "The table() function is useful to count up the frequency of a categorical variable 
+  in a sample vector like that returned from the output of the last command." 
+  
+- Class: cmd_question
+  Output: "Try it! Use the up-arrow to recall your last command and use ctrl-a and ctrl-e command-line 
+  editing to wrap the last expression in the table() function, to see how often each duck was resampled."
+  CorrectAnswer: table(sample(ducks,size=50,replace=TRUE))
+  AnswerTests: omnitest(correctExpr='table(sample(ducks,size=50,replace=TRUE))')
+  Hint: "Wrap the table() function around your last command expression using sample()"
+    
+- Class: cmd_question
+  Output: "Do the numbers add up to 50 as they should? Use the up-arrow to recall your last command and use ctrl-a and ctrl-e command-line 
+  editing to wrap the last expression in the sum() function, to validate the size of the sample vector."
+  CorrectAnswer: sum(table(sample(ducks,size=50,replace=TRUE)))
+  AnswerTests: omnitest(correctExpr='sum(table(sample(ducks,size=50,replace=TRUE)))')
+  Hint: "Wrap the sum() function around your last command expression using table()"
+  
+# Missing data in vectors
+
+- Class: text
+  Output: "R uses the value NA to represent missing data which can arise when observations of
+  variables are not made for specific sampling units."
+  
+  
+- Class: text
+  Output: "For example, the built-in R dataset called
+  airquality contains data on air quality from New York over the summer of 1973. Some variables 
+  including Ozone were not measured on each day." 
+  
+- Class: cmd_question
+  Output: "To see this, evaluate the expression airquality$Ozone"
+  CorrectAnswer: airquality$Ozone
+  AnswerTests: omnitest(correctExpr='airquality$Ozone')
+  Hint: "Enter airquality$Ozone"
+    
+- Class: text
+  Output: "The function is.na() returns a logical vector of the same size 
+  as its input vector, with values of TRUE where the input vector has the value NA."
+
+- Class: cmd_question
+  Output: "Evaluate the expression \n\n is.na(airquality$Ozone)"
+  CorrectAnswer: is.na(airquality$Ozone)
+  AnswerTests: omnitest(correctExpr='is.na(airquality$Ozone)')
+  Hint: "Enter is.na(airquality$Ozone)"
+
+- Class: text
+  Output: "Because R automatically converts TRUE to the number 1 and FALSE to the number 0,
+  we can simply apply the sum() function to a logical vector to count the number of elements
+  that are TRUE."
+
+- Class: cmd_question
+  Output: "Use up-arrow and command-line editing to wrap the last expression in the sum() function 
+  to tally up the number of missing data values in airquality$Ozone"
+  CorrectAnswer: sum(is.na(airquality$Ozone))
+  AnswerTests: omnitest(correctExpr='sum(is.na(airquality$Ozone))')
+  Hint: "Enter sum(is.na(airquality$Ozone))"
+
+- Class: cmd_question
+  Output: "The following may come as a surprise. 
+  Try computing the mean of the airquality$Ozone data vector using default arguments."
+  CorrectAnswer: mean(airquality$Ozone)
+  AnswerTests: omnitest(correctExpr='mean(airquality$Ozone)')
+  Hint: "Just use the mean() function on airquality$Ozone with no extra arguments."
+
+- Class: text
+  Output: "Did you get NA as the return value? 
+  Special care is needed to compute summary statistics on vectors
+  containing missing data with NA values. 
+  That is because NA inputs almost always lead to NA outputs in R."
+
+- Class: text
+  Output: "However, summary statistics like mean() and median() have a special optional argument
+  na.rm that can be set to TRUE, and this will allow the mean to be computed only from the observed
+  values."
+
+- Class: cmd_question
+  Output: "Try it! Compute the mean of the airquality$Ozone data vector 
+  using the optional argument na.rm=TRUE"
+  CorrectAnswer: mean(airquality$Ozone,na.rm=TRUE)
+  AnswerTests: omnitest(correctExpr='mean(airquality$Ozone,na.rm=TRUE)')
+  Hint: "Use the mean() function on airquality$Ozone with argument na.rm=TRUE."
+
+- Class: text
+  Output: "We saw that we can use logical vectors to select elements from other vectors using the 
+  square-bracket selection operator ([). Elements where the selection logical vector
+  has value TRUE will be selected and returned. By applying the R logical negation operator (!) to 
+  the return value of is.na() we can select all elements that are not NA."
+
+- Class: cmd_question
+  Output: "Evaluate the expression \n\n\ airquality$Ozone[!is.na(airquality$Ozone)] \n\n 
+  to select non-NA values from airquality$Ozone."
+  CorrectAnswer: airquality$Ozone[!is.na(airquality$Ozone)]
+  AnswerTests: omnitest(correctExpr='airquality$Ozone[!is.na(airquality$Ozone)]')
+  Hint: "Evaluate airquality$Ozone[!is.na(airquality$Ozone)]"
+
+- Class: text
+  Output: "Assignment is also vectorized, which allows you to assign to vector selections to replace
+  the values in a vector. For example, evaluate the expression \n\n 
+  airquality$Ozone[is.na(airquality$Ozone)]<-0 \n\n 
+  to convert missing values (NA) in airquality$Ozone to 0."
+  
+- Class: cmd_question
+  Output: "Try it! Write an R assignment expression to assign the value NA where the numeric
+  vector nv contains negative values. Hint: use the swirl command play() to develop
+  your command in peace and when you get it to work, resume swirl with command nxt(). 
+  Develop your command succesively in pieces, each time using command-line editing to 
+  modify your previous answer. First examine the value of nv. Then 
+  compare each element of nv to 0. Then select the negative elements of nv using the 
+  logical vector returned by the comparison by using the square brackets for selection.
+  Then use assignment with this selection to remap negative elements to NA. Then check it worked 
+  by again examing the value of nv."
+  CorrectAnswer: nv[nv < 0] <- NA
+  AnswerTests: omnitest(correctExpr='nv[nv < 0] <- NA')
+  Hint: "The name nv will appear twice in the correct answer, both inside and
+  outside the square brackets."
+
+# Sorting and Ordering Vectors: sort(), order()
+
+- Class: text
+  Output: "The sort() function sorts vector elements by their values. By dafault 
+  it ignores NA values."
+  
+- Class: cmd_question
+  Output: "Try it! Sort the airquality@Ozone vector elements by their values with
+  sort()"
+  CorrectAnswer: sort(airquality@Ozone)
+  AnswerTests: omnitest(correctExpr='sort(airquality@Ozone)')
+  Hint: "Evaluate sort(airquality@Ozone)"
+
+
+- Class: text
+  Output: "The order() function is related to sort() but particularly useful for 
+  working with data-frames as will see in lab today. It returns the indices of the 
+  elements of input vectors in sort order. It puts all missing data with lowest priority
+  but does not omit them."
+  
+- Class: cmd_question
+  Output: "Try it! Inspect the return value of order(airquality@Ozone)"
+  CorrectAnswer: order(airquality@Ozone)
+  AnswerTests: omnitest(correctExpr='order(airquality@Ozone)')
+  Hint: "Evaluate order(airquality@Ozone)"
+
+- Class: cmd_question
+  Output: "Write an R expression that uses the return value of 
+  order(airquality@Ozone) to sort the vector airquality@Ozone through the 
+  vector selection operator ([])".
+  CorrectAnswer: airquality$Ozone[order(airquality$Ozone)]
+  AnswerTests: omnitest(correctExpr='order(airquality$Ozone)')
+  Hint: "Evaluate order(airquality@Ozone)"
+  
+- Class: text
+  Output: "Congratulations on completing tAPP14! 
+  Please quit R with q() and upload your R output file tAPP14.txt 
+  to CatCourses. You do not need to save the workspace image when you quit R."
+
