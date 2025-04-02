@@ -261,10 +261,31 @@
   AnswerTests: omnitest(correctExpr='nv > 0')
   Hint: "Do not try to loop over the vector, just compare the vector directly to 0."
 
+- Class: text
+  Output: "Notice that the return value is a logical vector of the
+  same length as nv. We can use the logocal vector value of this
+  expression with the R vector selection operator nv[] to select only
+  the positive elements of nv, by putting the comparison expression
+  inside the square brackets."
+   
+- Class: cmd_question
+  Output: "Try this out! Use the up-arrow to recall the last command,
+  comparison expression, and edit the command-line to wrap this 
+  expression with the selection operator. Write a vector selection expression to select
+  only the positive elements of nv."
+  CorrectAnswer: nv[nv > 0]
+  AnswerTests: omnitest(correctExpr='nv[nv > 0]')
+  Hint: "Put the comparison expression inside the square brackets and
+  make sure that the selection brackets follow the vector name without 
+  spaces."
+
 
 # Generating Vectors by Sampling and Resampling: sample(), rnorm(), 
 
-
+- Class: text
+  Output: "That's enough basic R vector operations for now. Let's
+  explore generating vectors by random sampling now."
+  
 - Class: text
   Output: "Being a statistical programming language, R has many functions to 
   simulate sampling from probability distributons and resampling from sample vectors."
@@ -344,7 +365,36 @@
   CorrectAnswer: sum(table(sample(ducks,size=50,replace=TRUE)))
   AnswerTests: omnitest(correctExpr='sum(table(sample(ducks,size=50,replace=TRUE)))')
   Hint: "Wrap the sum() function around your last command expression using table()"
-  
+
+
+- Class: text
+  Output: "R comes with sets of functions that allow simulation from
+  many common and many uncommonly used probability distributions. For
+  example, the rnorm() function simulates random draws from the Normal
+  family of probability distributions, which are the familiar Gaussian
+  bell-shaped distributions that characterize a random sum of numbers."
+
+- Class: text  
+  Output: "By default, the rnorm() function simulates from the standard normal
+  distribution with mean 0 and standard deviation 1, which means that
+  about 95% of random variates will occur between -2 and 2. In this
+  case, the only argument that you need to supply to rnorm is the sample
+  size you want to create." 
+
+- Class: cmd_question
+  Output: "Try it out! Simulate 100 standard normal random variates
+  with the rnorm() function."
+  CorrectAnswer: rnorm(100)
+  AnswerTests: omnitest(correctExpr='rnorm(100)')
+  Hint: "Pass the desired sample size to the rnorm() function."
+
+- Class: cmd_question
+  Output: "Use up-arrow to recall your last command and wrap it with
+  the hist() function to create a histogram of your values.
+  CorrectAnswer: hist(rnorm(100))
+  AnswerTests: omnitest(correctExpr='hist(rnorm(100))')
+  Hint: "Wrap the previous command with the hist() function."
+	  
 # Missing data in vectors
 
 - Class: text
