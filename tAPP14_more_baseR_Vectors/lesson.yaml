@@ -390,7 +390,7 @@
 
 - Class: cmd_question
   Output: "Use up-arrow to recall your last command and wrap it with
-  the hist() function to create a histogram of your values.
+  the hist() function to create a histogram of your values."
   CorrectAnswer: hist(rnorm(100))
   AnswerTests: omnitest(correctExpr='hist(rnorm(100))')
   Hint: "Wrap the previous command with the hist() function."
