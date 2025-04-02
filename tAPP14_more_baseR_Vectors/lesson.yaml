@@ -366,7 +366,6 @@
   AnswerTests: omnitest(correctExpr='sum(table(sample(ducks,size=50,replace=TRUE)))')
   Hint: "Wrap the sum() function around your last command expression using table()"
 
-
 - Class: text
   Output: "R comes with sets of functions that allow simulation from
   many common and many uncommonly used probability distributions. For
@@ -380,7 +379,7 @@
   about 95% of random variates will occur between -2 and 2. In this
   case, the only argument that you need to supply to rnorm is the sample
   size you want to create." 
-
+  
 - Class: cmd_question
   Output: "Try it out! Simulate 100 standard normal random variates
   with the rnorm() function."
@@ -394,13 +393,12 @@
   CorrectAnswer: hist(rnorm(100))
   AnswerTests: omnitest(correctExpr='hist(rnorm(100))')
   Hint: "Wrap the previous command with the hist() function."
-	  
+  
 # Missing data in vectors
 
 - Class: text
   Output: "R uses the value NA to represent missing data which can arise when observations of
   variables are not made for specific sampling units."
-  
   
 - Class: text
   Output: "For example, the built-in R dataset called
