@@ -189,6 +189,19 @@
   Hint: "Subtract from the vector Nile its mean, computed as mean(Nile)."
 
 - Class: text
+  Output: "After centering a numeric vector by subtracting its mean,
+  the new mean of the centered vector should be 0." 
+  
+- Class: cmd_question
+  Output: "Use the up-arrow to recall your last command from the R
+  history, and edit the command to compute the mean of the centered
+  vector, to validate that its mean is 0." 
+  CorrectAnswer: mean(Nile-mean(Nile))
+  AnswerTests: omnitest(correctExpr='mean(Nile-mean(Nile))')
+  Hint: "Pass your R expression for the centered Nile vector to the
+  mean() function."
+
+- Class: text
   Output: "In the next example we will use the factorial() function, 
   defined on whole numbers. 
   For example, for the whole number n, factorial(n), also written n!, 
@@ -211,7 +224,8 @@
 
 - Class: cmd_question
   Output: "Use up-arrow to recall your last command and edit the
-  R command line by wrapping it in the log2() function. 
+  R command line by wrapping it in the log2() function, which computes
+  base-2 logarithms. 
   This shows that you can compose vectorized functions to 
   rapidly create new vectors."
   CorrectAnswer: log2(factorial(1:10)) 
@@ -227,9 +241,9 @@
 
 - Class: cmd_question
   Output: "For example, the nv vector contains a negative value. Apply the log2() function to the nv vector to see the result."
-  CorrectAnswer: log(nv) 
-  AnswerTests: omnitest(correctExpr='log(nv)')
-  Hint: "Enter log(nv)"
+  CorrectAnswer: log2(nv) 
+  AnswerTests: omnitest(correctExpr='log2(nv)')
+  Hint: "Enter log2(nv)"
 
 - Class: text
   Output: "The second element of the return vector is NaN, which stands for 
