@@ -195,7 +195,7 @@
 - Class: cmd_question
   Output: "Use the up-arrow to recall your last command from the R
   history, and edit the command to compute the mean of the centered
-  vector, to validate that its mean is 0." 
+  vector, to validate that its mean is (a small number very close to) 0." 
   CorrectAnswer: mean(Nile-mean(Nile))
   AnswerTests: omnitest(correctExpr='mean(Nile-mean(Nile))')
   Hint: "Pass your R expression for the centered Nile vector to the
