@@ -316,9 +316,9 @@
   Hint: "Copy and paste the R expression \n\n sample(1:10) \n\n."
   
 - Class: text
-  Output: "If you compare your results across your team, you will find that each member is generating 
-  a different random resample of the input vector. In order to make your random simulations reproducible, 
-  you always need to \"set the seed\" of the pseudorandom number generator (PRG) of R using the set.seed() function.
+  Output: "In order to make results using random simulation reproducible, and evaluate the same way each time, 
+  you always need to \"set the seed\" of the pseudorandom number generator (PRG) of R using the set.seed() function
+  at the beginning of an R script or session, before simulating.
   That way, everyone will get the same sequence of (pseudo-)random results."
   
 - Class: cmd_question
@@ -329,11 +329,26 @@
   Hint: "Copy and paste the R expression \n\n set.seed(42) \n\n."  
 
 - Class: cmd_question
-  Output: "Now after setting the seed, execute sample(1:10) again. Everyone should get the same
-  (pseudo-)random output vector which looks like:  \n\n [1]  1  5 10  8  2  4  6  9  7  3"
+  Output: "Now after setting the seed, execute sample(1:10)."
   CorrectAnswer: sample(1:10)
   AnswerTests: omnitest(correctExpr='sample(1:10)')
   Hint: "Copy and paste the R expression \n\n sample(1:10) \n\n."
+
+- Class: cmd_question
+  Output: "Every time you set or reset the seed, the sequence of simulation results 
+  will be identical. Reset the PRG seed using the set.seed() function again using the 
+  same input value seed, the number 42."
+  CorrectAnswer: set.seed(42)
+  AnswerTests: omnitest(correctExpr='set.seed(42)')
+  Hint: "Copy and paste the R expression \n\n set.seed(42) \n\n."  
+
+- Class: cmd_question
+  Output: "Now after setting the seed, execute sample(1:10) again. Did you get the same sample as 
+  before after you set the seed the first time?"
+  CorrectAnswer: sample(1:10)
+  AnswerTests: omnitest(correctExpr='sample(1:10)')
+  Hint: "Copy and paste the R expression \n\n sample(1:10) \n\n."
+
     
 - Class: text
   Output: "If you sample with replacement by passing the \"replace=TRUE\" optional arguement to sample(),
@@ -460,7 +475,7 @@
 
 - Class: text
   Output: "We saw that we can use logical vectors to select elements from other vectors using the 
-  square-bracket selection operator ([). Elements where the selection logical vector
+  square-bracket selection operator ([ ]). Elements where the selection logical vector
   has value TRUE will be selected and returned. By applying the R logical negation operator (!) to 
   the return value of is.na() we can select all elements that are not NA."
 
@@ -473,24 +488,14 @@
 
 - Class: text
   Output: "Assignment is also vectorized, which allows you to assign to vector selections to replace
-  the values in a vector. For example, evaluate the expression \n\n 
-  airquality$Ozone[is.na(airquality$Ozone)]<-0 \n\n 
-  to convert missing values (NA) in airquality$Ozone to 0."
+  the values in a vector."
   
 - Class: cmd_question
-  Output: "Try it! Write an R assignment expression to assign the value NA where the numeric
-  vector nv contains negative values. Hint: use the swirl command play() to develop
-  your command in peace and when you get it to work, resume swirl with command nxt(). 
-  Develop your command succesively in pieces, each time using command-line editing to 
-  modify your previous answer. First examine the value of nv. Then 
-  compare each element of nv to 0. Then select the negative elements of nv using the 
-  logical vector returned by the comparison by using the square brackets for selection.
-  Then use assignment with this selection to remap negative elements to NA. Then check it worked 
-  by again examing the value of nv."
+  Output: "Try it! Write an expression using selection and assignment to turn negative values of the 
+  vector nv to NA."
   CorrectAnswer: nv[nv < 0] <- NA
   AnswerTests: omnitest(correctExpr='nv[nv < 0] <- NA')
-  Hint: "The name nv will appear twice in the correct answer, both inside and
-  outside the square brackets."
+  Hint: "Use a selection expression on the left-side of an assignment."
 
 # Sorting and Ordering Vectors: sort(), order()
 
@@ -523,8 +528,8 @@
   order(airquality@Ozone) to sort the vector airquality@Ozone through the 
   vector selection operator ([])"
   CorrectAnswer: airquality$Ozone[order(airquality$Ozone)]
-  AnswerTests: omnitest(correctExpr='order(airquality$Ozone)')
-  Hint: "Evaluate order(airquality@Ozone)"
+  AnswerTests: omnitest(correctExpr='airquality$Ozone[order(airquality$Ozone)]')
+  Hint: "Use the order() function inside the selection operator ([])"
   
 - Class: text
   Output: "Congratulations on completing tAPP14! 
