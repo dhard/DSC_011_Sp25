@@ -2,7 +2,7 @@
 
 - Class: meta
   Course: DSC_011_Sp25
-  Lesson: More_with_Vectors_in_R
+  Lesson: tAPP14_more_baseR_Vectors
   Author: David H. Ardell
   Type: Standard
   Organization: UC Merced
@@ -18,7 +18,7 @@
   AnswerTests: omnitest(correctExpr='Sys.info()')
   Hint: Enter Sys.info() at the R prompt (>)
 
-# Numbers and Generating Vectors from Fixed Data: c(), seq(), rep(), outer(), paste()
+# Numbers and Generating Vectors from Fixed Data: c(), seq(), rep(),  paste()
   
 - Class: text
   Output: "Let's look at some frequently used ways to make vectors in R."
@@ -459,7 +459,7 @@
 - Class: cmd_question
   Output: "Write an R expression that uses the return value of 
   order(airquality@Ozone) to sort the vector airquality@Ozone through the 
-  vector selection operator ([])".
+  vector selection operator ([])"
   CorrectAnswer: airquality$Ozone[order(airquality$Ozone)]
   AnswerTests: omnitest(correctExpr='order(airquality$Ozone)')
   Hint: "Evaluate order(airquality@Ozone)"
