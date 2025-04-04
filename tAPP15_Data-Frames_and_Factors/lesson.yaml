@@ -308,18 +308,10 @@
 
 - Class: cmd_question
   Output: "Tally up the frequencies of each category of flow in the data by using up-arrow ctrl-a, ctrl-e command-line editing 
-  to wrap your last command in the table() function."
+  to wrap your last R expression with the table() function."
   CorrectAnswer: table(cut(Nile,breaks=3,labels=c("low","medium","high")))
   AnswerTests: omnitest(correctExpr='table(cut(Nile,breaks=3,labels=c("low","medium","high")))')
   Hint: "Wrap your last correct R expression to cut() with the table() function."
-
-- Class: cmd_question
-  Output: "Try it! Use up-arrow and command-line editing to add the the labels= optional argument to cut 
-  and provide as argument the character vector c(\"low\",\"medium\",\"high\") in order
-  to give the levels useful names."
-  CorrectAnswer: cut(Nile,breaks=3,labels=c("low","medium","high"))
-  AnswerTests: omnitest(correctExpr='cut(Nile,breaks=3,labels=c("low","medium","high"))')
-  Hint: "Call cut() with the labels optional argument to provide the indicated labels."
 
 - Class: cmd_question
   Output: "The output of table() shows that in R, it is not just the elements of lists that can have names. 
@@ -416,7 +408,7 @@
   Hint: "Evaluate head(baby_clean)"  
 
 - Class: text
-  Output: "In R, data-frames are implemented as lists of vectors, each of which must be the same length. 
+  Output: "In base R, a data-frame is implemented as a list of column vectors, each of which must be the same length. 
   Importing data-frames will fail unless all of the rows are complete and all of the columns have the same number of elements."
   
 - Class: cmd_question
@@ -431,9 +423,162 @@
   AnswerTests: omnitest(correctExpr='str(baby_clean)')
   Hint: "Evaluate str(baby_clean)"  
 
+- Class: text
+  Output: "Please notice that all of the vectors in baby_clean are either character vectors or numeric vectors.
+  Before R version 4.0.0, read.csv() use to treat columns with strings automatically as (ubordered) factors, and you needed to 
+  pass the optional argument stringsAsFactors=F in order to avoid this."
 
 - Class: text
-  Output: "Congratulations on completing tAPP15! 
+  Output: "Since R 4.0.0, you need to explicitly make factors from character vectors if and when you want to use them."
+
+- Class: cmd_question
+  Output:   "To see what a data-frame with factors looks like, re-import the baby_clean data using the optional argument
+  stringsAsFactors = T and assign it to the name baby_clean_f."
+  CorrectAnswer: baby_clean_f <- read.csv(baby_clean_data_path,header=F,stringsAsFactors = T)
+  AnswerTests: omnitest(correctExpr='baby_clean_f <- read.csv(baby_clean_data_path,header=F,stringsAsFactors = T)')
+  Hint: "Use command-line editing to modify your previous import command including also the option header=F."  
+
+- Class: cmd_question
+  Output:   "Now please inspect the structure of the baby_clean_f data-frame using the str() function."
+  CorrectAnswer: str(baby_clean_f)
+  AnswerTests: omnitest(correctExpr='str(baby_clean_f)')
+  Hint: "Evaluate str(baby_clean_f)"  
+
+- Class: mult_question
+  Output: Test your understanding! Inspect the output of str(baby_clean_f) to answer the question, how many unique girls names are represented in this data?
+  AnswerChoices: 2800;6;537;699
+  CorrectAnswer: nominal
+  AnswerTests: omnitest(correctVal='699')
+  Hint: How many levels does the factor contain corresponding to girls names?
+ 
+- Class: text
+  Output: "Because it doesn't have names assigned to its column vectors, the baby_clean_f data-frame gives us 
+  an opportunity to show how to extract a column using the list selection operator [[]]. Because a data-frame is a list of column vectors, you
+  can use [[]] to select column vectors by their indices (starting from 1 on the lett)."
+
+- Class: cmd_question
+  Output:   "Extract the girls name factor column of baby_clean_f by its numerrical index using the list selection operator [[ ]]"
+  CorrectAnswer: baby_clean_f[[5]]
+  AnswerTests: omnitest(correctExpr='baby_clean_f[[5]]')
+  Hint: "Which column number contains girls names counting from the left? Use this integer inside the selection operator on the data-frame baby_clean_f."  
+
+- Class: cmd_question
+  Output:   "You can also select columns by name with the [[]] list selection operator by putting it inside quotes, like [[\"rank\"]]. 
+  This has the same effect as using the specialized list selection operator ($), but the latter is used more often as you don't have to 
+  quote the variable name. Use double quotation marks and the list selection operator [[]] tp extract the 
+  \"decade\" vector from the baby_clean data-frame."
+  CorrectAnswer: baby_clean[["decade"]]
+  AnswerTests: omnitest(correctExpr='baby_clean[["decade"]]')
+  Hint: "Use [[]] with the argument \"decade\" on the baby_clean, not the baby_clean_f data-frame."  
+
+- Class: text
+  Output: "Compared to Bash+Perl, R's powerful set of operators and functions make it relatively easy to rapidly compute statistical results from 
+  data-frames."
+
+- Class: cmd_question
+  Output:   "For example, call table() on the boy_name column of baby_clean (selected using the $ operator) to compute observation-level 
+  frequencies of boy's names in this data."
+  CorrectAnswer: table(baby_clean$boy_name)
+  AnswerTests: omnitest(correctExpr='table(baby_clean$boy_name)')
+  Hint: "Call table on baby_clean$boy_name"  
+
+- Class: text
+  Output: "Notice that the output is ordered alphabetically by boy name. Let's use sort to sort the output by frequency instead."
+
+- Class: cmd_question
+  Output:   "Use command-line editing to wrap the previous expression with the sort() function to sort the output by observation-level frequency."
+  CorrectAnswer: sort(table(baby_clean$boy_name))
+  AnswerTests: omnitest(correctExpr='sort(table(baby_clean$boy_name))')
+  Hint: "Compose sort() with table() on baby_clean$boy_name"  
+
+- Class: text
+  Output: "Suppose that we wanted to only extract the names that occurred in all decades, for which the frequency is 14."
+
+- Class: cmd_question
+  Output:   "Use command-line editing on the command from two questions ago using table(), and extend the R expression of table() 
+  with a vector selection operator [] using a logical vector to select the elements for which the output of the table command is equal to 14."
+  CorrectAnswer: table(baby_clean$boy_name)[table(baby_clean$boy_name) == 14]
+  AnswerTests: omnitest(correctExpr='table(baby_clean$boy_name)[table(baby_clean$boy_name) == 14]')
+  Hint: "A template for the correct answer is table()[table() == 14]"  
+
+- Class: cmd_question
+  Output:   "Use command-line editing to wrap the correct answer from the previous question with the names() function to extract a character vector of 
+  all boys names observed in every decade."
+  CorrectAnswer: names(table(baby_clean$boy_name)[table(baby_clean$boy_name) == 14])
+  AnswerTests: omnitest(correctExpr='names(table(baby_clean$boy_name)[table(baby_clean$boy_name) == 14])')
+  Hint: "A template for the correct answer is names(table()[table() == 14])"  
+
+- Class: text
+  Output: "Now let's practice extracting and sorting data from data-frames using the data-frame selection operator [,]. All the 
+  of the various ways to select elements from vectors using logical vectors and numeric index vectors, 
+  apply in both the row-selection and column-selection slots before and after the comma." 
+  
+- Class: text
+  Output: "In addition, you can select one or more columns by their names in the column-selection slot after the comma."
+
+- Class: text
+  Output: "If you leave one of the slots empty, then the operator will select all of the rows or columns. 
+  For example, baby_clean[baby_clean$girl_name==\"Anna\",] will select all columns from all of the rows 
+  for which the girl_name is \"Anna\"."
+
+- Class: cmd_question
+  Output:   "Try it! Use the data-frame selection operator [,] on the baby_clean data-frame 
+  to select all columns from its rows for which the boy_name is == to \"Noah\"."
+  CorrectAnswer: baby_clean[baby_clean$boy_name=="Noah",]
+  AnswerTests: omnitest(correctExpr='baby_clean[baby_clean$boy_name=="Noah",]')
+  Hint: "Your expression needs to use the name baby_clean twice, once inside and once outside the selection operator."  
+
+- Class: text
+  Output: "We often need to extract specific columns of data conditional on one or more values of other columns."
+
+- Class: cmd_question
+  Output:   "Use command-line editing to modify the previous expression to only extract the \"rank\" column from those rows for which 
+  boy name is \"Noah\"."
+  CorrectAnswer: baby_clean[baby_clean$boy_name=="Noah","rank"]
+  AnswerTests: omnitest(correctExpr='baby_clean[baby_clean$boy_name=="Noah","rank"]')
+  Hint: "Use \"rank\" with double-quotes in the column-selection slot of the correct solution to the last problem.
+  The result should be a numeric vector of ranks."
+
+- Class: cmd_question
+  Output:   "Now use command-line editing to wrap your previous expression with the mean() function to compute 
+  the mean rank of the name \"Noah\" over decades in which it was ranked."
+  CorrectAnswer: mean(baby_clean[baby_clean$boy_name=="Noah","rank"])
+  AnswerTests: omnitest(correctExpr='mean(baby_clean[baby_clean$boy_name=="Noah","rank"])')
+  Hint: "Call mean() on your data-frame selection from the previous problem."  
+
+- Class: text
+  Output: "Another very common use of the data-frame selection operator [,] is with the order() function to order the rows (or 
+  selected columns) of a data-frame by the values in one or more of the columns."
+
+- Class: cmd_question
+  Output:   "To demonstrate this, read in the baby_letters data with the expression baby_letters <- read.table(baby_letters_data_path,header=T)"
+  CorrectAnswer: baby_letters <- read.table(baby_letters_data_path,header=T)
+  AnswerTests: omnitest(correctExpr='baby_letters <- read.table(baby_letters_data_path,header=T)')
+  Hint: "Evaluate baby_letters <- read.table(baby_letters_data_path,header=T)"  
+
+- Class: cmd_question
+  Output:   "Inspect the value of the baby_letters data-frame."
+  CorrectAnswer: baby_letters
+  AnswerTests: omnitest(correctExpr='baby_letters')
+  Hint: "Evaluate baby_letters"  
+
+- Class: cmd_question
+  Output:   "Use the order() function to sort the rows of baby_letters by the values of the both.freq_pop column."
+  CorrectAnswer: baby_letters[order(baby_letters$both.freq_pop),]
+  AnswerTests: omnitest(correctExpr='baby_letters[order(baby_letters$both.freq_pop),]')
+  Hint: "Use the order() function inside the data-frame selection operator in the row-slot and put nothing 
+  after the comma to select all columns. Select the both.freq_pop from the baby_letters data-frame as the 
+  argument to order()"  
+
+- Class: cmd_question
+  Output:   "Use command-line editing to wrap the order() expression with the rev() function, so that the rows are sorted 
+  descendingly from largest to smallest values of both.freq_pop"
+  CorrectAnswer: baby_letters[rev(order(baby_letters$both.freq_pop)),]
+  AnswerTests: omnitest(correctExpr='baby_letters[rev(order(baby_letters$both.freq_pop)),]')
+  Hint: "Wrap the order() function with the rev() function in your selection." 
+
+- Class: text
+  Output: "Great work! Congratulations on completing tAPP15! 
   Please quit R with q() and upload your R output file tAPP15.txt 
   to CatCourses. You do not need to save the workspace image when you quit R."
 
