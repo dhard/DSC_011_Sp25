@@ -9,19 +9,22 @@
   Version: 2.4.5
 
 - Class: text
-  Output: "Welcome to tAPP15 with more on vector selections, data-frames, lists, and factors in R."
+  Output: "Welcome to tAPP15 with more on working with vector selections, factors, data-frames and lists in R."
 
 # vector selections
 
 - Class: text
   Output: "Last time, we practiced selecting elements from vectors by using logical vectors 
   with the vector selection operator ([]), and we sorted a vector by using a vector of integer 
-  indices returned by the order() function. Let's review a few more ways to use the selection 
-  operator to select elements from vectors."
+  indices returned by the order() function."
+  
+  
+- Class: text
+  Output: "Let's review a few more ways to use the selection  operator to select elements from vectors."
   
 - Class: text
   Output: "Let's practice making some selections from the built-in character vector 
-  called \"letters\" whose elements are the 26 lower-case letters of the English alphabet."
+  called \"letters\" containing the 26 lower-case letters of the English alphabet."
   
 - Class: cmd_question
   Output: "Examine the value of the letters vector now."
@@ -30,10 +33,11 @@
   Hint: "Evaluate the R expression \n\n letters"
 
 - Class: cmd_question
-  Output: "Use the range operator (:) to select the first eight elements of the letters vector."
+  Output: "Great! Now use the range operator (:) to select the first eight elements of the letters vector."
   CorrectAnswer: letters[1:8]
   AnswerTests: omnitest(correctExpr='letters[1:8]')
-  Hint: "The range exression 3:6 evaluates to the same value as the numeric vector c(3,4,5,6)"
+  Hint: "The range exression 3:6 evaluates to the same value as the numeric vector c(3,4,5,6). 
+  Try using a range expression inside the vector selection operator ([ ])."
   
 - Class: text
   Output: "R vectors don't throw errors if you pass in indices larger than their length, they 
@@ -68,16 +72,196 @@
 
 - Class: cmd_question
   Output: "Write a selection using the seq() function to make a character vector that excludes every 
-  third letter from the alphabet."
+  third letter from the alphabet (this example is most easily computed using negative indices)."
   CorrectAnswer: letters[-seq(3,26,by=3)]
   AnswerTests: omnitest(correctExpr='letters[-seq(3,26,by=3)]')
   Hint: "The output should look like \n\n [1] \"a\" \"b\" \"d\" \"e\" \"g\" \"h\" \"j\" \"k\" \"m\" \"n\" 
   \"p\" \"q\" \"s\" \"t\" \"v\" \"w\" \"y\" \"z\""
 
 - Class: text
-  Output: "This example is probably most easily computed this way using negative indices." 
+  Output: "Now we have covered most of the ins and outs of vector selection expressions in R." 
   
+- Class: text
+  Output: "Let's turn to study factors, which are used in R to model categorical data, especially in 
+  regression and other modeling applications. In R, vectors of factor data are called factor vectors."
+
+- Class: video
+  Output: "To better understand R factors, please take a minute to study the typology of statistical data from 
+  a figure I posted to a Page on CatCourses. Would you like swirl to open this page for you in your browser?"
+  VideoLink: https://catcourses.ucmerced.edu/courses/33897/pages/types-of-statistical-data
+
+- Class: text
+  Output: "From this figure, we see that categorical statistical variables are non-numerical variables such as 
+  \"eye color\" or \"month of birth\"."
+
+- Class: text
+  Output: "We also see that categorical variables may be further classified as nominal or ordinal variables."  
+  
+- Class: text
+  Output: "Nominal variables such as \"eye color\" can take one from a set of alternative values for which there exists 
+  no natural order. For example, blue eye-color is not less than, greater than, or equal to brown eye-color."
+  
+- Class: text
+  Output: "Ordinal variables such as \"month of birth\" can take alternative values that have a natural order. For exmaple, 
+  \"January\" comes before \"February\" and \"hot\" is hotter than \"warm\" which is warmer than \"cool\"."
+  
+- Class: text
+  Output: "In both cases, the different alternative values that a factor can take are called its \"levels\"."
+    
+- Class: cmd_question
+  Output: "To see factors in action, examine the iris data-set built-in to R by evaluating its name"
+  CorrectAnswer: iris
+  AnswerTests: omnitest(correctExpr='iris')
+  Hint: "Evaluate the R-expression \"iris\""
+
+- Class: cmd_question
+  Output: "Also look at the structure summary of the iris data-frame, using the str() function"
+  CorrectAnswer: str(iris)
+  AnswerTests: omnitest(correctExpr='str(iris)')
+  Hint: "Evaluate the R-expression \"str(iris)\""
+
+- Class: cmd_question
+  Output: "And finally look at the statistical summary of the iris data-frame, using the summary() function"
+  CorrectAnswer: summary(iris)
+  AnswerTests: omnitest(correctExpr='summary(iris)')
+  Hint: "Evaluate the R-expression \"summary(iris)\""
+
+- Class: text
+  Output: "In the documentation for iris, which you can access with \"?iris\" or \"help(iris),\" you can learn that 
+  \"This famous (Fisher's or Anderson's) iris data set gives the measurements in centimeters of the variables 
+  sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris.
+  The species are Iris setosa, versicolor, and virginica.\""
+
+- Class: cmd_question
+  Output: "Use the name-selection operator ($) to print the Species field of iris."
+  CorrectAnswer: iris$Species
+  AnswerTests: omnitest(correctExpr='iris$Species')
+  Hint: "Evaluate the R-expression \"iris$Species\""
+ 
+- Class: mult_question
+  Output: Test your understanding! What kind of categorical statistical variable is Species in iris?
+  AnswerChoices: nominal;ordinal;both;neither
+  CorrectAnswer: nominal
+  AnswerTests: omnitest(correctVal='nominal')
+  Hint: Is there a natural order to different species of irises?
+ 
+- Class: cmd_question
+  Output: "Use up-arrow and ctrl-a, ctrl-e command-line editing to wrap the Species factor vector of iris with the levels() 
+  function, to see its levels."
+  CorrectAnswer: levels(iris$Species)
+  AnswerTests: omnitest(correctExpr='levels(iris$Species)')
+  Hint: "Evaluate the R-expression \"levels(iris$Species)\"" 
+
+- Class: text
+  Output: "One of the main uses of factors in R is to enforce data consistency, that is to enforce that the values in a factor vector all belong
+  to its defined levels." 
+
+- Class: cmd_question
+  Output: "To see this, first notice that you can chain selection operators. Write an expression to extract the first element 
+  of the Species factor vector of iris."
+  CorrectAnswer: iris$Species[1]
+  AnswerTests: omnitest(correctExpr='iris$Species[1]')
+  Hint: "Use the vector selection operator [ ] on the named-column selection expression \"iris$Species\"" 
+
+- Class: cmd_question
+  Output: "Now use up-arrow and command-line editing to modify this selection expression to try to assign the value \"Setosa\" 
+  to the first element of the Species factor vector of iris." 
+  CorrectAnswer: iris$Species[1]<-"Setosa"
+  AnswerTests: omnitest(correctExpr='iris$Species[1]<-"Setosa"')
+  Hint: "Assign the value to the chained selection from the last problem." 
+
+- Class: text
+  Output: "Did you get a warning \"invalid factor level, NA generated\"?"
+
+- Class: text
+  Output: "Even though a warning was generated, R did change the value of Species for the first iris in the dataset." 
+
+- Class: cmd_question
+  Output: "To see this, print the first ten rows of iris with the head() function." 
+  CorrectAnswer: head(iris)
+  AnswerTests: omnitest(correctExpr='head(iris)')
+  Hint: "Call the head() function on iris."
+
+- Class: text
+  Output: "It may be surprising that R appears to let you change the value of built-in data objects like iris, 
+  but these changes are only temporary. Behind the scenes, R creates a new copy of iris holding the changes 
+  which masks the built-in data object. The original value of iris will be restored when you restart R, or 
+  if you remove the newly created data-frame iris with the command rm(iris)."
+
+- Class: cmd_question
+  Output: "Try removing the altered copy of iris with the command rm(iris)." 
+  CorrectAnswer: rm(iris)
+  AnswerTests: omnitest(correctExpr='rm(iris)')
+  Hint: "Evaluate rm(iris)."
+
+- Class: cmd_question
+  Output: "Now print the first ten rows of iris with the head() function again." 
+  CorrectAnswer: head(iris)
+  AnswerTests: omnitest(correctExpr='head(iris)')
+  Hint: "Call the head() function on iris."
+
+- Class: text
+  Output: "Did you see that the original value of iris was restored?"
+
+- Class: text
+  Output: "To \"re-level\" a factor vector, that is to update the name(s) of one or more levels, and all of the 
+  corresponding elements in the factor vector correspondingly, assign a character vector with the new level names   
+  to the levels() function." 
+  
+- Class: cmd_question
+  Output: "Try it! Assign the first three elements of the letters vector to the levels of the Species vector of iris." 
+  CorrectAnswer: levels(iris$Species)<-letters[1:3]
+  AnswerTests: omnitest(correctExpr='levels(iris$Species)<-letters[1:3]')
+  Hint: "Use letters[1:3] as the right-hand side of the assignment. In R you can assign directly to a function 
+  expression. Here you want to use the function levels()"
+  
+- Class: cmd_question
+  Output: "Now examine the effect of the assignment on iris$Species."
+  CorrectAnswer: iris$Species
+  AnswerTests: omnitest(correctExpr='iris$Species')
+  Hint: "Evaluate iris$Species"
+
+- Class: text
+  Output: "By default, factors in R are unordered and represent nominal variables. Ordered factors are useful to 
+  specify the order of levels for various plotting and modelling functions, and for sorting data." 
+
+- Class: text
+  Output: "For example, suppose that the birth months of the youngest five students in our class is given by the character
+  vector c(\"March\",\"February\",\"February\",\"April\",\"October\")." 
+
+- Class: cmd_question
+  Output: "Try sorting this character vector with the sort(), to see that its default sort order is alphabetical, 
+  which is not very useful."
+  CorrectAnswer: sort(c("March","February","February","April","October"))
+  AnswerTests: omnitest(correctExpr='sort(c("March","February","February","April","October"))')
+  Hint: "Evaluate the R-expression \n\n sort(c("March","February","February","April","October"))"
+
+- Class: cmd_question
+  Output: "To make a factor vector from a character vector, use the factor() or ordered() functions. Evaluate the following expression
+  to define the factor vector months:\n\n months <- factor(c(\"March\",\"February\",\"February\",\"April\",\"October\"),levels=c(\"January\",
+  \"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\"), ordered=T)"
+  CorrectAnswer: months <- factor(c("March","February","February","April","October"),levels=c("January",
+  "February","March","April","May","June","July","August","September","October","November","December"), ordered=T)
+  AnswerTests: omnitest(correctExpr='months <- factor(c("March","February","February","April","October"),levels=c("January",
+  "February","March","April","May","June","July","August","September","October","November","December"), ordered=T)')
+  Hint: "Copy, paste and evaluate the R-expression exactly as shown."
+
+- Class: cmd_question
+  Output: "Now examine how ordered factors are printed by evaluating the name months"
+  CorrectAnswer: months
+  AnswerTests: omnitest(correctExpr='months')
+  Hint: "Evaluate the name months"
+
+- Class: cmd_question
+  Output: "Also, please use sort() on the months factor vector to see how ordered factors are sorted."
+  CorrectAnswer: sort(months)
+  AnswerTests: omnitest(correctExpr='sort(months)')
+  Hint: "Evaluate the expression name(months)"
+
+
+
 - Class: text
   Output: "Congratulations on completing tAPP15! 
   Please quit R with q() and upload your R output file tAPP15.txt 
   to CatCourses. You do not need to save the workspace image when you quit R."
+
