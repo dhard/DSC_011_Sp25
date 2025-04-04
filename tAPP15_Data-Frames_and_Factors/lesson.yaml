@@ -9,21 +9,19 @@
   Version: 2.4.5
 
 - Class: text
-  Output: "Welcome to tAPP15 with more on working with vector selections, factors, data-frames and lists in R."
+  Output: "Welcome to tAPP15 with more lessons on working with vector selections, factors, and data-frames in R."
 
 # vector selections
 
 - Class: text
-  Output: "Last time, we practiced selecting elements from vectors by using logical vectors 
-  with the vector selection operator ([]), and we sorted a vector by using a vector of integer 
-  indices returned by the order() function."
-  
+  Output: "Last time, we practiced various ways of selecting elements from vectors, for example using logical vectors or
+  indices returned by the order() function with the vector selection operator [."
   
 - Class: text
-  Output: "Let's review a few more ways to use the selection  operator to select elements from vectors."
+  Output: "Let's review a few more fine points about vector selections."
   
 - Class: text
-  Output: "Let's practice making some selections from the built-in character vector 
+  Output: "We'll practice making selections from the built-in character vector 
   called \"letters\" containing the 26 lower-case letters of the English alphabet."
   
 - Class: cmd_question
@@ -237,13 +235,25 @@
   Hint: "Evaluate the R-expression \n\n sort(c(\"March\",\"February\",\"February\",\"April\",\"October\"))"
 
 - Class: cmd_question
+  Output: "Handily, R provides the built-in month.name character vector; evaluate this name to see:"
+  CorrectAnswer: month.name
+  AnswerTests: omnitest(correctExpr='month.name')
+  Hint: "Evaluate the R-expression month.name"
+
+- Class: cmd_question
+  Output: "(Suppose you didn't know there was a defined object called month.name. How would you find it? Like Bash, 
+  R provides tab-completion on defined functions and variables. At the R prompt, enter \"month.\" and hit the Tab key twice to 
+  call up all of the functions whose names start with \"mobth\". What is the name of a second pre-defined character vector that 
+  starts with the prefix \"month.\" and holds three letter abbreviations of the months?"
+  CorrectAnswer: month.abb
+  AnswerTests: omnitest(correctExpr='month.abb')
+  Hint: "Use tab-completion to find the other named character vector."
+
+- Class: cmd_question
   Output: "To make a factor vector from a character vector, use the factor() or ordered() functions. Evaluate the following expression
-  to define the factor vector months:\n\n months <- factor(c(\"March\",\"February\",\"February\",\"April\",\"October\"),levels=c(\"January\",
-  \"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\"), ordered=T)"
-  CorrectAnswer: months <- factor(c("March","February","February","April","October"),levels=c("January",
-  "February","March","April","May","June","July","August","September","October","November","December"), ordered=T)
-  AnswerTests: omnitest(correctExpr='months <- factor(c("March","February","February","April","October"),levels=c("January",
-  "February","March","April","May","June","July","August","September","October","November","December"), ordered=T)')
+  to define the factor vector months:\n\n months <- factor(c(\"March\",\"February\",\"February\",\"April\",\"October\"),levels=month.name, ordered=T)"
+  CorrectAnswer: months <- factor(c("March","February","February","April","October"),levels=month.name, ordered=T)
+  AnswerTests: omnitest(correctExpr='months <- factor(c("March","February","February","April","October"),levels=month.name, ordered=T)')
   Hint: "Copy, paste and evaluate the R-expression exactly as shown."
 
 - Class: cmd_question
