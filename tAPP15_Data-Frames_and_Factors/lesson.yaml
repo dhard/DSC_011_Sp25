@@ -313,8 +313,123 @@
   AnswerTests: omnitest(correctExpr='table(cut(Nile,breaks=3,labels=c("low","medium","high")))')
   Hint: "Wrap your last correct R expression to cut() with the table() function."
 
+- Class: cmd_question
+  Output: "Try it! Use up-arrow and command-line editing to add the the labels= optional argument to cut 
+  and provide as argument the character vector c(\"low\",\"medium\",\"high\") in order
+  to give the levels useful names."
+  CorrectAnswer: cut(Nile,breaks=3,labels=c("low","medium","high"))
+  AnswerTests: omnitest(correctExpr='cut(Nile,breaks=3,labels=c("low","medium","high"))')
+  Hint: "Call cut() with the labels optional argument to provide the indicated labels."
+
+- Class: cmd_question
+  Output: "The output of table() shows that in R, it is not just the elements of lists that can have names. 
+  Elements of vectors can have names too. To see this, use command-line editing to wrap your last command with the
+  function names()."
+  CorrectAnswer: names(table(cut(Nile,breaks=3,labels=c("low","medium","high"))))
+  AnswerTests: omnitest(correctExpr='names(table(cut(Nile,breaks=3,labels=c("low","medium","high"))))')
+  Hint: "Wrap your last correct R expression to table() with the names() function."
+
 - Class: text
   Output: "Fantastic! Now let's turn to data-frames, including importing, selecting and sorting them by column values."
+
+- Class: text
+  Output: "This lesson includes validated copies of the baby_clean.csv and baby_letters.txt files that we have been working on. 
+  To practice importing csv and tab-delimited data in R you need to provide a UNIX filepath to the files you want to import."
+
+- Class: cmd_question
+  Output: "This lesson provides the path to the baby_clean.csv file in a one-element character vector called \"baby_clean_data_path\".
+  Evaluate this name to see its path."
+  CorrectAnswer: baby_clean_data_path
+  AnswerTests: omnitest(correctExpr='baby_clean_data_path')
+  Hint: "Evaluate baby_clean_data_path"
+
+- Class: cmd_question
+  Output: "Try to import the baby_clean data with the R command \"baby_clean <- read.csv(baby_clean_data_path)"
+  CorrectAnswer: baby_clean <- read.csv(baby_clean_data_path)
+  AnswerTests: omnitest(correctExpr='baby_clean <- read.csv(baby_clean_data_path)')
+  Hint: "Evaluate baby_clean <- read.csv(baby_clean_data_path)"
+
+- Class: text
+  Output: "To see that something went wrong with importing this data using the default of read.csv(), 
+  examine the dimensions (numbers of rows and columns) of the baby_clean data-frame using the dim() function."
+
+- Class: cmd_question
+  Output: "To see that something went wrong with importing this data using the default of read.csv(), 
+  examine the dimensions (numbers of rows and columns) of the baby_clean data-frame using the dim() function."
+  CorrectAnswer: dim(baby_clean)
+  AnswerTests: omnitest(correctExpr='dim(baby_clean)')
+  Hint: "Evaluate dim(baby_clean)"
+
+- Class: text
+  Output: "Remember, there are supposed to be 2800 rows in this data but we obtained 2799!"
+  
+- Class: cmd_question
+  Output: "Let's inspect the data to learn more what went wrong. Use the head() function to print the first 10 rows of baby_clean."
+  CorrectAnswer: head(baby_clean)
+  AnswerTests: omnitest(correctExpr='head(baby_clean)')
+  Hint: "Evaluate head(baby_clean)"  
+
+- Class: text
+  Output: "It appears that by default, read.csv() expects there to be header row as the first line of the file to name the data-frame 
+  rows."
+  
+- Class: cmd_question
+  Output:   "In order to read this data correctly, we need to tell read.csv() that there is no header line for the data by passing 
+  the optional argument header=F to read.csv(). In R you can abbreviate TRUE as T and FALSE as F. Use command-line editing to add this
+  optional argument to the call to read.csv()"
+  CorrectAnswer: baby_clean <- read.csv(baby_clean_data_path,header=F)
+  AnswerTests: omnitest(correctExpr='baby_clean <- read.csv(baby_clean_data_path,header=F)')
+  Hint: "Pass header=F to your call to read.csv() to read in the baby_clean data correctly."    
+
+- Class: cmd_question
+  Output: "Inspect the data again using the head() function to validate the import."
+  CorrectAnswer: head(baby_clean)
+  AnswerTests: omnitest(correctExpr='head(baby_clean)')
+  Hint: "Evaluate head(baby_clean)"  
+
+- Class: text
+  Output: "Now let's name the columns in baby_clean. We can practice using c() and paste() to generate these names."
+  
+- Class: cmd_question
+  Output:   "First, inspect the value of the expression \n\n paste(rep(c(\"boy\",\"girl\"),each=2),c(\"name\",\"freq\"),sep=\"_\")"
+  CorrectAnswer: paste(rep(c("boy","girl"),each=2),c("name","freq"),sep="_"")
+  AnswerTests: omnitest(correctExpr='paste(rep(c("boy","girl"),each=2),c("name","freq"),sep="_")')
+  Hint: "Evaluate the expression paste(rep(c(\"boy\",\"girl\"),each=2),c(\"name\",\"freq\"),sep=\"_\")"  
+
+- Class: cmd_question
+  Output:   "These are good names for the last four columns of baby_clean. Now use command-line editing to wrap the previous expression 
+  with the c() function, and add the labels \"decade\" and \"rank\" to the beginning of the character vector."
+  CorrectAnswer: c("decade","rank",paste(rep(c("boy","girl"),each=2),c("name","freq"),sep="_"))
+  AnswerTests: omnitest(correctExpr='c("decade","rank",paste(rep(c("boy","girl"),each=2),c("name","freq"),sep="_"))')
+  Hint: "Edit the expression paste(rep(c(\"boy\",\"girl\"),each=2),c(\"name\",\"freq\"),sep=\"_\") as instructed."  
+
+- Class: cmd_question
+  Output:   "Now use assignment on names(baby_clean) to set the names of the columns to the return value of this expression."
+  CorrectAnswer: names(baby_clean) <- c("decade","rank",paste(rep(c("boy","girl"),each=2),c("name","freq"),sep="_"))
+  AnswerTests: omnitest(correctExpr='names(baby_clean) <- c("decade","rank",paste(rep(c("boy","girl"),each=2),c("name","freq"),sep="_"))')
+  Hint: "Make an assignment to the function names(baby_clean)."  
+
+- Class: cmd_question
+  Output: "Inspect baby_clean again using the head() function to validate that the renaming of variables worked."
+  CorrectAnswer: head(baby_clean)
+  AnswerTests: omnitest(correctExpr='head(baby_clean)')
+  Hint: "Evaluate head(baby_clean)"  
+
+- Class: text
+  Output: "In R, data-frames are implemented as lists of vectors, each of which must be the same length. 
+  Importing data-frames will fail unless all of the rows are complete and all of the columns have the same number of elements."
+  
+- Class: cmd_question
+  Output:   "Validate that baby_clean is a list by evaluating its data mode with the mode() function"
+  CorrectAnswer: mode(baby_clean)
+  AnswerTests: omnitest(correctExpr='mode(baby_clean)')
+  Hint: "Evaluate mode(baby_clean)"  
+
+- Class: cmd_question
+  Output:   "Inspect the structure of the baby_clean data-frame using the str() function."
+  CorrectAnswer: str(baby_clean)
+  AnswerTests: omnitest(correctExpr='str(baby_clean)')
+  Hint: "Evaluate str(baby_clean)"  
 
 
 - Class: text
