@@ -234,7 +234,7 @@
   which is not very useful."
   CorrectAnswer: sort(c("March","February","February","April","October"))
   AnswerTests: omnitest(correctExpr='sort(c("March","February","February","April","October"))')
-  Hint: "Evaluate the R-expression \n\n sort(c("March","February","February","April","October"))"
+  Hint: "Evaluate the R-expression \n\n sort(c(\"March\",\"February\",\"February\",\"April\",\"October\"))"
 
 - Class: cmd_question
   Output: "To make a factor vector from a character vector, use the factor() or ordered() functions. Evaluate the following expression
