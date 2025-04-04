@@ -1,0 +1,83 @@
+# tAPP15
+
+- Class: meta
+  Course: DSC_011_Sp25
+  Lesson: tAPP15_Data-Frames_and_Factors
+  Author: David H. Ardell
+  Type: Standard
+  Organization: UC Merced
+  Version: 2.4.5
+
+- Class: text
+  Output: "Welcome to tAPP15 with more on vector selections, data-frames, lists, and factors in R."
+
+# vector selections
+
+- Class: text
+  Output: "Last time, we practiced selecting elements from vectors by using logical vectors 
+  with the vector selection operator ([]), and we sorted a vector by using a vector of integer 
+  indices returned by the order() function. Let's review a few more ways to use the selection 
+  operator to select elements from vectors."
+  
+- Class: text
+  Output: "Let's practice making some selections from the built-in character vector 
+  called \"letters\" whose elements are the 26 lower-case letters of the English alphabet."
+  
+- Class: cmd_question
+  Output: "Examine the value of the letters vector now."
+  CorrectAnswer: letters
+  AnswerTests: omnitest(correctExpr='letters')
+  Hint: "Evaluate the R expression \n\n letters"
+
+- Class: cmd_question
+  Output: "Use the range operator (:) to select the first eight elements of the letters vector."
+  CorrectAnswer: letters[1:8]
+  AnswerTests: omnitest(correctExpr='letters[1:8]')
+  Hint: "The range exression 3:6 evaluates to the same value as the numeric vector c(3,4,5,6)"
+  
+- Class: text
+  Output: "R vectors don't throw errors if you pass in indices larger than their length, they 
+  just return the missing data value NA."
+
+- Class: cmd_question
+  Output: "See for yourself! Examine the value of \n\n letters[27]"
+  CorrectAnswer: letters[27]
+  AnswerTests: omnitest(correctExpr='letters[27]')
+  Hint: "Evaluate letters[27]"
+
+- Class: text
+  Output: "Any valid R expression that evaluates to a vector of integers can be used with the 
+  selection operator, which allows you to select the same elements repeatedly and in any order."
+
+- Class: cmd_question
+  Output: "Use the rep() function with a range argument inside a selection on the letters vector 
+  to create a character vector in which the last six letters of the alphabet, in alphabetical 
+  order, are each repeated three times."
+  CorrectAnswer: letters[rep(21:26,each=3)]
+  AnswerTests: omnitest(correctExpr='letters[rep(21:26,each=3)]')
+  Hint: "The output should look like  \n\n [1] \"u\" \"u\" \"u\" \"v\" \"v\" \"v\" \"w\" \"w\" \"w\"
+  \"x\" \"x\" \"x\" \"y\" \"y\" \"y\" \"z\" \"z\" \"z\""
+
+- Class: text
+  Output: "In R vector selections, negative indicies imply exclusion of the corresponding elements from 
+  the selection. For example, \n\n letters[-1] \n\n excludes \"a\" and evaluates the same as \n\n letters[2:26]." 
+
+- Class: text
+  Output: "Mixing positive and negative indices in a selection results in an error. Because operators are
+  vectorized, you can use an expression like \n\n -c(1,2,3) \n\n to exclude multiple elements from a selection."
+
+- Class: cmd_question
+  Output: "Write a selection using the seq() function to make a character vector that excludes every 
+  third letter from the alphabet."
+  CorrectAnswer: letters[-seq(3,26,by=3)]
+  AnswerTests: omnitest(correctExpr='letters[-seq(3,26,by=3)]')
+  Hint: "The output should look like \n\n [1] \"a\" \"b\" \"d\" \"e\" \"g\" \"h\" \"j\" \"k\" \"m\" \"n\" 
+  \"p\" \"q\" \"s\" \"t\" \"v\" \"w\" \"y\" \"z\""
+
+- Class: text
+  Output: "This example is probably most easily computed this way using negative indices." 
+  
+- Class: text
+  Output: "Congratulations on completing tAPP15! 
+  Please quit R with q() and upload your R output file tAPP15.txt 
+  to CatCourses. You do not need to save the workspace image when you quit R."
