@@ -1,0 +1,305 @@
+#  tAPP16:_Data_Science_Workflows_with_Base_R_Data-Types,_Part_I
+
+- Class: meta
+  Course: DSC_011_Sp25
+  Lesson: tAPP16:_Data_Science_Workflows_with_Base_R_Data-Types,_Part_I
+  Author: David H. Ardell
+  Type: Standard
+  Organization: UC Merced
+  Version: 2.4.5
+
+- Class: text
+  Output: "Welcome to tAPP16 with more on contructing and converting base-R data-types, complex selections, 
+  and the apply family of functions."
+
+- Class: text
+  Output: "In this lesson, our baby-names data have already been imported for you, bound to the variable names 
+  \"baby_clean\" and \"baby_letters\"."
+
+- Class: text
+  Output: "We finished tAPP15 last-time looking at one of the most important operations in data science workflows, 
+  that is selecting specific fields (or variables) from records conditional on the values of other 
+  fields/variables in those records."
+
+- Class: text
+  Output: "In this section on base-R programming, we did this with the data-frame selection operator [,]."
+
+- Class: text
+  Output: "For example, last time we selected the rank field for all records when the boy_name field was \"Noah\" using
+  the selection expression: \n\nbaby_clean[baby_clean$boy_name==\"Noah\",\"rank\"]"
+
+- Class: cmd_question
+  Output:   "Evaluate this expression now to see the result."
+  CorrectAnswer: baby_clean[baby_clean$boy_name=="Noah","rank"]
+  AnswerTests: omnitest(correctExpr='baby_clean[baby_clean$boy_name=="Noah","rank"]')
+  Hint: "Evaluate the expressioni as given."  
+
+- Class: text
+  Output: "Notice that since we only selected one field, the return value was automatically converted and printed as a vector."
+  
+- Class: text
+  Output: "In previous tAPPs, we learned many different ways to make selections on vectors, including positive selections with vectors of
+  indices or names, negative selections with negative index vectors, logical vectors, and functional expressions that return one of the above."
+
+- Class: text
+  Output: "Any of the above may be used and combined in the row-selection and column-selection slots of the data-frame selection operator."
+  
+- Class: cmd_question
+  Output:   "Try it! Use up-arrow and command-line editing to modify the previous expression to print both the 
+  \"decade\" and \"rank\" fields of baby_clean where boy_name is \"Noah\". Use a character vector with column 
+  names to select those fields so that the decade column appears first on the left."
+  CorrectAnswer: baby_clean[baby_clean$boy_name=="Noah",c("decade","rank")]
+  AnswerTests: omnitest(correctExpr='baby_clean[baby_clean$boy_name=="Noah",c("decade","rank")]')
+  Hint: "Modify the column slot and use a character vector to select fields by their names."  
+  
+- Class: text
+  Output: "Notice that now the return value is a data-frame, sometimes called a \"slice\" of the original data-frame. 
+  Also, notice that row numbers (greater than or equal to 1 and less than or equal to 2800) are printed in the left 
+  margin of the output."
+
+- Class: text
+  Output: "Changing the order of elements in the c() function when using it to select columns by their names or indices 
+  lets you reorder columns in your data-frame slice."
+
+- Class: cmd_question
+  Output:   "Try it! Use up-arrow and command-line editing to modify the previous expression to reverse the order of columns 
+  so that rank is printed first followed by decade. To keep your expression simple, please don't use the rev() function but 
+  keep the basic structure of the answer the same as before."
+  CorrectAnswer: baby_clean[baby_clean$boy_name=="Noah",c("rank","decade")]
+  AnswerTests: omnitest(correctExpr='baby_clean[baby_clean$boy_name=="Noah",c("rank","decade")]')
+  Hint: "Modify the character vector in the column slot by reversing the order of elements." 
+
+- Class: text
+  Output: "Sometimes, perhaps often, we would like to select columns by their names, preserving their 
+  order in the original data frame even if we don't remember what their order is."
+
+- Class: text
+  Output: "A convenient way to do that is to compute a logical vector that tests whether the names() of the 
+  columns are members of a subset of names desired in the output, represented as a character vector using R's 
+  built-in set-membership operator %in%."
+
+- Class: cmd_question
+  Output:   "To see how this works, first evaluate the expression\n\nnames(baby_clean)"
+  CorrectAnswer: names(baby_clean)
+  AnswerTests: omnitest(correctExpr='names(baby_clean)')
+  Hint: "Evaluate names(baby_clean)" 
+
+- Class: cmd_question
+  Output:   "Now evaluate this R expression:\n\n names(baby_clean) %in% c(\"rank\",\"decade\")"
+  CorrectAnswer: names(baby_clean) %in% c("rank","decade")
+  AnswerTests: omnitest(correctExpr='names(baby_clean) %in% c("rank","decade")')
+  Hint: "Evaluate the expression as given." 
+
+- Class: text
+  Output: "See how that generated a logical vector with the same number of elements as names(baby_clean)?"
+    
+- Class: cmd_question
+  Output:   "Now use your history and command-line editing and use exactly the previous expression in the 
+  column-selection slot to print the decade and rank of \"Noah\" in their original order from baby_clean."
+  CorrectAnswer: baby_clean[baby_clean$boy_name=="Noah",names(baby_clean) %in% c("rank","decade")]
+  AnswerTests: omnitest(correctExpr='baby_clean[baby_clean$boy_name=="Noah",names(baby_clean) %in% c("rank","decade")]')
+  Hint: "Use the set-membership operator %in% in the column-selection slot of a selection on baby_clean." 
+  
+- Class: text
+  Output: "See how even though \"rank\" came first in the selection expression, the columns are returned in their 
+  original order in the return value slice?"
+      
+- Class: text
+  Output: "Let's turn to using vectorized logical operators to select rows based on values in more than one column."
+  
+# - Class: text
+#   Output: "We'll learn two diffent approaches to do this. First, using logical operators, and second using the built-in
+#   functions all() and any()."
+# 
+# - Class: text
+#   Output: "R comes with the built in logical operators && and || that operate on logical atoms TRUE and FALSE. 
+#   Let's call these operators for convenience respectively \"and\" and \"or\"."
+# 
+# - Class: cmd_question
+#   Output:   "These binary operators may be chained together. For example, evaluate the expression: \n\n FALSE && TRUE && TRUE"
+#   CorrectAnswer: FALSE && TRUE && TRUE
+#   AnswerTests: omnitest(correctExpr='FALSE && TRUE && TRUE')
+#   Hint: "Evaluate the expression as given." 
+#   
+# - Class: cmd_question
+#   Output:   "Now evaluate the expression: \n\n FALSE || TRUE || TRUE"
+#   CorrectAnswer: FALSE || TRUE || TRUE
+#   AnswerTests: omnitest(correctExpr='FALSE || TRUE || TRUE')
+#   Hint: "Evaluate the expression as given." 
+#   
+# - Class: text
+#   Output: "Combining multiple boolean expressions with && is the same as passing them as an argument list or a single logical 
+#   vector to the function all(), since every expression must evaluate to TRUE for the combination to be TRUE."
+# 
+# - Class: cmd_question
+#   Output:   "Evaluate the expression: \n\n all(FALSE,TRUE,TRUE)"
+#   CorrectAnswer: all(FALSE,TRUE,TRUE)
+#   AnswerTests: omnitest(correctExpr='all(FALSE,TRUE,TRUE)')
+#   Hint: "Evaluate the expression as given."
+# 
+# - Class: text
+#   Output: "Similarly, combining multiple boolean expressions with || is the same as passing them as an argument list or a single logical 
+#   vector to the function any(), since at least one expression must evaluate to TRUE for the combination to be TRUE."
+# 
+# - Class: cmd_question
+#   Output:   "Evaluate the expression: \n\n any(FALSE,TRUE,TRUE)"
+#   CorrectAnswer: any(FALSE,TRUE,TRUE)
+#   AnswerTests: omnitest(correctExpr='any(FALSE,TRUE,TRUE)')
+#   Hint: "Evaluate the expression as given."
+# 
+- Class: text
+  Output: "R provides the vectorized logical operators, & and |, for computing element-wise boolean operations on 
+  logical vectors. These could be called, respectively, the \"and\" and \"or\" vectorized logical operators."
+   
+- Class: text
+  Output: "These operators are useful when making selections on vectors and data-frames, because they work 
+  element-wise over their arguments, returning logical vectors of the same length as their inputs."
+
+- Class: text
+  Output: "For example, if\n\n lv1 <- c(TRUE,FALSE,TRUE,FALSE)\n\n lv2 <- c(TRUE,TRUE,FALSE,FALSE)\n\n then\n\n 
+  lv1 & lv2\n\n will eveluate to\n\nTRUE,FALSE,FALSE,FALSE\n\n while\n\n lv1 | lv2\n\nwill evaluate to\n\n
+  TRUE,TRUE,TRUE,FALSE\n\n"
+
+- Class: cmd_question
+  Output:   "As a simple example showing how to use & and | in vector or data-frame selections, evaluate the expression\n\n
+  baby_clean[baby_clean$decade == \"2000s\" & baby_clean$rank <= 10,] \n\n to select the rows from the 2000s with the top ten ranked names."
+  CorrectAnswer: baby_clean[baby_clean$decade == \"2000s\" & baby_clean$rank <= 10,]
+  AnswerTests: omnitest(correctExpr='baby_clean[baby_clean$decade == \"2000s\" & baby_clean$rank <= 10,]')
+  Hint: "Evaluate the expression as given."
+
+- Class: cmd_question
+  Output:   "Now, work with your team to select all columns from baby_clean where rank is less than or equal to 5 and the number of girl 
+  babies born with a name of a certain rank is greater than the number of boy babies born with a name of the same rank."
+  CorrectAnswer: 
+  AnswerTests: hash_check("8cafa33963f2a913fb71921f1e6d2732")
+  Hint: "There should only be 12 rows in the output. Only the output is tested by swirl, so you have freedom to write the expression any
+  way that generates the correct output." 
+
+- Class: cmd_question
+  Output:   "Select all rows for which the girl's name equals \"Anne\" or \"Anna\"."
+  CorrectAnswer: 
+  AnswerTests: hash_check("3033efa7823b8765f6978f37f208a00f")
+  Hint: "There should only be 12 rows in the output. Only the output is tested by swirl, so you have freedom to write the expression any
+  way that generates the correct output." 
+
+- Class: cmd_question
+  Output:   "In order to select data from certain decades, notice that decades are strings, so we can't easily do numerical
+  comparisons with them. But we can extract each unique decade name as character vector with 14 elements by extracting 
+  the decade column from baby_clean and passing it to the R function unique(). Try doing that now."
+  CorrectAnswer: unique(baby_clean$decade)
+  AnswerTests: omnitest(correctExpr='unique(baby_clean$decade)')
+  Hint: "Select the decade column by its name from baby_clean and pass it to unique()" 
+
+- Class: cmd_question
+  Output:   "Now use command-line editing and chain a vector selection operator at the end of the last
+  expression to select the last four decade names."
+  CorrectAnswer: unique(baby_clean$decade)[11:14]
+  AnswerTests: omnitest(correctExpr='unique(baby_clean$decade)[11:14]')
+  Hint: "Select the decade column by its name from baby_clean and pass it to unique()" 
+    
+- Class: cmd_question
+  Output:   "Now, work with your team to use the expression from the last question with the %in% operator to 
+  select all columns from all rows of baby_clean for the top-five ranked names from the last four decades."
+  CorrectAnswer: 
+  AnswerTests: hash_check("e9ca8c4ade07eb260d67b0535f7b751a")
+  Hint: ""
+  
+- Class: cmd_question
+  Output:   "Use command-line editing to modify the previous expression to extract only the girl's names from your previous 
+  selection from baby_clean."
+  CorrectAnswer: 
+  AnswerTests: hash_check("fdb6fd5f65efeede1ed0fea1e59e0df7")
+  Hint: "Select the girl's names with the column-selection slot of the data-frame selection operator."  
+  
+- Class: cmd_question
+  Output:   "Use command-line editing to modify the previous expression to wrap the previous expression with unique() 
+  to extract only the unique girl's names from your previous selection from baby_clean."
+  CorrectAnswer: 
+  AnswerTests: hash_check("af45bd983833798cf2be6555e5a3b5aa")
+  Hint: "Don't sort the names, just pass them to unique()"  
+
+- Class: text
+  Output: "To round out our study on computing with data-frames, let's study the apply() and sweep() functions. 
+  Suppose that we wanted to sum up the total number of babies born with top-5 ranked names over the last four decades."
+
+- Class: text
+  Output: "We already selected these rows earlier, so just recall the selection expression from your history."
+  
+- Class: cmd_question
+  Output:   "Now modify this expression to select only the boy_freq and girl_freq columns in that order. 
+  You may use any method you like to select those columns."
+  CorrectAnswer: 
+  AnswerTests: hash_check("ca7a92d59b8001e6584828aadc3a88a6")
+  Hint: ""    
+  
+- Class: cmd_question
+  Output:   "Now wrap the last expression with sum() to try to add up these columns."
+  CorrectAnswer: 
+  AnswerTests: hash_check("480ba6a3290fdba3d6f899b03d80602e")
+  Hint: ""    
+    
+- Class: text
+  Output: "Did you see that we added all of the numbers together in both columns? We wanted to sum over each column
+  separately. The way to do map a function over rows or columns separately in base R is with the apply() function."
+
+- Class: cmd_question
+  Output:   "For example, try getting the length of each column of baby_clean by evaluating the expresion\n\n apply(baby_clean,2,length)"
+  CorrectAnswer: apply(baby_clean,2,length)
+  AnswerTests: omnitest(correctExpr='apply(baby_clean,2,length)')
+  Hint: "Evaluate the expression as given."   
+  
+- Class: text
+  Output: "Notice that for apply() the data_frame is the first argument, a 1 or 2 is the second argument, 
+  and a function name is the third argument, without the parentheses. A 2 in the second argument maps 
+  functions over columns, while a 1 maps the function over rows."
+
+- Class: cmd_question
+  Output:   "Now, recall from your history the selection of boy_freq and girl_freq we computed previously for selected ranks and decades.
+  And work with your team to wrap this selection with apply(), to map the sum() function over the two columns and compute totals for each of them."
+  CorrectAnswer: 
+  AnswerTests: hash_check("a6ae69ebc53b76065b2539ffe5d90089")
+  Hint: "Put the long selection expression as the first argument to apply(), and use 2 as the second argument to apply()."
+
+- Class: text
+  Output: "To finish, let's use apply() in a data-frame selection expression to carry out a very common operation in data-science, which is
+  to select only those rows for which no column contains missing data.  The usefulness of apply() here is that we can use it to select \"complete\" rows 
+  with no missing data, without knowing in advance which or how many columns contain NAs." 
+  
+- Class: cmd_question
+  Output:   "Let's build up this selection successively. First pass the airquality data-frame to is.na()."
+  CorrectAnswer: is.na(airquality)
+  AnswerTests: omnitest(correctExpr='is.na(airquality)')
+  Hint: "call is.na() on airquality." 
+
+- Class: cmd_question
+  Output:   "Now modify the last expression by prepending the negation operator !"
+  CorrectAnswer: !is.na(airquality)
+  AnswerTests: omnitest(correctExpr='!is.na(airquality)')
+  Hint: "call !is.na() on airquality." 
+
+- Class: cmd_question
+  Output:   "This creates a logical data-frame of the same size as airquality. 
+  We want to select the rows from airquality where each element of this logical data-frame is TRUE across the row.
+  Evaluate the expression apply(!is.na(airquality),1,all) to compute this logical vector."
+  CorrectAnswer: apply(!is.na(airquality),1,all)
+  AnswerTests: omnitest(correctExpr='apply(!is.na(airquality),1,all)')
+  Hint: "Evaluate the expression as expected."
+
+- Class: cmd_question
+  Output:   "Now use this expression as a logical vector to select only the NA-free rows of airquality"
+  CorrectAnswer: airquality[apply(!is.na(airquality),1,all),]
+  AnswerTests: omnitest(correctExpr='airquality[apply(!is.na(airquality),1,all),]')
+  Hint: "airquality name appears twice in the correct expression"
+  
+- Class: cmd_question
+  Output:   "Evaluate the expression all(!is.na(airquality[apply(!is.na(airquality),1,all),])) to validate that the 
+  selection does not contain any NAs."
+  CorrectAnswer: all(!is.na(airquality[apply(!is.na(airquality),1,all),]))
+  AnswerTests: omnitest(correctExpr='all(!is.na(airquality[apply(!is.na(airquality),1,all),]))')
+  Hint: "Evaluate the expression as given."  
+  
+- Class: text
+  Output: "Great work! Congratulations on completing tAPP16! 
+  Please quit R with q() and upload the file tAPP16.txt to CatCourses. 
+  You do not need to save the workspace image when you quit R."
+
