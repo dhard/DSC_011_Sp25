@@ -1,0 +1,338 @@
+#  tAPP17: Data_Science_Workflows_with_Base_R_Part_II
+
+- Class: meta
+  Course: DSC_011_Sp25
+  Lesson: tAPP17_Data_Science_Workflows_with_Base_R_Part_II
+  Author: David H. Ardell
+  Type: Standard
+  Organization: UC Merced
+  Version: 2.4.5
+
+- Class: text
+  Output: "Welcome to tAPP17 with more on the apply() family of
+  functions including lapply() for lists, anonymous functions with function(), 
+  converting lists to vectors and data-frames and other and more complicated 
+  encapsulated data science workflow computations in R."
+
+- Class: cmd_question
+  Output:   "Please run the R function date()."
+  CorrectAnswer: date()
+  AnswerTests: omnitest(correctExpr='date()')
+  Hint: "Run date()"  
+
+- Class: cmd_question
+  Output:   "Please run the R function Sys.info()"
+  CorrectAnswer: Sys.info()
+  AnswerTests: omnitest(correctExpr='Sys.info()')
+  Hint: "Run Sys.info()"  
+
+- Class: text
+  Output: "In the last tAPP, we met the apply() function, which works on data-frames by applying a named vectorized 
+  function like sum(), length(), or mean() over each row or each column of a vector."
+
+- Class: text
+  Output: "If you don't remember the order of arguments to apply(), it's OK! Unlike Python, languages like R, 
+  Perl and Rust are designed for rapid as-needed consultation of the documentation as close to where you are working 
+  as possible, in the R Console or in the Plot/Help Viewer pane of RStudio."
+  
+- Class: cmd_question
+  Output:   "That's why R's ? operator is so short, it makes it super easy to use to look up documentation 
+  usage examples. In RStudio, you can even run the documentation's prvided usage examples automatically very easily to see
+  what they evaluate to. Use the ? operator to look up the order of arguments to apply now."
+  CorrectAnswer: ?apply
+  AnswerTests: omnitest(correctExpr='?apply')
+  Hint: "Look up the docs for apply() functioni using the ? prefix operator. The operator goes before the 
+  function you are looking up."  
+
+- Class: mult_question
+  Output: In which argument of apply() does the name of the function go that will be mapped over columns or rows?
+  AnswerChoices: first;second;third;fourth
+  CorrectAnswer: third
+  AnswerTests: omnitest(correctVal='third')
+  Hint: Read the Usage and Arguments sections of the documentation to apply()
+  
+- Class: text
+  Output: "In data-driven exploratory data scientific programming, especially when using multiple languages, it's normal
+  to look up the documentation to functions or commands all of the time. The goal is not to memorize usage 
+  but to be able to \"code on the fly.\"" 
+  
+- Class: text
+  Output: "While you are looking at the documentation of apply() notice the ellipsis (...) in the argument list.
+  In general, the ellipsis in the argument list of an R usage signature means that a function accepts an unlimited 
+  number of arguments."
+  
+- Class: text
+  Output: "In the documentation to apply() the ...	stands for \"optional arguments to FUN.\""    
+  
+- Class: cmd_question
+  Output:   "Let's walk through an example where this becomes useful. Please use apply() with the 
+  function median() to write an R expression to compute the median of each column of the airquality dataset."
+  CorrectAnswer: apply(airquality,2,median)
+  AnswerTests: omnitest(correctExpr='apply(airquality,2,median)')
+  Hint: "Check the documentation of apply() carefully. The second argument MARGIN determines whether the
+  function named in the third argument is mapped over rows or columns, and we want to compute the 
+  medians of columns."   
+  
+- Class: text
+  Output: "Did you get back NAs from the first two columns? That's right, if a column vector 
+  contains missing data in the form of NAs, then summary stats returned by functions like mean() 
+  or median() will return NA."
+  
+- Class: cmd_question
+  Output:   "Please check the documentation of median using the ? operator to 
+  find the name and usage of an optional argument to median to configure it to ignore NAs."
+  CorrectAnswer: ?median
+  AnswerTests: omnitest(correctExpr='?median')
+  Hint: "Use the ? operator prefixed to the median function name."   
+  
+- Class: cmd_question
+  Output:   "Now please use up-arrow command-line editing to recall your previous 
+  expression that uses apply() to compute the medians of the airquality data variables, and modify 
+  it to include the optional argument to median() that ignores NA as a fourth argument to apply()."
+  CorrectAnswer: apply(airquality,2,median,na.rm=T)
+  AnswerTests: any_of_exprs('apply(airquality,2,median,na.rm=T)', 'apply(airquality,2,median,na.rm=TRUE)')
+  Hint: "Check the documentation of apply() carefully if needed."     
+
+- Class: text
+  Output: "Isn't it interesting that when using apply(), you provide the function name median \"nakedly\", not 
+  surrounded by quotes? That's because functions are first-class R objects just like the data-frame
+  we are analyzing called baby_clean."    
+
+- Class: cmd_question
+  Output:   "This means that if we evaluate a function object name without the parentheses after, R returns the 
+  defintion of the function instead of evaluating the function on provided arguments. 
+  Try it! Evaluate the name median without including any parentheses after."
+  CorrectAnswer: median
+  AnswerTests: omnitest(correctExpr='median')
+  Hint: "Evaluate the name \"median\" without using any parentheses after."    
+
+- Class: text
+  Output: "What we see printed is an R function object, which we can tell by looking at the first word of 
+  the first line, which reads \"function\"."    
+  
+- Class: cmd_question
+  Output:   "To confirm that the R object bound to the name \"median\" is a function object, we can use the 
+  class() function on that name, and we should see that it is of class \"function\". Try it!"
+  CorrectAnswer: class(median)
+  AnswerTests: omnitest(correctExpr='class(median)')
+  Hint: "Call the class() function on the name \"median\""     
+
+- Class: text
+  Output: "What we see printed is an R function object, which we can tell by looking at the first word of 
+  the first line, which reads \"function\"."    
+
+- Class: text
+  Output:   "Unlike Python, which uses the def keyword to define functions, in R you can create and bind
+  user-defined named functions using the function(){} keyword and the assignment operator (<-) 
+  to bind its newly created function object to a name." 
+
+- Class: text
+  Output:   "For example, the R expression\n\n my_square <- function(x) { return(x ** 2) } \n\n will be automatically 
+  vectorized to return the element-wise square of many R data-types." 
+  
+- Class: cmd_question
+  Output:   "Try it! Define the function \"my_square\" as shown."
+  CorrectAnswer: my_square <- function(x) { return(x ** 2) }
+  AnswerTests: omnitest(correctExpr='my_square <- function(x) { return(x ** 2) }')
+  Hint: "Evaluate the function definition as shown."     
+
+- Class: cmd_question
+  Output:   "Now test that it works by calling it on the anonymous vector returned by the R 
+  expression \n\n c(4,5)"
+  CorrectAnswer: my_square(c(4,5))
+  AnswerTests: omnitest(correctExpr='my_square(c(4,5))')
+  Hint: "Call my_square() on the vector returned by the R expre4ssion\n\nc(4,6)"     
+  
+- Class: text
+  Output:   "While R function objects like median point to compiled byte-code,
+  most user-defined function objects, and many built-in and library-provided function objects,
+  have function bodies that are fully and transparently written in R, which means you can inspect the 
+  R code for the functions that you are using by evaluating their names without parentheses." 
+  
+- Class: cmd_question
+  Output:   "Try it! Evaluate my_square without parentheses to return its definition." 
+  CorrectAnswer: my_square
+  AnswerTests: omnitest(correctExpr='my_square')
+  Hint: "Call my_square"     
+  
+- Class: text
+  Output:   "An extremely powerful and general programming technique that you must learn to master 
+  is the use of functions like apply() and its variants with so-called anonymous functions."   
+  
+- Class: text
+  Output:   "Anonymous functions are nameless function objects returned by a function constructor that are
+  not bound to a name. In R, you create an anonymous function by using the function() keyword just like we used
+  it in defining the function my_square() but without using assignment operator (<-) to bind it to a name."     
+
+- Class: text
+  Output:   "We can pass these anonymous function expressions directly as function arguments to apply() and 
+  other related functions that take functions as arguments."
+  
+- Class: text
+  Output:   "The advantage of using anonymous functions are simplification and encapsulation, making
+  code more self-contained and not depending on externally defined variable and function names that could cause
+  name collisions or be undefined, and therefore easily broken."    
+  
+- Class: cmd_question
+  Output:   "Use command-line editing to recall and edit your very first call to apply() on airquality 
+  using function argument median. Instead of passing the optional argument \"na.rm=T\" as a fourth argument to apply, 
+  use instead an anonymous function as a third argument to apply, which uses argument name \"x\" and 
+  in its function body definition enclosed in squirrely braces, calls the median() function on argument 
+  x with its optional argument \"na.rm=T\". The result should be a vector of medians of every colukn of the airquality
+  data-frame." 
+  CorrectAnswer: apply(airquality,2,function(x){median(x,na.rm=T)})
+  AnswerTests: hash_check("e47b78ce4e5ea49f24620e4e34e50fe2")
+  Hint: "Replace the function name median with an anonymous function with argument \"x\" and a function body in braces 
+  {} that calls median on x with optional argument na.rm=T"   
+
+- Class: text
+  Output:   "The function sweep() is related to apply() but specialized for a common task in statistics
+  of \"sweeping\" out summary statistics from a data matrix. This means, for example to \"center\" each 
+  vector of values in a column by subtracting its respective mean from each element, or \"rescaling\" a
+  vector by dividing each element by its standard deviation."
+
+- Class: cmd_question
+  Output:   "Check the documentation for sweep() using the ? prefix operator."
+  CorrectAnswer: ?sweep
+  AnswerTests: omnitest(correctExpr='?sweep')
+  Hint: "Use ? as a prefix to sweep"   
+  
+- Class: text
+  Output:   "Do you see that sweep() takes 4 arguments, with 3 of them mandatory. 
+  Its third argument STATS corresponds to the column-wise
+  or row-wise statistics to be swept out of each column, as a vector of the same length() as the 
+  number of columns or rows being swept."  
+  
+- Class: cmd_question
+  Output:   "Use command-line editing to wrap your last command computing the column-wise medians of 
+  airquality with sweep(), to subtract those column-wise medians correspondingly from each element of airquality." 
+  CorrectAnswer: sweep(airquality,2,apply(airquality,2,function(x){median(x,na.rm=T)}))
+  AnswerTests: hash_check("0bfcca9876785beffba08512a92adbd4")
+  Hint: "Only use the first three mandatory arguments to sweep(), taking advantage of the fact that its default
+  function argument is the subtraction operator \"-\"."     
+
+- Class: text
+  Output:   "In the baby_clean data, the explanatory variable \"decade\" is prime to \"pivot\" on, meaning that we 
+  can easily imagine asking questions to compare statistics across or over decades. For each decade in column 1, there 
+  is a set of rows of data that all have the same structure,tarting from ranks in column 2 to the girl-name frequencies 
+  in column 6."
+
+- Class: text
+  Output:   "In order to make comparing across decades easier, we'll want to represent the decades as an ordered factor. 
+  This will automatically order results over decades by their correct order. To make this easier, this tAPP provides a 
+  baby_clean_f object that is analogous to baby_clean, in which the decades, boy names and girl names are factors."
+
+- Class: cmd_question
+  Output:   "The base-R function split() allows us to pivot a data-frame like baby_clean_f by one of its categorical 
+  ordered factors like baby_clean_f$decade. Check the usage of split using the ? documentation prefix operator." 
+  CorrectAnswer: ?split
+  AnswerTests: omnitest(correctExpr='?split')
+  Hint: "Use ? as a prefix to the name split." 
+
+- Class: cmd_question
+  Output:   "Wrap a call to split(), with arguments baby_clean_f and baby_clean_f$decade, with a call to the function str()" 
+  CorrectAnswer: str(split(baby_clean_f,baby_clean_f$decade))
+  AnswerTests: omnitest(correctExpr='str(split(baby_clean_f,baby_clean_f$decade))')
+  Hint: "Pass the indicated call to split() to the function str()." 
+
+- Class: text
+  Output:   "Do you see from the output of str() that the object returned is a list of data-frames each with 
+  200 rows, one for each decade?"
+
+- Class: text
+  Output:   "Now, given any list, such as that returned by split(), we can map any function that we like over 
+  each element of that list using the list version of apply, which is called lapply()."
+
+- Class: text
+  Output:   "Because in R, lists can represent any type of data, and because anonymous functions can represent
+  any arbitrary computation possible in R (not just those previously defined with unique function names), the combination 
+  of lapply() and function() is a universal way to represent any possble computation over any data. This forms the basis 
+  of the MAP-REDUCE paradigm of computing on big data, that was very popular in the last decade." 
+
+- Class: cmd_question
+  Output:   "Use lapply() with an anonymous function to compute the mean of the girl-name frequencies over decades. 
+  Use command-line editing to edit your last command to swap out the call to str() with a call to lapply() instead.
+  The lapply() function takes two arguments, the first is a list and the second is the function to be mapped onto each 
+  element of the list. Use your previous call to split() on baby_clean_f as the first argument to apply. Use as 
+  the second argument to lapply() an anonymous function that calls the mean() function on the girl_freq column
+  (of each data-frame element of the list return value of split()). Use  \"x\"  as the argument name of 
+  your anonymous function." 
+  CorrectAnswer: lapply(split(baby_clean_f,baby_clean_f$decade),function(x){mean(x$girl_freq)})
+  AnswerTests: hash_check("cf2db3c4f0ced886cfe60a029acc9769")
+  Hint: "Use lapply() with an anonymous function taking one argument whose name is \"x\"."  
+
+- Class: text
+  Output:   "Did you get back a list of mean frequencies of top-200-ranked girl names over decades?"
+
+- Class: text
+  Output:   "At this point, in order to compute with these mean frequencies, we usually want to work with the data in 
+  vector form. The function unlist() converts a list of single values into a corresponding vector."
+  
+- Class: cmd_question
+  Output:   "Try it! Use command-line editing to recall your previous command and ctrl-a, ctrl-e to wrap ot with a call to 
+  unlist()" 
+  CorrectAnswer: unlist(lapply(split(baby_clean_f,baby_clean_f$decade),function(x){mean(x$girl_freq)}))
+  AnswerTests: hash_check("8cdc6780fa92d6730b72c23d0e0e9009")
+  Hint: "Wrap your call to lapply() with a call to unlist() to make a vector from a list."  
+
+- Class: cmd_question
+  Output:   "Now use command-line editing to save the results in vector form of the previous command 
+  to a new variable called \"mean_girl_freq\" using the assignment operator (<-)." 
+  CorrectAnswer: mean_girl_freq<-unlist(lapply(split(baby_clean_f,baby_clean_f$decade),function(x){mean(x$girl_freq)}))
+  AnswerTests: 1
+  Hint: "Bind the vector result of your previous command to the variable name \"mean_girl_freq\" using the assignment operator (<-)"  
+
+- Class: cmd_question
+  Output:   "Use command-line editing to compute a corresponding vector of mean boy-name frequencies over decades called
+  \"mean_boy_freq\" for the boy-name frequencies in baby_clean_f." 
+  CorrectAnswer: mean_boy_freq<-unlist(lapply(split(baby_clean_f,baby_clean_f$decade),function(x){mean(x$boy_freq)}))
+  AnswerTests: 1
+  Hint: "Bind the vector result of your previous command to the variable name \"mean_girl_freq\" using the assignment operator (<-)"  
+
+- Class: cmd_question
+  Output:   "Now we have two vectors of the same length representing data for different decades. Can we combine these two vectors 
+  into a data-frame as its columns? Yes, we can, with the built-in function called cbind(), which stands for \"column-bind\".
+  A corresponding function rbind() exists for binding rows together into a data-frame. Try it! Call cbind() with the vectors
+  mean_girl_freq and mean_boy_freq as its arguments, putting the girl data as the first column." 
+  CorrectAnswer: cbind(mean_girl_freq,mean_boy_freq);hash_check("431ba83e22617ed12fceac3c0c7378aa")
+  AnswerTests: omnitest(correctExpr='cbind(mean_girl_freq,mean_boy_freq)')
+  Hint: "Call cbind() on arguments mean_girl_freq and mean_boy_freq in that order."
+
+- Class: cmd_question
+  Output:   "To finish this lesson, we'll look at post-processing calls to lapply() that return vectors instead of single 
+  values. For example, use command-line editing to recall your first expression with an outermost call to lapply(), when you 
+  first computed the mean of girl-name frequencies, and edit it so that the anonymous function argument calls apply() 
+  to compute the column-wise means of the second, fourth and sixth columns, selected by their indices."
+  CorrectAnswer: lapply(split(baby_clean_f,baby_clean_f$decade),function(x){apply(x[,c(2,4,6)],2,mean)})
+  AnswerTests: omnitest(correctExpr='lapply(split(baby_clean_f,baby_clean_f$decade),function(x){apply(x[,c(2,4,6)],2,mean)})')
+  Hint: "Use apply() in the body of the anonymous function. As the first argument to apply(), use 
+  the data-frame selection operator [,] on the anonymous function argument \"x\" to select all rows, and in the column slot 
+  use the c() function to select columns by their index coluimn numbers, in imcreasing order."  
+
+- Class: text
+  Output:   "Did you get a list of row vectors in return, in which the mean rank was always 100.5?"
+
+- Class: text
+  Output:   "Again, we would like to get rid of the outermost list corresponding to decades and make a data-frame
+  from these list elements, but we cannot use unlist() for this
+  when the list elements are vectors."
+  
+- Class: text
+  Output:   "Instead, we can use the do.call() function, which takes as its first argument a function name and as a 
+  second argument a list. Instead of mapping the function over the list, do.call() removes the outermost
+  list structure entirely, and hands over the list elements as an arbitrary number of arguments to the 
+  function in the first argument."
+
+- Class: cmd_question
+  Output:   "Use command-line editing to recall your previous command, and wrap it in a call to do.call() with 
+  rbind as the first argument, in order to make a data-frame of your column-wise means over decades."
+  CorrectAnswer: do.call(rbind,lapply(split(baby_clean_f,baby_clean_f$decade),function(x){apply(x[,c(2,4,6)],2,mean)}))
+  AnswerTests: omnitest(correctExpr='do.call(rbind,lapply(split(baby_clean_f,baby_clean_f$decade),function(x){apply(x[,c(2,4,6)],2,mean)}))')
+  Hint: "do.call() takes two arguments. Use rbind as the first argument and your previous expression calling
+  lapply() as its second argument."  
+
+- Class: text
+  Output: "Great work! Congratulations on completing tAPP17! 
+  Please quit R with q() and upload the file tAPP16.txt to CatCourses.
+  You do not need to save the workspace image when you quit R."
+
