@@ -46,7 +46,7 @@
   Output: "According to its website at http://tidyverse.org: \"The 
   tidyverse is an opinionated collection of R packages designed for data
    science. All packages share an underlying design philosophy, grammar, 
-   and data structures."
+   and data structures.\""
 
 - Class: text
   Output:   "As you see, the tidyverse is a collection of packages, including
@@ -70,9 +70,15 @@
   Output:   "On a new line, type \"```{r}\" and then hit return twice and end the R code chunk with three backticks on a new line \"```\". RStudio offers a keypress to template code chunks, try command-option-i (Mac) or control-option-i (WSL2). The Professor has also written the markdown for an R code chunk on the whiteboard. Then between the backtick lines, enter the R code \"library(tidyverse)\" and Render the notebook."
 
 ## palmerpenguins 
- 
+
+- Class: text
+  Output:   "Instead of base-R data-frames, the tidyverse uses tibbles. However, tibbles are very closely related to data-frames; in fact, in the object-oriented programming sense, tibbles are derived from or descended from data-frames"
+
+- Class: text
+  Output:   "This means that almost all functions you have already learned that take data-frames can operate on tibbles, and that many functions written to take tibbles as input can operate on data-frames too."
+
 - Class: cmd_question
-  Output:   "Instead of base-R data-frames, the tidyverse uses tibbles. However, tibbles are very closely related to data-frames; in fact, in the object-oriented programming sense, tibbles are derived from or descended from data-frames, which means that almost all functions you have already learned that take data-frames can operate on tibbles, and that many functions written to take tibbles as input can operate on data-frames too. To better understand tibbles, let's load a famous data-set published as tibbles, the Palmer Penguins dataset (learn more at https://allisonhorst.github.io/palmerpenguins/), by calling the library() function on the package name bareword palmerpenguins."
+  Output:   "To better understand tibbles, let's load a famous data-set published as tibbles, the Palmer Penguins dataset (learn more at https://allisonhorst.github.io/palmerpenguins/), by calling the library() function on the package name bareword palmerpenguins."
   CorrectAnswer: library(palmerpenguins)
   AnswerTests: omnitest(correctExpr='library(palmerpenguins)')
   Hint: "Evaluate library(palmerpenguins), no quotes, and use tab-completion to save typing! "    
@@ -108,7 +114,10 @@
   Hint: "Evaluate tibble(sp=penguins$species[1:10],is=penguins$island[1:10]) with no quotes, and use tab-completion to save typing! " 
   
 - Class: text
-  Output:   "You can read in data directly to tibbles. Many tidyverse functions use snake case with underscores, so for example read_csv() is the tidyverse version of the base-R function read.csv() but returns tibbles instead of data-frames. It comes in the tidyverse readr package. We won't practice with it right now buut later in lab."
+  Output:   "You can read in data directly to tibbles. Many tidyverse functions use snake case with underscores, so for example read_csv() is the tidyverse version of the base-R function read.csv() but returns tibbles instead of data-frames."
+  
+- Class: text
+  Output:   "read_csv() comes in the tidyverse readr package. We won't practice with it right now but we'll use it later in lab."
 
 ### tibbles are data-frames; base-R selections work with them
 
@@ -142,7 +151,7 @@
 
 
 - Class: cmd_question
-  Output:   "See how the model names appear as row-names. If you call as_tibble() on this 
+  Output:   "See how the model names appear as row-names? If you call as_tibble() on this 
   data-frame, by default the row-names are dropped. Try it." 
   CorrectAnswer:  as_tibble(mtcars)
   AnswerTests: omnitest(correctExpr='as_tibble(mtcars)')
@@ -159,13 +168,16 @@
 ## tidyverse magrittr and base-R pipes
 
 - Class: text
-  Output:   "The tidyverse is designed to work together in R/tidyverse pipelines, similar to using pipes in bash in which data is passed between functions as tibbles. Instead of wrapping R functions like the tidyverse function filter() around a tibble-generating function like as_tibble() to make an expression like filter(as_tibble(iris),...), you can pipe them together using base-R's newish built in pipe operator (|>), which looks like \n\n as_tibble(iris) |> filter(...). All/most of these functions expect a tibble as a first argument unless used in a pipeline, in which case the tibble is passed through the pipe."
+  Output:   "The tidyverse is designed to work together in R/tidyverse pipelines, similar to using pipes in bash in which data is passed between functions as tibbles." 
+  
+- Class: text
+  Output:   "Instead of wrapping tidyverse functions like filter() around a tibble-generating function like as_tibble() to make an expression like filter(as_tibble(iris),...), we pipe them together using base-R's newish built in pipe operator (|>), which looks like \n\n as_tibble(iris) |> filter(...)."
 
 ### verbs that work on rows
 #### filter()
 
 - Class: cmd_question
-  Output:   "We'll learn more about tidyverse pipelines soon, but for now to illustrate, evaluate the R expression \n\n penguins |> filter(sex == \"male\" & island == \"Torgersen\") " 
+  Output:   "We'll use tidyverse pipelines soon, but for now to illustrate, evaluate the R expression \n\n penguins |> filter(sex == \"male\" & island == \"Torgersen\") " 
   CorrectAnswer:  penguins |> filter(sex == \male" & island == "Torgersen")
   AnswerTests: omnitest(correctExpr='penguins |> filter(sex == "male" & island == "Torgersen")')
   Hint: "Evaluate penguins |> filter(sex == \"male\" & island == \"Torgersen\")"
@@ -206,7 +218,7 @@
 # ### ggplot2
 
 - Class: text
-  Output:   "The ggplot2 package is a tidyverse package that accepts tibbles as input. \"gg\" stands for \"Grammar of Graphics\" a specific system to specify graphs using layers (similar to how you can add layers in base-R to a plot with functions like lines() and points()). To use, it you need to learn how to write what I call ggplot2 \"graph expressions\"."
+  Output:   "Did you see how only male penguins form Torgersen island were printed? The ggplot2 package is a tidyverse package that accepts tibbles as input. \"gg\" stands for \"Grammar of Graphics\" a specific system to specify graphs using layers (similar to how you can add layers in base-R to a plot with functions like lines() and points()). To use, it you need to learn how to write what I call ggplot2 \"graph expressions\"."
 
 ### verbs that work on rows
 #### filter()
@@ -218,7 +230,7 @@
   Hint: "evaluate ggplot(penguins)"
 
 - Class: cmd_question
-  Output:   "Inside the call to ggplot() there is always a call to the aes() function. \"aes\" stands for \"aesthetics\", and specifies the mapping from variable names in the input tibble to aesthetics in the graph, such as the x-values, y-values, colors, shapes and so on of the data-points. For example, to start making a barchart of the counts of different species of penguins on each of the three islands, evaluate the R expression \n\n ggplot(penguins, aes(x = island, fill = species))." 
+  Output:   "Inside the call to ggplot() there is always a call to the aes() function. \"aes\" stands for \"aesthetics\", and specifies the mapping from variable names in the input tibble to aesthetics in the graph, such as the x-values, y-values, colors, shapes and so on of the data-points. For example, to start making a barchart of the counts of different species of penguins on each of the three islands, evaluate the R expression \n\n ggplot(penguins, aes(x = island, fill = species))" 
   CorrectAnswer:  ggplot(penguins, aes(x = island, fill = species))
   AnswerTests: omnitest(correctExpr='ggplot(penguins, aes(x = island, fill = species))')
   Hint: "evaluate ggplot(penguins, aes(x = island, fill = species))"
@@ -239,7 +251,7 @@
   Hint: "Use up-arrow command-line editing and follow the instructions exactly, asking for help if anything is unclear."
 
 - Class: cmd_question
-  Output:   "Those densities are hard to see because of opacity. Let's use transparency to make them more visible. Pass the optional aesthetic \"alpha=0.5\" to set the transparency to intermediate (alpha ranges from 0 to 1), and opacity is att alpha = 1)."  
+  Output:   "Those densities are hard to see because of opacity. Let's use transparency to make them more visible. Pass the optional aesthetic \"alpha=0.5\" to geom_density() in order to set the transparency to an intermediate value (alpha ranges from 0 to 1, with full opacity at alpha = 1)."  
   CorrectAnswer:  ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)
   AnswerTests: omnitest(correctExpr='ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)')
   Hint: "Use up-arrow command-line editing and follow the instructions exactly, asking for help if anything is unclear."
