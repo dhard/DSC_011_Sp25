@@ -48,48 +48,128 @@
    science. All packages share an underlying design philosophy, grammar, 
    and data structures."
 
-- Class: cmd_question
+- Class: text
   Output:   "As you see, the tidyverse is a collection of packages, including
    tibble and ggplot2 that work together using a common interface. Although
    we can install and load these packages individually, we can choose to 
-   save time by installing and loading the complete tidyverse. Let's do that     now. Even if you have already installed the tidyverse for the currently     running R interpreter, attempt to install it with the R code 
-   install.packages() and the argument \"tidyverse\" in quotes as a string."
-  CorrectAnswer: install.packages("tidyverse")
-  AnswerTests: omnitest(correctExpr='install.packages("tidyverse")')
-  Hint: "Evaluate install.packages(\"tidyverse\")"    
+   save time by loading the complete tidyverse at once. Let's load the 
+   tidyverse now, in case you haven't already."
 
 - Class: cmd_question
-  Output:   "Now that you installed or validated installation of tidyverse, we are going to need to   load it in order to use it. To load tidyverse, including ggplot2, call the R function library()     with the bare name tidyverse, that is no quotes."
+  Output:   "Like in all interpreted languages, in R we need to load packages before we can use 
+  them (and we can only load them after they are installed). To load the tidyverse, including
+  ggplot2, call the R function library() with the bare name tidyverse without quotes."
   CorrectAnswer: library(tidyverse)
   AnswerTests: omnitest(correctExpr='library(tidyverse)')
   Hint: "Evaluate library(tidyverse)"    
 
+- Class: text
+  Output:   "But to record and communicate our work that uses the tidyverse packages in our Quarto    notebook we also need to make the R interpreter that evaluates R code chunks for our notebook load   the tidyverse packages. To do this, create an R code chunk in the bottom subsection which is for    the purpose of loading all of the notebook package dependencies for it to render properly."
 
-## Setting for working the assignment.
+- Class: text
+  Output:   "On a new line, type \"```{r}\" and then hit return twice and end the R code chunk with three backticks on a new line \"```\". RStudio offers a keypress to template code chunks, try command-option-i (Mac) or control-option-i (WSL2). The Professor has also written the markdown for an R code chunk on the whiteboard. Then between the backtick lines, enter the R code \"library(tidyverse)\" and Render the notebook."
 
 ## palmerpenguins 
  
+- Class: cmd_question
+  Output:   "Instead of base-R data-frames, the tidyverse uses tibbles. However, tibbles are very closely related to data-frames; in fact, in the object-oriented programming sense, tibbles are derived from or descended from data-frames, which means that almost all functions you have already learned that take data-frames can operate on tibbles, and that many functions written to take tibbles as input can operate on data-frames too. To better understand tibbles, let's load a famous data-set published as tibbles, the Palmer Penguins dataset (learn more at https://allisonhorst.github.io/palmerpenguins/), by calling the library() function on the package name bareword palmerpenguins."
+  CorrectAnswer: library(palmerpenguins)
+  AnswerTests: omnitest(correctExpr='library(palmerpenguins)')
+  Hint: "Evaluate library(palmerpenguins), no quotes, and use tab-completion to save typing! "    
+ 
 - Class: text
-  Output: ""  
+  Output:   "Back in your Quarto notebook at the bottom, inside the only code chunk in your notebook after the line \"library(tidyverse)\" hit return to make a new blank line inside the code chunk, and add the R code \"library(palmerpenguins)\" and Render the notebook."
+ 
+- Class: cmd_question
+  Output:   "Now you can see how tibbles print by evaluating the name of a tibble called   \"penguins\" that's been loaded into memory with the palmerpenguins package. Please give it a try."
+  CorrectAnswer: penguins
+  AnswerTests: omnitest(correctExpr='penguins')
+  Hint: "Evaluate penguins with no quotes, and use tab-completion to save typing! "  
   
 ## tibbles
 #lotting package ggplot2.
 ### palmer penguins
 ### nycflights 
 ### glimpse()
+
+- Class: cmd_question
+  Output:   "The tidyverse equivalent to the base-R str() function is called glimpse(). Try calling glimpse() on penguins"
+  CorrectAnswer: glimpse(penguins)
+  AnswerTests: omnitest(correctExpr='glimpse(penguins)')
+  Hint: "Evaluate glimpse(penguins) with no quotes, and use tab-completion to save typing! " 
+
 ### constructing tibbles by hand
+
+
+- Class: cmd_question
+  Output:   "You can create a tibble by hand using the tibble() constructor, and passing in the column vectors with names. Try evaluating the R expression tibble(sp=penguins$species[1:10],is=penguins$island[1:10]) to see this."
+  CorrectAnswer:  tibble(sp=penguins$species[1:10],is=penguins$island[1:10])
+  AnswerTests: omnitest(correctExpr='tibble(sp=penguins$species[1:10],is=penguins$island[1:10])')
+  Hint: "Evaluate tibble(sp=penguins$species[1:10],is=penguins$island[1:10]) with no quotes, and use tab-completion to save typing! " 
+  
+- Class: text
+  Output:   "You can read in data directly to tibbles. Many tidyverse functions use snake case with underscores, so for example read_csv() is the tidyverse version of the base-R function read.csv() but returns tibbles instead of data-frames. It comes in the tidyverse readr package. We won't practice with it right now buut later in lab."
+
 ### tibbles are data-frames; base-R selections work with them
+
+- Class: cmd_question
+  Output:   "Because tibbles are data-frames, all of the base-R selection semantics work on them. Try using the data-frame selection operator ([,]) to select only the first three rows and the first three columns of penguins using the range operator 1:3 in both row and column selection slots."
+  CorrectAnswer:  penguins[1:3,1:3]
+  AnswerTests: omnitest(correctExpr='penguins[1:3,1:3]')
+  Hint: "Evaluate penguins[1:3,1:3]."
+
 ### converting tibbles
+
+- Class: cmd_question
+  Output:   "It's generally best to convert a data-frame to a tibble explicitly using the as_tibble() function when you want to use it with tidyverse functions. Try calling as_tibble() on the built-in R iris data-frame."
+  CorrectAnswer:  as_tibble(iris)
+  AnswerTests: omnitest(correctExpr='as_tibble(iris)')
+  Hint: "Evaluate as_tibble(iris)"
+
 ### as_tibble(iris) 
 ### importing tibbles 
 ### about row-names
+
+- Class: text
+  Output:   "A very important difference between base-R data-frames and tibbles is that data-frames support the concept of row-names, but row-names don't exist in tibbles. Because row-names are used to record a dimenion of our data, tidyverse insists that such information, if needed, be recorded as a column or field within a tibble. So as_tibble() provides an option to move row-name information to a column with a specified name."
+
+
+- Class: cmd_question
+  Output:   "To illustrate, inspect the value of the built-in R data-frame mtcars"
+  CorrectAnswer:  mtcars
+  AnswerTests: omnitest(correctExpr='mtcars')
+  Hint: "Evaluate mtcars"
+
+
+- Class: cmd_question
+  Output:   "See how the model names appear as row-names. If you call as_tibble() on this 
+  data-frame, by default the row-names are dropped. Try it." 
+  CorrectAnswer:  as_tibble(mtcars)
+  AnswerTests: omnitest(correctExpr='as_tibble(mtcars)')
+  Hint: "Evaluate as_tibble(mtcars)"
+
+- Class: cmd_question
+  Output:   "Now use up-arrow command line editing to recall the last command, only now add the optional argument rownames=\"model\" to move the row-name information into a column." 
+  CorrectAnswer:  as_tibble(mtcars,rownames="model")
+  AnswerTests: omnitest(correctExpr='as_tibble(mtcars,rownames="model")')
+  Hint: "Evaluate as_tibble(mtcars,rownames=\"model\")"
 
 #as_tibble(mtcars,rownames="model")
 
 ## tidyverse magrittr and base-R pipes
 
+- Class: text
+  Output:   "The tidyverse is designed to work together in R/tidyverse pipelines, similar to using pipes in bash in which data is passed between functions as tibbles. Instead of wrapping R functions like the tidyverse function filter() around a tibble-generating function like as_tibble() to make an expression like filter(as_tibble(iris),...), you can pipe them together using base-R's newish built in pipe operator (|>), which looks like \n\n as_tibble(iris) |> filter(...). All/most of these functions expect a tibble as a first argument unless used in a pipeline, in which case the tibble is passed through the pipe."
+
 ### verbs that work on rows
 #### filter()
+
+- Class: cmd_question
+  Output:   "We'll learn more about tidyverse pipelines soon, but for now to illustrate, evaluate the R expression \n\n penguins |> filter(sex == \"male\" & island == \"Torgersen\") " 
+  CorrectAnswer:  penguins |> filter(sex == \male" & island == "Torgersen")
+  AnswerTests: omnitest(correctExpr='penguins |> filter(sex == "male" & island == "Torgersen")')
+  Hint: "Evaluate penguins |> filter(sex == \"male\" & island == \"Torgersen\")"
+#### 
 #### arrange()
 #### arrange(desc())
 #### distinct()
@@ -124,6 +204,50 @@
 # 
 # ## plotting with ggplot2
 # ### ggplot2
+
+- Class: text
+  Output:   "The ggplot2 package is a tidyverse package that accepts tibbles as input. \"gg\" stands for \"Grammar of Graphics\" a specific system to specify graphs using layers (similar to how you can add layers in base-R to a plot with functions like lines() and points()). To use, it you need to learn how to write what I call ggplot2 \"graph expressions\"."
+
+### verbs that work on rows
+#### filter()
+
+- Class: cmd_question
+  Output:   "ggplot2 graph expressions always start with a call to the function ggplot(), and the first argument is the tibble to be plotted when evaluated in a stand alone expression call to ggplot(). Try calling ggplot() on penguins: you should see blank plot started." 
+  CorrectAnswer:  ggplot(penguins)
+  AnswerTests: omnitest(correctExpr='ggplot(penguins)')
+  Hint: "evaluate ggplot(penguins)"
+
+- Class: cmd_question
+  Output:   "Inside the call to ggplot() there is always a call to the aes() function. \"aes\" stands for \"aesthetics\", and specifies the mapping from variable names in the input tibble to aesthetics in the graph, such as the x-values, y-values, colors, shapes and so on of the data-points. For example, to start making a barchart of the counts of different species of penguins on each of the three islands, evaluate the R expression \n\n ggplot(penguins, aes(x = island, fill = species))." 
+  CorrectAnswer:  ggplot(penguins, aes(x = island, fill = species))
+  AnswerTests: omnitest(correctExpr='ggplot(penguins, aes(x = island, fill = species))')
+  Hint: "evaluate ggplot(penguins, aes(x = island, fill = species))"
+
+- Class: cmd_question
+  Output:   "This specifies that a bar should be placed on the x-axis for every island, and that bars should be filled with colors according to species. Implicit is that the bars should show the counts of species per island. To tell ggplot2 that we want to make a bar chart, we extend our graph expression using the plus operator (+) and call the bar-chart \"geom\" with the R function geom_bar(). Try it." 
+  CorrectAnswer:  ggplot(penguins, aes(x = island, fill = species)) + geom_bar()
+  AnswerTests: omnitest(correctExpr='ggplot(penguins, aes(x = island, fill = species))+ geom_bar()')
+  Hint: "Use up-arrow command-line editing and type \"+ geom_bar()\" after ggplot(penguins, aes(x = island, fill = species))"
+
+- Class: text
+  Output:   "Now, to record your work, back in your Quarto notebook at the bottom of the notebook, make a new subsection with the markdown subsection header \"### Results\", and below this make a new R code chunk. Inside the second R code chunk in your notebook, copy your working ggplot2 graph expression and Render the notebook to validate that the bar chart appears in your notebook. Ask for help if you need it."
+
+- Class: cmd_question
+  Output:   "Now let's try a different kind of plot with different variables to get a feelf or how this works. Use up-arrow command-line editing to write a new ggplot2 graph expression that associates x with body_mass_g , color with species, and fill with species in the call to aes(), and then uses a call to geom_density() instead of geom_bar() to make overlapping density plots for body mass by species." 
+  CorrectAnswer:  ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_density()
+  AnswerTests: omnitest(correctExpr='ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_density()')
+  Hint: "Use up-arrow command-line editing and follow the instructions exactly, asking for help if anything is unclear."
+
+- Class: cmd_question
+  Output:   "Those densities are hard to see because of opacity. Let's use transparency to make them more visible. Pass the optional aesthetic \"alpha=0.5\" to set the transparency to intermediate (alpha ranges from 0 to 1), and opacity is att alpha = 1)."  
+  CorrectAnswer:  ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)
+  AnswerTests: omnitest(correctExpr='ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)')
+  Hint: "Use up-arrow command-line editing and follow the instructions exactly, asking for help if anything is unclear."
+
+- Class: text
+  Output:   "Now record your work, back in your Quarto notebook make a new R code chunk below the one that you just added. Inside the second R code chunk in your notebook, copy your working ggplot2() graph expression and Render the notebook to validate that the bar chart appears in your notebook."
+
+
 # ### aes() function
 # ### geoms and graph expressions
 # ### color and size aesthetics
@@ -168,11 +292,7 @@
 # 
 # ### other geoms
 # 
-# ggplot(penguins, aes(x = island, fill = species)) +
-#   geom_bar(position = "fill")
-# 
-# ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) +
-#   geom_density(alpha = 0.5)
+
 # 
 # 
 # ### saving plots with ggsave()
@@ -180,7 +300,7 @@
 
 
 - Class: text
-  Output: "Great work! Congratulations on completing tAPP17! 
-  Please quit R with q() and upload the file tAPP16.txt to CatCourses.
-  You do not need to save the workspace image when you quit R."
+  Output: "Great work! Congratulations on completing tAPP21! 
+  Please render your Quarto Notebook and turn in the rendered HTML output to CatCourses.
+  You can save the workspace image if and when you quit R."
 
