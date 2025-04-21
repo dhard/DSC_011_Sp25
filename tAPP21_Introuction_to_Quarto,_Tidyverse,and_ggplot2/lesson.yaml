@@ -1,0 +1,186 @@
+#  tAPP21_Introuction_to_Quarto,_Tidyverse,and_ggplot2 
+
+- Class: meta
+  Course: DSC_011_Sp25
+  Lesson: tAPP21_Introuction_to_Quarto,_Tidyverse,and_ggplot2
+  Author: David H. Ardell
+  Type: Standard
+  Organization: UC Merced
+  Version: 2.4.5
+
+- Class: text
+  Output: "Welcome to tAPP21, introducing Quarto notebooks and the tidyverse collection of packages for data science, particularly tibble and ggplot2." 
+  
+- Class: text
+  Output: "Today's lesson will focus on the tidyverse descendents of the base-R data-frame, which are called tibbles, and how to plot from tibbles using tidyverses' famous and very popular plotting package, ggplot2."
+  
+- Class: text
+  Output: "In data science, plots are always best generated in notebooks. This is because notebooks communicate a narrative context that tell the story of the plots: why they were made, what data they show, how they were made and so on. So this lesson will walk you through making a record of your work in a Quarto notebook in RStudio just like a professional data scientist would work a project in RStudio." 
+  
+- Class: text
+  Output: "You will learn to make plots with ggplot2 by programming in the R Console and recording your validated code and results in a Quarto notebook. "  
+
+- Class: text
+  Output: "If you have not yet already done so, please open the quarto notebook file \"DSC-011-Sp25-tAPP21_YourLastname.qmd\" in RStudio, edit it with your name in its YAML header, and save it in the same directory with a new name that includes your last name before the .qmd file extension."     
+  
+- Class: message
+  Output: "After saving the file, render it to HTML by pressing the Render button in the toolbar. The HTML output should appear in the Viewer tab of the Files/Help pane of RStudio. You can make a copy pop up in your browser by pressing a button in the toolbar of this pane."    
+  
+- Class: text
+  Output: "Back in the document/source pane of RStudio on the upper left, its important to select \"Source\" instead of \"Visual\" in order to see and edit the markdown source of the notebook file. Please select \"Source\"."   
+  
+- Class: text
+  Output: "You need to learn markdown in order to successfully author documents using Quarto and Jupyter notebooks. Markdown is a human- and machine-readable plain-text-encoded markup language for authoring documents, presentations, websites, etc. Markdown is also the format of README files on GitHub and widely used elsewhere."
+
+- Class: text
+  Output:   "The section and subsection structure of a markdown document is created like an outline using the hashtag symbol (#). To illustrate, copy and paste the markdown in the markdown file \"intro,md\" included in your cloned git repository. Copy from the line \"## Introduction\" to the end of \"### Loading Library Dependencies\", and paste it into your Quarto notebook below the YAML header line which looks like this (---)." 
+  
+- Class: text
+  Output: "Now please render the notebook file and verify that the new section and subsection appears. If you have problems or questions with this step, please ask for help."   
+
+- Class: text
+  Output: "Before you can use the tidyverse, including ggplot2, on any new     version of R that you
+  install on your computer or any machine, you need to install it once."     
+  
+- Class: text
+  Output: "According to its website at http://tidyverse.org: \"The 
+  tidyverse is an opinionated collection of R packages designed for data
+   science. All packages share an underlying design philosophy, grammar, 
+   and data structures."
+
+- Class: cmd_question
+  Output:   "As you see, the tidyverse is a collection of packages, including
+   tibble and ggplot2 that work together using a common interface. Although
+   we can install and load these packages individually, we can choose to 
+   save time by installing and loading the complete tidyverse. Let's do that     now. Even if you have already installed the tidyverse for the currently     running R interpreter, attempt to install it with the R code 
+   install.packages() and the argument \"tidyverse\" in quotes as a string."
+  CorrectAnswer: install.packages("tidyverse")
+  AnswerTests: omnitest(correctExpr='install.packages("tidyverse")')
+  Hint: "Evaluate install.packages(\"tidyverse\")"    
+
+- Class: cmd_question
+  Output:   "Now that you installed or validated installation of tidyverse, we are going to need to   load it in order to use it. To load tidyverse, including ggplot2, call the R function library()     with the bare name tidyverse, that is no quotes."
+  CorrectAnswer: library(tidyverse)
+  AnswerTests: omnitest(correctExpr='library(tidyverse)')
+  Hint: "Evaluate library(tidyverse)"    
+
+
+## Setting for working the assignment.
+
+## palmerpenguins 
+ 
+- Class: text
+  Output: ""  
+  
+## tibbles
+#lotting package ggplot2.
+### palmer penguins
+### nycflights 
+### glimpse()
+### constructing tibbles by hand
+### tibbles are data-frames; base-R selections work with them
+### converting tibbles
+### as_tibble(iris) 
+### importing tibbles 
+### about row-names
+
+#as_tibble(mtcars,rownames="model")
+
+## tidyverse magrittr and base-R pipes
+
+### verbs that work on rows
+#### filter()
+#### arrange()
+#### arrange(desc())
+#### distinct()
+#### count()
+
+### verbs that work on columns
+#### mutate()
+#### . arguments . before and .after, and  .keep = "used"
+#### select()
+# flights |> 
+#   select(year, month, day)
+# 
+# Select all columns between year and day (inclusive):
+# 
+# flights |> 
+#   select(year:day)
+# 
+# Select all columns except those from year to day (inclusive):
+# 
+# flights |> 
+#   select(!year:day)
+# 
+# flights |> 
+#   select(where(is.character))
+# 
+#  matches() to select variables that match a pattern.
+# 
+# flights |> 
+#   rename(tail_num = tailnum)
+# 
+# summarize( .by)
+# 
+# ## plotting with ggplot2
+# ### ggplot2
+# ### aes() function
+# ### geoms and graph expressions
+# ### color and size aesthetics
+# 
+# library(pals)
+# ggplot(iris, aes(Sepal.Length, Sepal.Width, alpha=0.5, color = Species, size=Petal.Width)) +
+#   geom_jitter(height=0.02,width=0.02) + 
+#   labs(title="Sepal Width and Length and Petal Width in Three Species of Iris",x="Sepal Length (cm)",y="Sepal Width (cm)",
+#  subtitle="Anderson (1935). The Irises of the Gaspe Peninsula,   Bulletin of the American Iris Society 59:2") +
+#   scale_color_manual(values=okabe(4)[c(3,2,4)])
+# 
+# ### color palettes
+# ### scale_color_colorblind() function from the ggthemes package
+# ### facet_wrap() is a formula3
+# 
+# head(mpg)
+# ggplot(mpg, aes(displ,hwy)) + geom_point()
+# 
+# mpg |> ggplot(aes(displ,hwy)) + geom_point()
+# 
+# ggplot(mpg, aes(displ,hwy)) + geom_point()
+# 
+# ggplot(mpg, aes(displ,hwy)) + geom_smooth()
+# 
+# mpg |> ggplot(aes(displ,hwy)) + geom_smooth() + 
+# labs(title="Highway Mileage versus Engine Displacement",
+#    caption="Data from https://fueleconomy.gov/ for models with release between 1999 and 2008") + 
+# xlab("Engine Displacement (liters)") + 
+# ylab("Highway Miles Per Gallon")
+# 
+# mpg |> ggplot(aes(displ,hwy)) + geom_point(color=class) + geom_smooth(se = FALSE) + 
+# labs(title="Fuel efficiency generally decreases with engine size",
+#    caption="Data from https://fueleconomy.gov/ for models with release between 1999 and 2008") + 
+# xlab("Engine Displacement (liters)") + 
+# ylab("Highway Miles Per Gallon")
+# 
+# mpg |> ggplot(aes(displ,hwy)) + geom_smooth(color=class) + 
+# labs(title="Highway Mileage versus Engine Displacement",
+#    caption="Data from https://fueleconomy.gov/ for models with release between 1999 and 2008") + 
+# xlab("Engine Displacement (liters)") + 
+# ylab("Highway Miles Per Gallon")
+# 
+# ### other geoms
+# 
+# ggplot(penguins, aes(x = island, fill = species)) +
+#   geom_bar(position = "fill")
+# 
+# ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) +
+#   geom_density(alpha = 0.5)
+# 
+# 
+# ### saving plots with ggsave()
+
+
+
+- Class: text
+  Output: "Great work! Congratulations on completing tAPP17! 
+  Please quit R with q() and upload the file tAPP16.txt to CatCourses.
+  You do not need to save the workspace image when you quit R."
+
