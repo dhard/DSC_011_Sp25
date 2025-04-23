@@ -246,7 +246,7 @@
 
 - Class: cmd_question
   Output:  "Great, now add polished and meaningful labels to the graph. Use command-line editing to extend the graph expression further with a call to labs() function. In the arguments to labs(), set the x-axis label to \"Decade\", the y-axis label to \"Frequency\", the title to \"Frequency of Top-Ranked Baby Names by Decade and Sex\", and the caption to \"Data from U.S. Census\" in that order. Finally, extend the graph expression to move the legend inside the plot using the theme() function with argument legend.position and coordinates x = 0.92 and y = 0.85."    
-  AnswerTests: omnitest(correctExpr='as_tibble(baby_clean) |> pivot_longer(cols=boy_name:girl_freq,names_sep="_",names_to = c("sex",".value")) |> filter(rank == 1) |> ggplot(aes(x=decade,y=freq,fill=sex)) + geom_col(position="dodge") + scale_fill_okabe_ito() + labs(x="Decade",y="Frequency",title="Frequency of Top-Ranked Baby Names by Decade and Sex",caption="Data from U.S. Census") + theme(legend.position = c(0.92,0.85))')
+  AnswerTests: omnitest(correctExpr='baby_clean |> pivot_longer(cols=boy_name:girl_freq,names_sep="_",names_to = c("sex",".value")) |> filter(rank == 1) |> ggplot(aes(x=decade,y=freq,fill=sex)) + geom_col(position="dodge") + scale_fill_okabe_ito() + labs(x="Decade",y="Frequency",title="Frequency of Top-Ranked Baby Names by Decade and Sex",caption="Data from U.S. Census") + theme(legend.position = c(0.92,0.85))')
   Hint: "A short template structure for the graph expression is ggplot(aes()) + geom_col() + scale_fill_okabe_ito() + labs() + theme(), The order of arguments to each function must be exactly as described."
 
 - Class: text
