@@ -264,9 +264,9 @@
 - Class: cmd_question
   Output:  "Notice the data is untidy, since both urbanization and sex are coded into the column
   names. Use command-line editing to extend the previous R/tidyverse pipeline to pass the output
-  tibble to the pivot_longer() function, with arguments cols = !ages, names_sep=" ",
+  tibble to the pivot_longer() function, with arguments cols = !ages, names_sep=\" \",
   names_to=c(\"urbanization\",\"sex\"),  and values_to = \"death_rate\" in that order."    
-  AnswerTests: omnitest(correctExpr='as_tibble(VADeaths,rownames="ages") |> pivot_longer(cols = !ages, names_sep=" ",names_to=c("urbanization","sex"), values_to = "death_rate") ')
+  AnswerTests: omnitest(correctExpr='as_tibble(VADeaths,rownames="ages") |> pivot_longer(cols = !ages, names_sep=" ",names_to=c("urbanization","sex"), values_to = "death_rate")')
   Hint: "Extend the call to as_tibble() with a call to pivot_longer() with specified arguments in the order given  using the base-R pipe operator (|>)."
 
 - Class: cmd_question
