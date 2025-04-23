@@ -43,11 +43,10 @@
   Hint: "Evaluate the expression as given."  
   
 - Class: text
-  Output: "First, let's see if we can get rid of the warning \"Removed 2 rows containing non-finite outside the scale range\"."
-  
+  Output: "First, let's see if we can get rid of the cryptic warning \"Removed 2 rows containing non-finite outside the scale range\"."
   
 - Class: text
-  Output: "Suppose that this cryptic warning is caused by the presence of two NA values in the vector of body masses of penguins. Let's test this hypothesis interactively."   
+  Output: "Suppose that this warning is caused by the presence of two NA values in the vector of body masses of penguins. Let's test this hypothesis interactively."   
   
 - Class: cmd_question
   Output:   "Use the $ name-selection operator on penguins to select the body mass variable (RStudio will make it easy to find the name of this variable and complete it) and write a base-R expression using the sum() and is.na() functions on this selection to verify that it contains two NA missing values."
@@ -55,15 +54,17 @@
   AnswerTests: omnitest(correctExpr='sum(is.na(penguins$body_mass_g))')
   Hint: "Select body masses from penguins using the base-R name-selection operator, pass it as input to is.na() and pass the output to sum(). Use base-R composed functions wrapping is.na() with sum(), not base-R pipes."   
 
+- Class: text
+  Output:   "ggplot2 graph expressions usually appear at the ends of R/tidyverse pipelines.  R/tidyverse pipelines
+  are made by concatenating calls to tidyverse and base-R functions with the base-R pipe operator (|>). 
+  Often these pipelines start with just a tibble name. For example, \n\npenguins |> filter(island==Torgersen)" 
+
 - Class: cmd_question
-  Output:   "ggplot2 graph expressions usually appear at the ends of R/tidyverse pipelines, which are 
-  made by concatenating tidyverse and base-R functions with the |> base-R pipe operator.\n Often these pipelines 
-  start with the tibble name. \n After all it is easier to understand \n\n data |> select() |> summarize() \n\n 
-  then \n\n summarize(select(data))\n\n  
-  To get rid of the warning from the call to ggplot(), let's use up-arrow command-line editing to 
-  edit the graph expression from two commands ago. First pipe the tibble penguins into the tidyverse drop_na()  
-  function to filter out rows containing NA, and then pipe its output through our previous graph expression. 
-  Be sure to remove penguins as the first argument in your new call to ggplot()."
+  Output:   "To get rid of the warning from the call to ggplot(),  use up-arrow command-line editing to 
+  edit the graph expression from two commands ago. Start your tidyverse pipeline with the tibble penguins.
+  Then use the base-R pipe operator (|>) to pipe the penguins tibble into the tidyverse function drop_na(), 
+  which filters out rows containing at least one NA. Then pipe the output through the call to ggplot(), the
+  graph expression we had previously, only now be sure to remove penguins as the first argument to ggplot()."
   CorrectAnswer:  penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)
   AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)')
   Hint: "Use the base-R pipe operator (|>) twice before the graph expression. 
@@ -95,14 +96,15 @@
   and scale_fill_okabe_ito()."  
 
 - Class: text
-  Output:   "In general, each part of a graph expression connected by the plus operator (+), 
+  Output:   "Although in general, each part of a graph expression connected by the plus operator (+), 
   after the call to ggplot(aes()), may be provided 
-  in any order to mostly the same effect on the final plot. "
+  in any order to mostly the same effect on the final plot, in this swirl lesson we have to specify the 
+  order of parts of expressions and function arguments precisely for swirl to detect correct answers."
 
 - Class: cmd_question
   Output:   "Use up-arrow command-line editing to extend the previous ggplot2 graph expression, in the last 
   part of the R/tidyverse pipeline, with calls to scale_color_okabe_ito() and scale_fill_okabe_ito() using 
-  the plus operator. Write the graph expression with the geom_density(), scale_color_okabe_ito() and
+  the plus operator. Write the graph expression with geom_density(alpha=0.5), scale_color_okabe_ito() and
    scale_fill_okabe_ito() parts in this specific order."
   CorrectAnswer: penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito()
   AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito()')
@@ -157,38 +159,139 @@
   Hint: "Edit the previous graph expression in place. Insert \"+ geom_sina()\" right after the call to \"geom_violin(alpha=0.5)\"."  
   
 - Class: text
-  Output:   "Now we have finished our first publication-quality graph for this assignment. In your tAPP22 Quarto notebook, under the section \"Publication-Quality Plots with ggplot2\" and in the empty R code chunk under the subsection \"Color-blind-friendly Sina Plots of Body Mass by Penguin Species\", copy your working ggplot2 graph expression and Render the notebook to validate that the density plot in your notebook. Ask for help if you need it."  
+  Output:   "Now we have finished our first publication-quality graph for this assignment. In your tAPP22 Quarto notebook, under the section \"Publication-Quality Plots with ggplot2\" and in the empty R code chunk under the subsection \"Sina Plots of Body Mass by Penguin Species\", copy your working ggplot2 graph expression and Render the notebook to validate that the Sina plots appear in your notebook. Ask for help if you need it."  
+ 
+# color and size aesthetics
  
 - Class: text
-  Output: "Let's apply our principles of visualization to make some publication-quality scatter-plots using
-  ggplot2. "   
+  Output: "Let's apply our principles of visualization to make a publication-quality scatter-plot using ggplot2 from the iris data. The basic geom for a scatter-plot is called geom_point(). "   
  
- 
+- Class: cmd_question
+  Output:  "Try it! Evaluate the graph expression \n\n ggplot(iris, aes(Sepal.Length, Sepal.Width)) + geom_point()" 
+  AnswerTests: omnitest(correctExpr='ggplot(iris, aes(Sepal.Length, Sepal.Width)) + geom_point()')
+  Hint: "Evaluate the expression as given."   
   
-# ### color and size aesthetics
-# 
-# library(pals)
-# ggplot(iris, aes(Sepal.Length, Sepal.Width, alpha=0.5, color = Species, size=Petal.Width)) +
-#   geom_jitter(height=0.02,width=0.02) + 
-#   labs(title="Sepal Width and Length and Petal Width in Three Species of Iris",x="Sepal Length (cm)",y="Sepal Width (cm)",
-#  subtitle="Anderson (1935). The Irises of the Gaspe Peninsula,   Bulletin of the American Iris Society 59:2") +
-#   scale_color_manual(values=okabe(4)[c(3,2,4)])
-# 
-# ### color palettes
+- Class: cmd_question
+  Output:  "There is a lattice-like regularity in the data that strongly suggests overplotting: points in the data are obscuring each other. To make the individual points more visible, let's make three changes: use both color and transparency by adding \"color=Species,alpha=0.3\" as the third and fourth arguments to the call to aes(), and change geom from geom_point() to geom_jitter() to avoid overplotting." 
+  AnswerTests: omnitest(correctExpr='ggplot(iris, aes(Sepal.Length, Sepal.Width,color=Species,alpha=0.3)) + geom_jitter()')
+  Hint: "Use command-line editing to modify the previous graph expression."   
+    
+- Class: cmd_question
+  Output:  "With scatterplots in ggplot2, we can use the sizes of points to show an additional dimension of the data. Use command-line editing to add a fifth argument \"size=Petal.Length\" to the call to aes() in the previous graph expression, and extend the graph expression with \"+ scale_color_okabe_ito(order=c(3,4,2))\" to make it color-blind friendly. Note that we can specify the order of colors in the Okabe-Ito color palette to maximize the color contrast of overlapping points." 
+  AnswerTests: omnitest(correctExpr='ggplot(iris, aes(Sepal.Length, Sepal.Width, color=Species,alpha=0.3,size=Petal.Length)) + geom_jitter() + scale_color_okabe_ito(order=c(3,4,2))')
+  Hint: "Use command-line editing to modify the previous graph expression."   
 
-# ### facet_wrap() is a formula3
-# 
+- Class: cmd_question
+  Output:  "Finally, let's set the labels appropriately. Use command-line editing to extend the graph expression with a call to the labs() function, setting labels in the following order to labs(): \"Sepal Length (cm)\" as the x-axis label, \"Sepal Width (cm)\" as the y-axis label, \"Flower Morphology in Three Species of Iris\" as the plot title, and \"Data from Anderson (1935). Bulletin of the American Iris Society 59:2\" as the caption. Finally, add size=\"Petal Length (cm)\" as a fifth argument to labs() to make a better label in the legend."  
+  AnswerTests: omnitest(correctExpr='ggplot(iris, aes(Sepal.Length, Sepal.Width, color=Species,alpha=0.3,size=Petal.Length)) + geom_jitter() + scale_color_okabe_ito(order=c(3,4,2))+ labs(x="Sepal Length (cm)",y="Sepal Width (cm)",title="Flower Morphology in Three Species of Iris",caption="Data from Anderson (1935). Bulletin of the American Iris Society 59:2", size="Petal Length (cm)")')
+  Hint: "Use command-line editing to modify the previous graph expression."   
+
 - Class: text
-  Output: "The tidyverse gets its name from the concept of \"tidy data,\" a specifically 
-  \"normalized\" arrangement of data in a data-frame or tibble so that every categorical variable    is represented in its own column with values for every level, and rows correspond to units of 
-  observation." 
+  Output:   "Great, now we have finished our second publication-quality graph for this assignment. In your tAPP22 Quarto notebook, under the section \"Publication-Quality Plots with ggplot2\" and in the empty R code chunk under the subsection \"Flower Morphology in Three Species of Iris\", copy your working ggplot2 graph expression and Render the notebook to validate that the scatter plot appears in your notebook. Ask for help if you need it." 
+
+- Class: text
+  Output: "The tidyverse gets its name from the concept of \"tidy data,\" a specific
+  arrangement of data in a data-frame or tibble where each categorical variable is represented by its own column with values for every level (rather than through column names in diffent columns), and so that rows correspond to a single unit of observation." 
   
 - Class: text
-  Output: "We have already learned about data \"scrubbing\" --- processing and cleaning raw data after it is obtained to a conc"    
+  Output: "We have already learned about data \"scrubbing\" --- the processing and cleaning of raw data, removing extraneous information while organizing and modifying the remaining data to make it all consistent and machine-readable. Making data tidy is different, and involves reorganizing existing clean data into another form."    
 
+- Class: cmd_question
+  Output:  "To illustrate, call as_tibble() on the baby_clean data-frame (already loaded by swirl) to print its first ten rows."  
+  AnswerTests: omnitest(correctExpr='as_tibble(baby_clean)')
+  Hint: "Call as_tibble(baby_clean)"  
 
 - Class: text
-  Output: "Great work! Congratulations on completing tAPP21! 
+  Output: "The baby_clean data is not tidy because a major explanatory variable --- 
+  the sex of babies --- is encoded in the column/variable names, rather than as an explanatory
+   factor in its own column. The data is not tidy because the rank column, in effect, serves 
+   twice in specifying the ranks of both boys and girls names in the same row. The granular unit 
+   of observation is a single name in this data, whether it belongs to boys or girls."
+
+- Class: text
+  Output: "This brings us to pivoting. By pivoting on the sex of babies, we can effectively split each row of baby_clean in to two rows, one for each sex of baby for a given rank and decade. The tidyverse package tidyr provides two functions, called pivot_wider() and pivot_longer(), to reshape tibbles in this way. Because we are splitting each row into two narrower rows, we want to use the pivot_longer() function to make baby_clean data tidy. In making the baby_clean tibble tidy, we are adding rows and making it longer."
+  
+- Class: cmd_question
+  Output:  "Use the base-R pipe operator (|>) to pipe the output of as_tibble(baby_clean) 
+  to the function pivot_longer() with first argument \"cols=boy_name:girl_freq\" to specify 
+  which columns to pivot on, second argument
+  names_sep=\"_\" to specify how to split the column names, and third argument 
+  \"names_to = c(\"sex\",\".value\")\" to specify that a new column with name \"sex\" 
+  should be created from the first part of the column names and that the frequency 
+  and name data should appear in columns labelled \"freq\" and \"name\".
+  Note that there is a dot (.) before value in the vector-value passed to names_to."    
+  AnswerTests: omnitest(correctExpr='as_tibble(baby_clean) |> pivot_longer(cols=boy_name:girl_freq,names_sep="_",names_to = c("sex",".value"))')
+  Hint: "Be sure to include a dot (.) before value in names_to = c(\"sex\",\".value\")"   
+
+- Class: text
+  Output: "The importance of tidy data is that it allows you to take information previously 
+  encoded in column names, like the sex of babies in baby_clean, and represent that 
+  information as distinct factor variables that can be associated to aesthetics when plotting. 
+  In order to be able to visualize the effects of sex on baby names, 
+  such as to multiplot frequencies over decades by sex, we need to pivot baby_clean in this way."
+
+- Class: cmd_question
+  Output:  "Use command-line editing to extend the tidyverse pipeline from the previous problem. 
+  First pipe the output of pivot_longer() through the tidyverse function filter(rank==1) to select 
+  only top-ranked rows. Then pipe the output through ggplot(). In the call to aes(), associate 
+  decade to the x-axis, freq to the y-axis and sex to the fill aesthetic, in that order. Then 
+  specify the geom to make a bar-chart with bars side-by-side using geom_col(position=\"dodge\").
+  Next, make it color-blind friendly with a call to scale_fill_okabe_ito(). "    
+  AnswerTests: omnitest(correctExpr='as_tibble(baby_clean) |> pivot_longer(cols=boy_name:girl_freq,names_sep="_",names_to = c("sex",".value")) |> filter(rank == 1) |> ggplot(aes(x=decade,y=freq,color=sex,fill=sex)) + geom_col(position="dodge") + scale_fill_okabe_ito()')
+  Hint: "Pipe through filter() and pivot_longer(). Call aes() immediately as the first argument to ggplot(). Chain parts of the graph expression using the plus operator (+) with the geom after ggplot() and scale_fill...() last in the graph expression." 
+
+- Class: cmd_question
+  Output:  "Great, now add polished and meaningful labels to the graph. Use command-line editing to extend the graph expression further with a call to labs() function. In the arguments to labs(), set the x-axis label to \"Decade\", the y-axis label to \"Frequency\", the title to \"Frequency of Top-Ranked Baby Names by Decade and Sex\", and the caption to \"Data from U.S. Census\" in that order. Finally, extend the graph expression to move the legend inside the plot using the theme() function with argument legend.position and coordinates x = 0.92 and y = 0.85."    
+  AnswerTests: omnitest(correctExpr='as_tibble(baby_clean) |> pivot_longer(cols=boy_name:girl_freq,names_sep="_",names_to = c("sex",".value")) |> filter(rank == 1) |> ggplot(aes(x=decade,y=freq,color=sex,fill=sex)) + geom_col(position="dodge") + scale_fill_okabe_ito() + labs(x="Decade",y="Frequency",title="Frequency of Top-Ranked Baby Names by Decade and Sex",caption="Data from U.S. Census") + theme(legend.position = c(0.92,0.85))')
+  Hint: "A short template structure for the graph expression is ggplot(aes()) + geom_col() + scale_fill_okabe_ito() + labs() + theme(), The order of arguments to each function must be exactly as described."
+
+- Class: text
+  Output:   "Now we have finished our third publication-quality graph for this assignment. In your tAPP22 Quarto notebook, under the section \"Publication-Quality Plots with ggplot2\" and in the empty R code chunk under the subsection \"Frequency of Top-Ranked Baby Names by Decade and Sex\", copy your working ggplot2 graph expression under the call to the tidyverse readr function read_csv() (do not delete that) and Render the notebook to validate that the bar plot appears in your notebook. Ask for help if you need it." 
+
+- Class: text
+  Output:   "To practice using ggplot2 with untidy data.frames even further, let's make the publication-quality bar chart of Deaths in Virgina in 1940 that was included in last Wednesday's lecture slides. This is also going to involve tidying the data." 
+
+- Class: cmd_question
+  Output:  "First, evaluate the built-in base-R data-frame VADeaths to see the starting point. The values shown are in deaths per 1000 people."    
+  AnswerTests: omnitest(correctExpr='VADeaths')
+  Hint: "Evaluate VADeaths."
+
+- Class: cmd_question
+  Output:  "Notice that this data-frame contains age-ranges as row-names. Let's use the rownames option to as_tibble() function to convert this data-frame to a tibble with the row-names in a new column called \"ages\"."    
+  AnswerTests: omnitest(correctExpr='as_tibble(VADeaths,rownames="ages")')
+  Hint: "Pass VADeaths to as_tibble() followed by the optional rownames argument assigned to the string \"ages\"."
+
+- Class: cmd_question
+  Output:  "Notice the data is untidy, since both urbanization and sex are coded into the column
+  names. Use command-line editing to extend the previous R/tidyverse pipeline to pass the output
+  tibble to the pivot_longer() function, with arguments cols = !ages, names_sep=" ",
+  names_to=c(\"urbanization\",\"sex\"),  and values_to = \"death_rate\" in that order."    
+  AnswerTests: omnitest(correctExpr='as_tibble(VADeaths,rownames="ages") |> pivot_longer(cols = !ages, names_sep=" ",names_to=c("urbanization","sex"), values_to = "death_rate") ')
+  Hint: "Extend the call to as_tibble() with a call to pivot_longer() with specified arguments in the order given  using the base-R pipe operator (|>)."
+
+- Class: cmd_question
+  Output:  "Now that you have tidied the VADeaths data, plot summed death rates over age-bins by piping to ggplot(), with a call to aes() in the first argument with arguments mapping sex to the x-axis, rate to the y-axis and urbanization to the color fill aesthetic in that order. Finally, extend the graph expression with a call to geom_col() to make a stacked bar chart summing over all ages." 
+  AnswerTests: omnitest(correctExpr='as_tibble(VADeaths,rownames="ages") |> pivot_longer(cols = !ages, names_sep=" ",names_to=c("urbanization","sex"), values_to = "death_rate") |> ggplot(aes(x=sex,y=death_rate,fill=urbanization)) + geom_col()")')
+  Hint: "Use the base-R pipe operator (|>) to extend the previous graph expression with a call to ggplot(aes()) + geom_col()"
+
+- Class: cmd_question
+  Output:  "The tidyverse provides the facet_wrap() function to create sub-plot panels for different values of a categorical explanatory variable. Try using command-line editing to add \n\n + facet_grid(~ ages, switch = \"x\")\n\n at the end of the previous graph expression, to graph bars separately for different ages in side-by-side panels."
+  AnswerTests: omnitest(correctExpr='as_tibble(VADeaths,rownames="ages") |> pivot_longer(cols = !ages, names_sep=" ",names_to=c("urbanization","sex"), values_to = "death_rate") |> ggplot(aes(x=sex,y=death_rate,fill=urbanization)) + geom_col()  + facet_grid(~ ages, switch = "x")')
+  Hint: "Use the base-R pipe operator (|>) to extend the previous graph expression with a call to ggplot(aes()) + geom_col()"
+
+- Class: text
+  Output:   "Fantastic! The \"~ ages\" first argument to facet_grid() is an R model formula, used to specify response and explanatory variables in regression and other types of models in R. We'll learn more about them later."
+
+- Class: cmd_question
+  Output:  "Now use command-line editing to extend the graph expression with a call to scale_fill_okabe_ito() to make the bar plot color-blind friendly, and extend the graph expression further to set the x-axis label to \"Sex\", the y-axis label to \"Deaths per 1000 People\", the fill label to \"Urbanization\", the title \"Death Rates by Age, Sex, and Urbanization in Virgina in 1940\" and the caption to \"Data from Molyneaux et al. (1947)\" in that order."
+  AnswerTests: omnitest(correctExpr='as_tibble(VADeaths,rownames="ages") |> pivot_longer(cols = !ages, names_sep=" ",names_to=c("urbanization","sex"), values_to = "death_rate") |> ggplot(aes(x=sex,y=death_rate,fill=urbanization)) + geom_col()  + facet_grid(~ ages, switch = "x") + scale_fill_okabe_ito() + labs(x="Sex",y="Deaths per 1000 People",fill="Urbanization",title="Death Rates by Age, Sex, and Urbanization in Virgina in 1940", caption="Data from Molyneaux et al. (1947)")')
+  Hint: "A template for the correct answer is as_tibble() |> pivot_longer() |> ggplot(aes()) + geom_col()  + facet_grid() + scale_fill_okabe_ito() + labs(x=,y=,fill=,title=, caption=)"
+
+- Class: text
+  Output:   "Now we have finished our fourth publication-quality graph for this assignment. In your tAPP22 Quarto notebook, under the section \"Publication-Quality Plots with ggplot2\" and in the empty R code chunk under the subsection \"Death Rates by Age, Sex, and Urbanization in Virgina in 1940\", copy your working ggplot2 graph expression and Render the notebook to validate that the bar plot appears in your notebook. Ask for help if you need it." 
+
+- Class: text
+  Output: "Great work! Congratulations on completing tAPP22! 
   Please render your Quarto Notebook and turn in the rendered HTML output to CatCourses.
   You can save the workspace image if and when you quit R."
 
