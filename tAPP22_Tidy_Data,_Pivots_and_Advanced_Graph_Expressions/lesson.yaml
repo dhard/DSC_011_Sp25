@@ -49,7 +49,7 @@
   Output: "Suppose that this warning is caused by the presence of two NA values in the vector of body masses of penguins. Let's test this hypothesis interactively."   
   
 - Class: cmd_question
-  Output:   "Use the $ name-selection operator on penguins to select the body mass variable (RStudio will make it easy to find the name of this variable and complete it) and write a base-R expression using the sum() and is.na() functions on this selection to verify that it contains two NA missing values."
+  Output:   "Use the dollar-sign name-selection operator ($) on penguins to select the body mass variable (RStudio will make it easy to find the name of this variable and complete it) and write a base-R expression using the sum() and is.na() functions on this selection to verify that it contains two NA missing values."
   CorrectAnswer:  sum(is.na(penguins$body_mass_g))
   AnswerTests: omnitest(correctExpr='sum(is.na(penguins$body_mass_g))')
   Hint: "Select body masses from penguins using the base-R name-selection operator, pass it as input to is.na() and pass the output to sum(). Use base-R composed functions wrapping is.na() with sum(), not base-R pipes."   
@@ -71,7 +71,10 @@
   Start with the penguins tibble, pipe it to drop_na() with no arguments, and then pipe to a call to ggplot(aes()), that is omitting penguins as first argument to ggplot()"
 
 - Class: text
-  Output:   "Did you notice that the warning disappeared now? Let's now focus on making this graph publication quality."
+  Output:   "Did you notice the warning disappeared?" 
+  
+- Class: text
+  Output:   "Now let's now focus on making the graph publication quality."
   
 - Class: text
   Output:   "By applying the principles of good visualization to this graph, we see that 
@@ -81,7 +84,7 @@
 
 - Class: text
   Output:   "In the call to aes() we are associating two different aesthetics with the species
-  variable/column in the penguins tibble: color and fill. The first corresponds to the color of 
+  variable in the penguins tibble: color and fill. The first corresponds to the color of 
   points and lines, while the second corresponds to the fill-color of shapes like densities, 
   polygons, violins, and other two-dimensional aesthetics."
   
@@ -96,20 +99,20 @@
   and scale_fill_okabe_ito()."  
 
 - Class: text
-  Output:   "Although in general, each part of a graph expression connected by the plus operator (+), 
-  after the call to ggplot(aes()), may be provided 
-  in any order to mostly the same effect on the final plot, in this swirl lesson we have to specify the 
+  Output:   "Although in general, each part of a graph expression connected by a plus operator (+), 
+  after a call to ggplot(aes()) may be provided 
+  in any order with mostly the same effect on the final plot, although their effects are 
+  generally applied in the order given by the graph expression. However, 
+  in this swirl lesson, you must specify the 
   order of parts of expressions and function arguments precisely for swirl to detect correct answers."
 
 - Class: cmd_question
-  Output:   "Use up-arrow command-line editing to extend the previous ggplot2 graph expression, in the last 
-  part of the R/tidyverse pipeline, with calls to scale_color_okabe_ito() and scale_fill_okabe_ito() using 
-  the plus operator. Write the graph expression with geom_density(alpha=0.5), scale_color_okabe_ito() and
-   scale_fill_okabe_ito() parts in this specific order."
+  Output:   "Use up-arrow command-line editing to extend the previous ggplot2 graph expression, at the last position of the R/tidyverse pipeline, with calls to scale_color_okabe_ito() and scale_fill_okabe_ito() using 
+  the plus operator in that order. Write the graph expression with geom_density(alpha=0.5), scale_color_okabe_ito() and scale_fill_okabe_ito() parts in this specific order."
   CorrectAnswer: penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito()
   AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito()')
   Hint: "Extend the previous ggplot2 graph expression using the plus (+) operator with calls to 
-  scale_color_okabe_ito() and scale_fill_okabe_ito() in that order."  
+  scale_color_okabe_ito() and scale_fill_okabe_ito() in that order. Don't use the alias functions that provide for British spellings using the word \"colour\"."  
 
 - Class: cmd_question
   Output:   "Now let's extend the graph expression further to fix the x-axis and y-axis labels. Keep using 
@@ -127,7 +130,7 @@
   Using title as a third argument to labs(), assign the string  \"Distribution of Body Mass by Species of Penguin\" 
   as a meaningful title. Using caption as a fourth argument to labs(), 
   assign the string \"data from palmerpenguins.org\" as an attribution of data-source in a caption."
-  AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito() + labs(x="Body Mass (g)",y="Density",,title ="Distribution of Body Mass by Species of Penguin",caption="data from palmerpenguins.org")')
+  AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito() + labs(x="Body Mass (g)",y="Density",title ="Distribution of Body Mass by Species of Penguin",caption="data from palmerpenguins.org")')
   Hint: "Provide additional arguments to the call to labs() in the previous pipeline. Check ?labs for its documentation and usage."  
 
 - Class: text
@@ -149,7 +152,7 @@
   using an existing graph expression with few changes."
   
 - Class: cmd_question
-  Output:  "Use command-line editing to change the geom of the previous graph expression from geom_density(alpha=0.5) to geom_violin(alpha=0.5). In the aes() call nested inside ggplot(), associate body_mass_g with the y-axis and associate species with the x-axis. To make room for the legend in the new figure, change the coordinates of the legend to x = 0.1 and y = 0.85." 
+  Output:  "Use command-line editing to change the geom of the previous graph expression from geom_density(alpha=0.5) to geom_violin(alpha=0.5). In the aes() call nested inside ggplot(), associate species with the x-axis, and associate body_mass_g with the y-axis as the first two arguments in that order. To make room for the legend in the new figure, change the coordinates of the legend to x = 0.1 and y = 0.85." 
   AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x=species, y = body_mass_g, color = species, fill = species)) + geom_violin(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito() + labs(x="Body Mass (g)",y="Density",title ="Distribution of Body Mass by Species of Penguin",caption="data from palmerpenguins.org") + theme(legend.position = c(0.1, 0.85))')
   Hint: "Edit the graph expression in place. Change the geom, and edit the aesthetics including both x and y aesthetics in the call to aes() as instructed."    
 
@@ -177,14 +180,15 @@
   Hint: "Use command-line editing to modify the previous graph expression."   
     
 - Class: cmd_question
-  Output:  "With scatterplots in ggplot2, we can use the sizes of points to show an additional dimension of the data. Use command-line editing to add a fifth argument \"size=Petal.Length\" to the call to aes() in the previous graph expression, and extend the graph expression with \"+ scale_color_okabe_ito(order=c(3,4,2))\" to make it color-blind friendly. Note that we can specify the order of colors in the Okabe-Ito color palette to maximize the color contrast of overlapping points." 
+  Output:  "With scatterplots in ggplot2, we can use the sizes of points to show an additional dimension of the data. Use command-line editing to add a fifth argument \"size=Petal.Length\" to the call to aes() in the previous graph expression, and extend the graph expression with 
+  \"+ scale_color_okabe_ito(order=c(3,4,2))\" to make it color-blind friendly. Note that we can specify the order of colors in the Okabe-Ito color palette to maximize the color contrast of overlapping points." 
   AnswerTests: omnitest(correctExpr='ggplot(iris, aes(Sepal.Length, Sepal.Width, color=Species,alpha=0.3,size=Petal.Length)) + geom_jitter() + scale_color_okabe_ito(order=c(3,4,2))')
   Hint: "Use command-line editing to modify the previous graph expression."   
 
 - Class: cmd_question
   Output:  "Finally, let's set the labels appropriately. Use command-line editing to extend the graph expression with a call to the labs() function, setting labels in the following order to labs(): \"Sepal Length (cm)\" as the x-axis label, \"Sepal Width (cm)\" as the y-axis label, \"Flower Morphology in Three Species of Iris\" as the plot title, and \"Data from Anderson (1935). Bulletin of the American Iris Society 59:2\" as the caption. Finally, add size=\"Petal Length (cm)\" as a fifth argument to labs() to make a better label in the legend."  
   AnswerTests: omnitest(correctExpr='ggplot(iris, aes(Sepal.Length, Sepal.Width, color=Species,alpha=0.3,size=Petal.Length)) + geom_jitter() + scale_color_okabe_ito(order=c(3,4,2))+ labs(x="Sepal Length (cm)",y="Sepal Width (cm)",title="Flower Morphology in Three Species of Iris",caption="Data from Anderson (1935). Bulletin of the American Iris Society 59:2", size="Petal Length (cm)")')
-  Hint: "Use command-line editing to modify the previous graph expression."   
+  Hint: "Use command-line editing to modify the previous graph expression. Delete any pipe or newline characters in the labels that come from copy-pasting from the swirl instructions, so that the tidyverse pipeline is all on one line."   
 
 - Class: text
   Output:   "Great, now we have finished our second publication-quality graph for this assignment. In your tAPP22 Quarto notebook, under the section \"Publication-Quality Plots with ggplot2\" and in the empty R code chunk under the subsection \"Flower Morphology in Three Species of Iris\", copy your working ggplot2 graph expression and Render the notebook to validate that the scatter plot appears in your notebook. Ask for help if you need it." 
@@ -197,12 +201,12 @@
   Output: "We have already learned about data \"scrubbing\" --- the processing and cleaning of raw data, removing extraneous information while organizing and modifying the remaining data to make it all consistent and machine-readable. Making data tidy is different, and involves reorganizing existing clean data into another form."    
 
 - Class: cmd_question
-  Output:  "To illustrate, call as_tibble() on the baby_clean data-frame (already loaded by swirl) to print its first ten rows."  
-  AnswerTests: omnitest(correctExpr='as_tibble(baby_clean)')
-  Hint: "Call as_tibble(baby_clean)"  
+  Output:  "To illustrate, print the baby_clean tibble (already loaded by swirl) to show its first ten rows."  
+  AnswerTests: omnitest(correctExpr='baby_clean')
+  Hint: "Call baby_clean"  
 
 - Class: text
-  Output: "The baby_clean data is not tidy because a major explanatory variable --- 
+  Output: "The baby_clean tibble is not tidy because a major explanatory variable --- 
   the sex of babies --- is encoded in the column/variable names, rather than as an explanatory
    factor in its own column. The data is not tidy because the rank column, in effect, serves 
    twice in specifying the ranks of both boys and girls names in the same row. The granular unit 
@@ -215,12 +219,12 @@
   Output:  "Use the base-R pipe operator (|>) to pipe the output of as_tibble(baby_clean) 
   to the function pivot_longer() with first argument \"cols=boy_name:girl_freq\" to specify 
   which columns to pivot on, second argument
-  names_sep=\"_\" to specify how to split the column names, and third argument 
-  \"names_to = c(\"sex\",\".value\")\" to specify that a new column with name \"sex\" 
+  \" names_sep=\"_\" \"to specify how to split the column names, and third argument 
+  \" names_to = c(\"sex\",\".value\") \" to specify that a new column with name \"sex\" 
   should be created from the first part of the column names and that the frequency 
   and name data should appear in columns labelled \"freq\" and \"name\".
   Note that there is a dot (.) before value in the vector-value passed to names_to."    
-  AnswerTests: omnitest(correctExpr='as_tibble(baby_clean) |> pivot_longer(cols=boy_name:girl_freq,names_sep="_",names_to = c("sex",".value"))')
+  AnswerTests: omnitest(correctExpr='baby_clean |> pivot_longer(cols=boy_name:girl_freq,names_sep="_",names_to = c("sex",".value"))')
   Hint: "Be sure to include a dot (.) before value in names_to = c(\"sex\",\".value\")"   
 
 - Class: text
@@ -237,12 +241,12 @@
   decade to the x-axis, freq to the y-axis and sex to the fill aesthetic, in that order. Then 
   specify the geom to make a bar-chart with bars side-by-side using geom_col(position=\"dodge\").
   Next, make it color-blind friendly with a call to scale_fill_okabe_ito(). "    
-  AnswerTests: omnitest(correctExpr='as_tibble(baby_clean) |> pivot_longer(cols=boy_name:girl_freq,names_sep="_",names_to = c("sex",".value")) |> filter(rank == 1) |> ggplot(aes(x=decade,y=freq,color=sex,fill=sex)) + geom_col(position="dodge") + scale_fill_okabe_ito()')
+  AnswerTests: omnitest(correctExpr='baby_clean |> pivot_longer(cols=boy_name:girl_freq,names_sep="_",names_to = c("sex",".value")) |> filter(rank == 1) |> ggplot(aes(x=decade,y=freq,fill=sex)) + geom_col(position="dodge") + scale_fill_okabe_ito()')
   Hint: "Pipe through filter() and pivot_longer(). Call aes() immediately as the first argument to ggplot(). Chain parts of the graph expression using the plus operator (+) with the geom after ggplot() and scale_fill...() last in the graph expression." 
 
 - Class: cmd_question
   Output:  "Great, now add polished and meaningful labels to the graph. Use command-line editing to extend the graph expression further with a call to labs() function. In the arguments to labs(), set the x-axis label to \"Decade\", the y-axis label to \"Frequency\", the title to \"Frequency of Top-Ranked Baby Names by Decade and Sex\", and the caption to \"Data from U.S. Census\" in that order. Finally, extend the graph expression to move the legend inside the plot using the theme() function with argument legend.position and coordinates x = 0.92 and y = 0.85."    
-  AnswerTests: omnitest(correctExpr='as_tibble(baby_clean) |> pivot_longer(cols=boy_name:girl_freq,names_sep="_",names_to = c("sex",".value")) |> filter(rank == 1) |> ggplot(aes(x=decade,y=freq,color=sex,fill=sex)) + geom_col(position="dodge") + scale_fill_okabe_ito() + labs(x="Decade",y="Frequency",title="Frequency of Top-Ranked Baby Names by Decade and Sex",caption="Data from U.S. Census") + theme(legend.position = c(0.92,0.85))')
+  AnswerTests: omnitest(correctExpr='as_tibble(baby_clean) |> pivot_longer(cols=boy_name:girl_freq,names_sep="_",names_to = c("sex",".value")) |> filter(rank == 1) |> ggplot(aes(x=decade,y=freq,fill=sex)) + geom_col(position="dodge") + scale_fill_okabe_ito() + labs(x="Decade",y="Frequency",title="Frequency of Top-Ranked Baby Names by Decade and Sex",caption="Data from U.S. Census") + theme(legend.position = c(0.92,0.85))')
   Hint: "A short template structure for the graph expression is ggplot(aes()) + geom_col() + scale_fill_okabe_ito() + labs() + theme(), The order of arguments to each function must be exactly as described."
 
 - Class: text
@@ -270,8 +274,8 @@
   Hint: "Extend the call to as_tibble() with a call to pivot_longer() with specified arguments in the order given  using the base-R pipe operator (|>)."
 
 - Class: cmd_question
-  Output:  "Now that you have tidied the VADeaths data, plot summed death rates over age-bins by piping to ggplot(), with a call to aes() in the first argument with arguments mapping sex to the x-axis, rate to the y-axis and urbanization to the color fill aesthetic in that order. Finally, extend the graph expression with a call to geom_col() to make a stacked bar chart summing over all ages." 
-  AnswerTests: omnitest(correctExpr='as_tibble(VADeaths,rownames="ages") |> pivot_longer(cols = !ages, names_sep=" ",names_to=c("urbanization","sex"), values_to = "death_rate") |> ggplot(aes(x=sex,y=death_rate,fill=urbanization)) + geom_col()")')
+  Output:  "Now that you have tidied the VADeaths data, plot summed death rates over age-bins by piping to ggplot(), with a call to aes() in the first argument with arguments mapping sex to the x-axis, death_rate to the y-axis and urbanization to the color fill aesthetic in that order. Finally, extend the graph expression with a call to geom_col() to make a stacked bar chart summing over all ages." 
+  AnswerTests: omnitest(correctExpr='as_tibble(VADeaths,rownames="ages") |> pivot_longer(cols = !ages, names_sep=" ",names_to=c("urbanization","sex"), values_to = "death_rate") |> ggplot(aes(x=sex,y=death_rate,fill=urbanization)) + geom_col()')
   Hint: "Use the base-R pipe operator (|>) to extend the previous graph expression with a call to ggplot(aes()) + geom_col()"
 
 - Class: cmd_question
