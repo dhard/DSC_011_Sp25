@@ -15,105 +15,155 @@
 - Class: text
   Output: "Like last time, in this lesson we'll develop R/tidyverse and ggplot2 graph 
   expressions interactively in the R Console and save our finalized and edited code in 
-  code chunks in a Quarto Notebook for tAPP22 that you'll export to HTML. You also should 
+  code chunks in a Quarto Notebook for tAPP22 that you'll export to HTML. You should 
   have already installed some prerequisite packages before starting this lesson." 
-
-- Class: text
-  Output: "Just like the tAPP21 notebook that we made last time, today's tAPP22 notebook is 
-  going to need to load its package dependencies like the tidyverse and palmerpenguins 
-  packages in a code chunk before we use the functions or R objects they define in subsequent 
-  code chunks."
   
 - Class: text
-  Output: "For your convenience, these package dependencies have been preloaded into this
-  swirl lesson for you. An R code chunk at the top of your tAPP22 notebook has also been 
-  providedto load the dependencies we will use in this lesson."   
+  Output: "For your convenience, package dependencies of this swirl lesson 
+  are already preloaded by swirl. 
+  An R code chunk at the top of your tAPP22 notebook has already been 
+  provided that loads the package dependencies for this lesson for when you 
+  render your notebook. Test it by rendering your notebook now."   
   
 - Class: text
-  Output: "Last time we finished tAPP21 by using transparency (alpha) to improve the first 
-  draft of a density plot for the body mass for three species of penguins in the 
+  Output: "Last time when finishing tAPP21, we used transparency (alpha) to improve the first 
+  draft of a density plot of body masses of three species of penguins from the 
   palmerpenguins dataset."   
 
 - Class: text
-  Output: "Let's pick up where we left off by showing how to improve this rough-draft graph, 
-  interactively and successively, to the point of presentation and publication-quality using 
-  the grammar of graphics in ggplot2. " 
+  Output: "Let's pick up where we left off and improve this rough-draft plot, 
+  interactively and successively, to the point of publication quality, using 
+  the grammar of graphics in ggplot2." 
   
 - Class: cmd_question
-  Output:   "First let's regenerate the last graph we made by evaluating the graph expression \n\n
+  Output:   "First, let's regenerate the last graph that we made by evaluating the ggplot2 graph expression \n\n
   ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)"
   CorrectAnswer:  ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)
   AnswerTests: omnitest(correctExpr='ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)')
   Hint: "Evaluate the expression as given."  
   
-- Class: cmd_question
-  Output:   "First, let's get rid of the warning \"Removed 2 rows containing non-finite outside the scale range\".
-  Let's investigate the hypothesis that this somewhat cryptic warning comes from two NA values in the body mass
-  variable of the penguins. Use the $ name-selection operator on penguins to select the body mass variable and write   a base-R expression using the sum() and is.na() functions to verify that it contains two NA missing values."
-  CorrectAnswer:  sum(is.na(penguins$body_mass_g))
-  AnswerTests: omnitest(correctExpr='sum(is.na(penguins$body_mass_g))')
-  Hint: "Select body masses from penguins using the base-R name-selection operator, pass it as input to is.na() and pass the output to sum()."   
-
-- Class: cmd_question
-  Output:   "ggplot2 graph expressions usually appear at the ends of tidyverse pipelines, which are 
-  made by concatenating tidyverse functions with the |> base-R pipe operator. Often these pipelines start with the 
-  tibble name. To get rid of the warning from the call to ggplot(), let's use our up-arrow command-line editing to 
-  edit the graph expression from two commands ago. first pipe the penguins tibble through the drop_na() tidyverse 
-  function, which filters out rows containing NAs, and then pipe the output through our previous graph expression, 
-  only removing penguins as the first argument to the call of ggplot()."
-  CorrectAnswer:  penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)
-  AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)')
-  Hint: "Use the base-R pipe operator (|>) twice. Start with penguins, pipe to drop_na(), and then pipe to ggplot
-  (aes()) omitting penguins as first argument to ggplot()"
-
 - Class: text
-  Output:   "Did you notice that the warning disappeared now?"
+  Output: "First, let's see if we can get rid of the warning \"Removed 2 rows containing non-finite outside the scale range\"."
+  
   
 - Class: text
-  Output:   "But applying the principles of good visualization to this graph, we see that 
+  Output: "Suppose that this cryptic warning is caused by the presence of two NA values in the vector of body masses of penguins. Let's test this hypothesis interactively."   
+  
+- Class: cmd_question
+  Output:   "Use the $ name-selection operator on penguins to select the body mass variable (RStudio will make it easy to find the name of this variable and complete it) and write a base-R expression using the sum() and is.na() functions on this selection to verify that it contains two NA missing values."
+  CorrectAnswer:  sum(is.na(penguins$body_mass_g))
+  AnswerTests: omnitest(correctExpr='sum(is.na(penguins$body_mass_g))')
+  Hint: "Select body masses from penguins using the base-R name-selection operator, pass it as input to is.na() and pass the output to sum(). Use base-R composed functions wrapping is.na() with sum(), not base-R pipes."   
+
+- Class: cmd_question
+  Output:   "ggplot2 graph expressions usually appear at the ends of R/tidyverse pipelines, which are 
+  made by concatenating tidyverse and base-R functions with the |> base-R pipe operator.\n Often these pipelines 
+  start with the tibble name. \n After all it is easier to understand \n\n data |> select() |> summarize() \n\n 
+  then \n\n summarize(select(data))\n\n  
+  To get rid of the warning from the call to ggplot(), let's use up-arrow command-line editing to 
+  edit the graph expression from two commands ago. First pipe the tibble penguins into the tidyverse drop_na()  
+  function to filter out rows containing NA, and then pipe its output through our previous graph expression. 
+  Be sure to remove penguins as the first argument in your new call to ggplot()."
+  CorrectAnswer:  penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)
+  AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5)')
+  Hint: "Use the base-R pipe operator (|>) twice before the graph expression. 
+  Start with the penguins tibble, pipe it to drop_na() with no arguments, and then pipe to a call to ggplot(aes()), that is omitting penguins as first argument to ggplot()"
+
+- Class: text
+  Output:   "Did you notice that the warning disappeared now? Let's now focus on making this graph publication quality."
+  
+- Class: text
+  Output:   "By applying the principles of good visualization to this graph, we see that 
   ggplot2's default color palette is not color-blind friendly because it depends on a 
   red-green contrast. Let's make the graph more color-blind-friendly by using the Okabe-Ito
-  qualitative color palette, provided in the extension package called ggokabeito."
+  qualitative color palette, which we have already provided and loaded in the extension package called ggokabeito."
 
 - Class: text
   Output:   "In the call to aes() we are associating two different aesthetics with the species
   variable/column in the penguins tibble: color and fill. The first corresponds to the color of 
-  points and lines, while the second is the fill-color of shapes like densities, 
+  points and lines, while the second corresponds to the fill-color of shapes like densities, 
   polygons, violins, and other two-dimensional aesthetics."
   
 - Class: text
-  Output:   "To set a different color palette to these two aesthetics in a ggplot2 graph
-  expression, we simply use the plus operator (+) to extend that expressions with calls to 
+  Output:   "To set different color palettes to these two aesthetics in a ggplot2 graph
+  expression, we simply use the plus operator (+) to extend the graph expressions with calls to 
   functions with prefixes like \"scale_color_...()\" and  \"scale_fill_...()\". Each call 
-  changes the color-palette of one of the aesthetics and each can be provided in any order to the 
-  same effect. "  
+  changes the color-palette of one of the aesthetics." 
 
 - Class: text
   Output:   "For example, the ggokabeito package provides functions scale_color_okabe_ito() 
   and scale_fill_okabe_ito()."  
 
+- Class: text
+  Output:   "In general, each part of a graph expression connected by the plus operator (+), 
+  after the call to ggplot(aes()), may be provided 
+  in any order to mostly the same effect on the final plot. "
 
 - Class: cmd_question
-  Output:   "Use up-arrow command-line editing to extend the previous graph expression with 
-  calls to scale_color_okabe_ito() and scale_fill_okabe_ito() using the plus operator. Although 
-  you could write a valid ggplot2 graph expression with the calls to geom_density(), 
-  scale_color_okabe_ito() and scale_fill_okabe_ito() in any order, please write them 
-  in this order to be recognized as valid in this swirl lesson. "
-  CorrectAnswer:  ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito()
-  AnswerTests: omnitest(correctExpr='ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito()')
-  Hint: "Edit the previous ggplot2 graph expression "  
-  
-    
-  
-ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.3) + scale_color_okabe_ito() + scale_fill_okabe_ito() + labs(x="Body Mass (g)",y="Density",title ="Distribution of Body Mass by Species of Penguin",caption="data: palmerpenguins.org") + theme(legend.position = c(0.9, 0.8))  
+  Output:   "Use up-arrow command-line editing to extend the previous ggplot2 graph expression, in the last 
+  part of the R/tidyverse pipeline, with calls to scale_color_okabe_ito() and scale_fill_okabe_ito() using 
+  the plus operator. Write the graph expression with the geom_density(), scale_color_okabe_ito() and
+   scale_fill_okabe_ito() parts in this specific order."
+  CorrectAnswer: penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito()
+  AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito()')
+  Hint: "Extend the previous ggplot2 graph expression using the plus (+) operator with calls to 
+  scale_color_okabe_ito() and scale_fill_okabe_ito() in that order."  
+
+- Class: cmd_question
+  Output:   "Now let's extend the graph expression further to fix the x-axis and y-axis labels. Keep using 
+  command-line editing to extend the 
+  graph expression using the plus operator (+) with a call to the ggplot2 labs() function. Using x as 
+  the first argument to labs(), assign the string \"Body Mass (g)\" as the x-axis 
+  label. Using y as the second argument to labs(), assign the string \"Density\" as the y-axis label."
+  CorrectAnswer: penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito() + labs(x="Body Mass (g)",y="Density")
+  AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill =  species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito() + labs(x="Body Mass (g)",y="Density")')
+  Hint: "Extend the previous ggplot2 graph expression using the plus (+) operator with a call to 
+  labs() to set the x- and y-axis labels. Check ?labs for its documentation and usage."  
+
+- Class: cmd_question
+  Output:   "Let's use command-line editing to add additional arguments to the call to labs().
+  Using title as a third argument to labs(), assign the string  \"Distribution of Body Mass by Species of Penguin\" 
+  as a meaningful title. Using caption as a fourth argument to labs(), 
+  assign the string \"data from palmerpenguins.org\" as an attribution of data-source in a caption."
+  AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito() + labs(x="Body Mass (g)",y="Density",,title ="Distribution of Body Mass by Species of Penguin",caption="data from palmerpenguins.org")')
+  Hint: "Provide additional arguments to the call to labs() in the previous pipeline. Check ?labs for its documentation and usage."  
 
 - Class: text
-  Output: "The tidyverse gets its name from the concept of \"tidy data,\" a specifically 
-  \"normalized\" arrangement of data in a data-frame or tibble so that every categorical variable    is represented in its own column with values for every level, and rows correspond to units of 
-  observation." 
+  Output: "Let's place the legend in the upper-right corner of the plot to remove dead space and make the 
+   data display of density-plots larger."
+
+- Class: cmd_question
+  Output:  "Use command-line editing to extend the 
+   previous pipeline/graph expression using the plus (+) operator with a call to the ggplot2 theme() function 
+   specifying the numeric vector c(0.9, 0.8) as the value of the legend.position argument to theme(). The vector 
+   specifies the relative x- and y-coordinates of the legend. The coordinates each range between 0 and 1."
+  AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x = body_mass_g, color = species, fill = species)) + geom_density(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito() + labs(x="Body Mass (g)",y="Density",title ="Distribution of Body Mass by Species of Penguin",caption="data from palmerpenguins.org") + theme(legend.position = c(0.9, 0.8))')
+  Hint: "Use the plus operator to extend the terminal graph expression with a call to theme() with argument legend.position=c(0.9, 0.8) as instructed."    
+ 
+- Class: text
+  Output:   "This density plot is much better than it was when we started, but some might disagree with the aesthetic of 
+  plotting overlapping densities with transparency. Separating the densities by species in a violin plot may be 
+  preferable. Fortunately, ggplot2 makes it easy to change the geom, or plot-type, and make a whole new type of graph
+  using an existing graph expression with few changes."
+  
+- Class: cmd_question
+  Output:  "Use command-line editing to change the geom of the previous graph expression from geom_density(alpha=0.5) to geom_violin(alpha=0.5). In the aes() call nested inside ggplot(), associate body_mass_g with the y-axis and associate species with the x-axis. To make room for the legend in the new figure, change the coordinates of the legend to x = 0.1 and y = 0.85." 
+  AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x=species, y = body_mass_g, color = species, fill = species)) + geom_violin(alpha=0.5) + scale_color_okabe_ito() + scale_fill_okabe_ito() + labs(x="Body Mass (g)",y="Density",title ="Distribution of Body Mass by Species of Penguin",caption="data from palmerpenguins.org") + theme(legend.position = c(0.1, 0.85))')
+  Hint: "Edit the graph expression in place. Change the geom, and edit the aesthetics including both x and y aesthetics in the call to aes() as instructed."    
+
+- Class: cmd_question
+  Output:  "Now, remembering that it is preferable to show the raw data in such distributional plots, use command-line editing to insert a call to geom_sina() from the ggforce package after the call to geom_violin using the plus operator (+). Be sure to put the call to geom_sina() right after the call to geom_violin()." 
+  AnswerTests: omnitest(correctExpr='penguins |> drop_na() |> ggplot(aes(x=species, y = body_mass_g, color = species, fill = species)) + geom_violin(alpha=0.5) + geom_sina() + scale_color_okabe_ito() + scale_fill_okabe_ito() + labs(x="Body Mass (g)",y="Density",title ="Distribution of Body Mass by Species of Penguin",caption="data from palmerpenguins.org") + theme(legend.position = c(0.1, 0.85))')
+  Hint: "Edit the previous graph expression in place. Insert \"+ geom_sina()\" right after the call to \"geom_violin(alpha=0.5)\"."  
   
 - Class: text
-  Output: "We have already learned about data \"scrubbing\" --- processing and cleaning raw data after it is obtained to a conc"     
+  Output:   "Now we have finished our first publication-quality graph for this assignment. In your tAPP22 Quarto notebook, under the section \"Publication-Quality Plots with ggplot2\" and in the empty R code chunk under the subsection \"Color-blind-friendly Sina Plots of Body Mass by Penguin Species\", copy your working ggplot2 graph expression and Render the notebook to validate that the density plot in your notebook. Ask for help if you need it."  
+ 
+- Class: text
+  Output: "Let's apply our principles of visualization to make some publication-quality scatter-plots using
+  ggplot2. "   
+ 
+ 
   
 # ### color and size aesthetics
 # 
@@ -125,43 +175,16 @@ ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) + geom_d
 #   scale_color_manual(values=okabe(4)[c(3,2,4)])
 # 
 # ### color palettes
-# ### scale_color_colorblind() function from the ggthemes package
+
 # ### facet_wrap() is a formula3
 # 
-# head(mpg)
-# ggplot(mpg, aes(displ,hwy)) + geom_point()
-# 
-# mpg |> ggplot(aes(displ,hwy)) + geom_point()
-# 
-# ggplot(mpg, aes(displ,hwy)) + geom_point()
-# 
-# ggplot(mpg, aes(displ,hwy)) + geom_smooth()
-# 
-# mpg |> ggplot(aes(displ,hwy)) + geom_smooth() + 
-# labs(title="Highway Mileage versus Engine Displacement",
-#    caption="Data from https://fueleconomy.gov/ for models with release between 1999 and 2008") + 
-# xlab("Engine Displacement (liters)") + 
-# ylab("Highway Miles Per Gallon")
-# 
-# mpg |> ggplot(aes(displ,hwy)) + geom_point(color=class) + geom_smooth(se = FALSE) + 
-# labs(title="Fuel efficiency generally decreases with engine size",
-#    caption="Data from https://fueleconomy.gov/ for models with release between 1999 and 2008") + 
-# xlab("Engine Displacement (liters)") + 
-# ylab("Highway Miles Per Gallon")
-# 
-# mpg |> ggplot(aes(displ,hwy)) + geom_smooth(color=class) + 
-# labs(title="Highway Mileage versus Engine Displacement",
-#    caption="Data from https://fueleconomy.gov/ for models with release between 1999 and 2008") + 
-# xlab("Engine Displacement (liters)") + 
-# ylab("Highway Miles Per Gallon")
-# 
-# ### other geoms
-# 
-
-# 
-# 
-# ### saving plots with ggsave()
-
+- Class: text
+  Output: "The tidyverse gets its name from the concept of \"tidy data,\" a specifically 
+  \"normalized\" arrangement of data in a data-frame or tibble so that every categorical variable    is represented in its own column with values for every level, and rows correspond to units of 
+  observation." 
+  
+- Class: text
+  Output: "We have already learned about data \"scrubbing\" --- processing and cleaning raw data after it is obtained to a conc"    
 
 
 - Class: text

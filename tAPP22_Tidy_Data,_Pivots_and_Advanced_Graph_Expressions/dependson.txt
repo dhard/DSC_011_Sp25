@@ -1,2 +1,4 @@
 tidyverse
 palmerpenguins
+ggokabeito
+ggforce
