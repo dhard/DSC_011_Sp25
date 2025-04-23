@@ -33,14 +33,14 @@
   Output: "You need to learn markdown in order to successfully author documents using Quarto and Jupyter notebooks. Markdown is a human- and machine-readable plain-text-encoded markup language for authoring documents, presentations, websites, etc. Markdown is also the format of README files on GitHub and widely used elsewhere."
 
 - Class: text
-  Output:   "The section and subsection structure of a markdown document is created like an outline using the hashtag symbol (#). To illustrate, copy and paste the markdown in the markdown file \"intro,md\" included in your cloned git repository. Copy from the line \"## Introduction\" to the end of \"### Loading Library Dependencies\", and paste it into your Quarto notebook below the YAML header line which looks like this (---)." 
+  Output:   "The section and subsection structure of a markdown document is created like an outline using the hashtag symbol (#). To illustrate, copy and paste the markdown in the markdown file \"intro.md\" included in your cloned git repository. Copy from the line \"## Introduction\" to the end of \"### Loading Library Dependencies\", and paste it into your Quarto notebook below the YAML header line which looks like this (---)." 
   
 - Class: text
   Output: "Now please render the notebook file and verify that the new section and subsection appears. If you have problems or questions with this step, please ask for help."   
 
 - Class: text
   Output: "Before you can use the tidyverse, including ggplot2, on any new     version of R that you
-  install on your computer or any machine, you need to install it once."     
+  install on your computer or any machine, you need to install it once for each version of the R interpreter that you install and use. Libraries are OS-specific, so Windows users need to separately install and update "     
   
 - Class: text
   Output: "According to its website at http://tidyverse.org: \"The 
